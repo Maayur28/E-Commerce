@@ -67,13 +67,14 @@ const Carousel = () => {
                   <option value="US 7">US 7</option>
                   <option value="US 6">US 6</option>
                 </select>
+                <i className="select-icon fas fa-sort-down"></i>
               </div>
               <div className="price">
                 <h3>Rs. 1999</h3>
               </div>
             </div>
             <div className="cart">
-              <i className="cartIcon fas fa-cart-arrow-down"></i>
+            <i className="cartIcon fas fa-cart-arrow-down"></i>
             </div>
           </MDBCardBody>
         </MDBCard>
