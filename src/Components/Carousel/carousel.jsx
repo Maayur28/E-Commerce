@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "./carousel.css";
-import img1 from "../images/shoe1.png";
-import img2 from "../images/shoe2.png";
-import img3 from "../images/shoe3.png";
-import { MDBCard, MDBCardBody } from "mdb-react-ui-kit";
+import Navbar from "../Navbar/navbar";
+import img1 from "../../images/shoe1.png";
+import img2 from "../../images/shoe2.png";
+import img3 from "../../images/shoe3.png";
 const Carousel = () => {
   const arr = [
     { image: img1, heading: "Nike Air Max 2020" },
@@ -28,6 +28,8 @@ const Carousel = () => {
     });
   };
   return (
+    <div className="home">
+      <Navbar/>
     <div className="carousel">
       <div className="navigate">
         <i className="fas fa-long-arrow-alt-left arrowleft" onClick={prev}></i>
@@ -35,7 +37,7 @@ const Carousel = () => {
         <i
           className="fas fa-long-arrow-alt-right arrowright"
           onClick={next}
-        ></i>
+          ></i>
       </div>
       <div className="image">
         {arr.map((slide, index) => {
@@ -44,9 +46,9 @@ const Carousel = () => {
               key={index}
               className={
                 active === 1
-                  ? index === current && "active"
-                  : index === current && "passive"
-              }
+                  ? index === current && "activeImg"
+                  : index === current && "passiveImg"
+                }
             >
               {index === current && (
                 <img src={arr[current].image} alt={arr[current].heading} />
@@ -56,8 +58,8 @@ const Carousel = () => {
         })}
       </div>
       <div className="cardPaper">
-        <MDBCard>
-        <MDBCardBody>
+        <div className="card">
+        <div className="card-body">
             <div className="cardBody">
               <div className="select">
                 <select name="size" id="size">
@@ -76,10 +78,11 @@ const Carousel = () => {
             <div className="cart">
             <i className="cartIcon fas fa-cart-arrow-down"></i>
             </div>
-          </MDBCardBody>
-        </MDBCard>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
   );
 };
 

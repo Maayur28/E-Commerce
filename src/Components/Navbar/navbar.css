@@ -1,0 +1,67 @@
+.navbar {
+  display: flex;
+  height: 70px;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  user-select: none;
+}
+.logoNav {
+  cursor: pointer;
+  margin-left: 50px;
+}
+.menuBar {
+  display: flex;
+  margin: 10px 0;
+}
+.menuBar li {
+  margin-right: 120px;
+}
+
+.searchCart {
+  display: flex;
+}
+input[type="search"] {
+  position: absolute;
+  right: 12%;
+  width: 100px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  margin-top: 6px;
+  border-radius: 4px;
+  font-size: 16px;
+  background-color: white;
+  background-image: url("../../images/magnifier.png");
+  background-position: 660px 5px;
+  background-repeat: no-repeat;
+  padding: 5px 20px 5px 20px;
+  transition: width 0.2s ease-in-out;
+}
+
+input[type="search"]:focus {
+  width: 700px;
+  outline: none;
+  right: 24%;
+}
+input[type="search"]:focus .menuBar {
+  display: none;
+}
+ul {
+  list-style-type: none;
+}
+.cartDiv {
+  margin: 3px 20px;
+  position: relative;
+  cursor: pointer;
+}
+.badge {
+  position: absolute;
+  left: 25px;
+}
+.profileDiv {
+  margin: 12px 20px;
+  cursor: pointer;
+}
+.profile {
+  font-size: 22px;
+}

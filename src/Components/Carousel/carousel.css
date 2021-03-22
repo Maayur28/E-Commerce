@@ -1,7 +1,7 @@
 .carousel {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 90vh;
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
@@ -9,7 +9,7 @@
 .navigate {
   display: flex;
   color: white;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 .arrowleft {
   font-size: 32px;
@@ -28,12 +28,12 @@ img {
   cursor: pointer;
   z-index: 10;
 }
-.active {
+.activeImg {
   animation-name: act;
   animation-duration: 2s;
   z-index: 2;
 }
-.passive {
+.passiveImg {
   animation-name: pass;
   animation-duration: 2s;
   z-index: 2;
