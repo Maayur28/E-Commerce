@@ -7,27 +7,14 @@ const Navbar = () => {
       <div className="logoNav">
         <img src={logo} alt="logo" />
       </div>
-      <div className="menuBar">
-        <div className="menu">
-        <span>Men</span>
-        <span className="menuline"></span>
-        </div>
-        <div className="menu">
-        <span>Women</span>
-        <span className="menuline"></span>
-        </div>
-        <div className="menu">
-        <span>Kids</span>
-        <span className="menuline"></span>
-        </div>
-      </div>
+        <ul className="menuBar">
+          <li><a href>Men</a></li>
+          <li><a href >Women</a></li>
+          <li><a href>Kids</a></li>
+        </ul>
       <div className="searchCart">
         <div className="searchBar">
-          <input
-            type="text"
-            className="searchInput"
-            placeholder="Search..."
-          />
+          <input type="text" className="searchInput" placeholder="Search..." />
         </div>
         <div className="cartDiv">
           <i className="cartIcon fas fa-cart-plus"></i>

@@ -11,25 +11,43 @@
   cursor: pointer;
   margin-left: 50px;
 }
-.menuBar {
+ul {
   display: flex;
+  list-style-type: none;
+  margin-top: 15px;
+  margin-left: 100px;
+}
+ul li
+{
+  margin-right: 125px;
+}
+ul li a {
+  position: relative;
+  display: block;
+  text-decoration: none;
+  color: #ecf0f1;
+  transition: 0.5s;
+  cursor: pointer;
+}
+ul li a::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 3px;
+  top: 100%;
+  left: 0;
   margin-top: 10px;
+  background: white;
+  transition: transform 0.5s;
+  transform: scaleX(0);
+  transform-origin: right;
 }
-.menu
-{
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
+ul li a:hover {
+  color: #95a5a6;
 }
-.menuline
-{
-    /* position: absolute; */
-    width: fit-content;
-    height: 2px;
-    background-color: white;
-}
-.menuBar div {
-  margin-right: 120px;
+ul li a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .searchCart {
@@ -46,7 +64,7 @@ input[type="text"] {
   font-size: 16px;
   background-color: white;
   background-image: url("../../images/magnifier.png");
-  background-position: 48vw 5px;
+  background-position: 47vw 5px;
   background-repeat: no-repeat;
   padding: 3px 20px 3px 20px;
   transition: width 0.2s ease-in-out;
