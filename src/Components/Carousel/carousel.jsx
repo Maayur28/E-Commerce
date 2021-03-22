@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./carousel.css";
-import Navbar from "../Navbar/navbar";
+
 import img1 from "../../images/shoe1.png";
 import img2 from "../../images/shoe2.png";
 import img3 from "../../images/shoe3.png";
@@ -29,7 +29,6 @@ const Carousel = () => {
   };
   return (
     <div className="home">
-      <Navbar/>
     <div className="carousel">
       <div className="navigate">
         <i className="fas fa-long-arrow-alt-left arrowleft" onClick={prev}></i>

@@ -7,22 +7,31 @@ const Navbar = () => {
       <div className="logoNav">
         <img src={logo} alt="logo" />
       </div>
-      <ul className="menuBar">
-        <li>Men</li>
-        <li>Women</li>
-        <li>Kids</li>
-      </ul>
+      <div className="menuBar">
+        <div className="menu">
+        <span>Men</span>
+        <span className="menuline"></span>
+        </div>
+        <div className="menu">
+        <span>Women</span>
+        <span className="menuline"></span>
+        </div>
+        <div className="menu">
+        <span>Kids</span>
+        <span className="menuline"></span>
+        </div>
+      </div>
       <div className="searchCart">
         <div className="searchBar">
           <input
-            type="search"
+            type="text"
             className="searchInput"
             placeholder="Search..."
           />
         </div>
         <div className="cartDiv">
           <i className="cartIcon fas fa-cart-plus"></i>
-          <span class="badge rounded-pill bg-dark">0</span>
+          <span className="badge rounded-pill bg-dark">0</span>
         </div>
         <div className="profileDiv dropstart">
           <i className="profile fas fa-user-alt" data-bs-toggle="dropdown"></i>

@@ -5,6 +5,7 @@
   align-items: center;
   color: white;
   user-select: none;
+  margin-right: 10px;
 }
 .logoNav {
   cursor: pointer;
@@ -12,45 +13,53 @@
 }
 .menuBar {
   display: flex;
-  margin: 10px 0;
+  margin-top: 10px;
 }
-.menuBar li {
+.menu
+{
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+.menuline
+{
+    /* position: absolute; */
+    width: fit-content;
+    height: 2px;
+    background-color: white;
+}
+.menuBar div {
   margin-right: 120px;
 }
 
 .searchCart {
   display: flex;
 }
-input[type="search"] {
+input[type="text"] {
   position: absolute;
-  right: 12%;
+  right: 15%;
   width: 100px;
   box-sizing: border-box;
   border: 2px solid #ccc;
-  margin-top: 6px;
+  margin-top: 8px;
   border-radius: 4px;
   font-size: 16px;
   background-color: white;
   background-image: url("../../images/magnifier.png");
-  background-position: 660px 5px;
+  background-position: 48vw 5px;
   background-repeat: no-repeat;
-  padding: 5px 20px 5px 20px;
+  padding: 3px 20px 3px 20px;
   transition: width 0.2s ease-in-out;
 }
 
-input[type="search"]:focus {
-  width: 700px;
+input[type="text"]:focus {
+  width: 50vw;
   outline: none;
   right: 24%;
 }
-input[type="search"]:focus .menuBar {
-  display: none;
-}
-ul {
-  list-style-type: none;
-}
+
 .cartDiv {
-  margin: 3px 20px;
+  margin: 3px 30px;
   position: relative;
   cursor: pointer;
 }
@@ -59,9 +68,31 @@ ul {
   left: 25px;
 }
 .profileDiv {
-  margin: 12px 20px;
+  margin: 12px 30px;
   cursor: pointer;
 }
 .profile {
-  font-size: 22px;
+  font-size: 24px;
+}
+@media screen and (max-width: 680px) {
+  .logoNav {
+    margin-left: -10px;
+  }
+  .logoNav img {
+    width: 50%;
+  }
+  .menuBar li {
+    margin-right: 12px;
+  }
+  .menuBar {
+    display: flex;
+    margin-top: 10px;
+    margin-left: -100px;
+  }
+}
+@media screen and (min-width: 680px) and (max-width: 840px) {
+}
+@media screen and (min-width: 840px) and (max-width: 1048px) {
+}
+@media screen and (min-width: 1048px) and (max-width: 1200px) {
 }
