@@ -5,23 +5,23 @@
   align-items: center;
   color: white;
   user-select: none;
-  margin-right: 10px;
+  background-color: rgba(254,77,1,255);
 }
 .logoNav {
   cursor: pointer;
   margin-left: 50px;
 }
-ul {
+.menuBar {
   display: flex;
   list-style-type: none;
   margin-top: 15px;
   margin-left: 100px;
 }
-ul li
+.menuBar li
 {
   margin-right: 125px;
 }
-ul li a {
+.menuBar li a {
   position: relative;
   display: block;
   text-decoration: none;
@@ -29,7 +29,7 @@ ul li a {
   transition: 0.5s;
   cursor: pointer;
 }
-ul li a::after {
+.menuBar li a::after {
   position: absolute;
   content: "";
   width: 100%;
@@ -42,10 +42,10 @@ ul li a::after {
   transform: scaleX(0);
   transform-origin: right;
 }
-ul li a:hover {
+.menuBar li a:hover {
   color: #95a5a6;
 }
-ul li a:hover::after {
+.menuBar li a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -86,11 +86,16 @@ input[type="text"]:focus {
   left: 25px;
 }
 .profileDiv {
-  margin: 12px 30px;
+  margin: 10px 30px;
   cursor: pointer;
 }
 .profile {
   font-size: 24px;
+}
+.dropdown-menu
+{
+  padding: 10px;
+  text-align: center;
 }
 @media screen and (max-width: 680px) {
   .logoNav {

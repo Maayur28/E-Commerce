@@ -3,7 +3,6 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgba(254,77,1,255);
   box-sizing: border-box;
   overflow: hidden;
 }

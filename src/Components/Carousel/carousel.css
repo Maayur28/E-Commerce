@@ -5,6 +5,7 @@
   justify-content: space-between;
   align-items: center;
   overflow: hidden;
+  background-color: rgba(254,77,1,255);
 }
 .navigate {
   display: flex;

@@ -4,6 +4,7 @@ import "./carousel.css";
 import img1 from "../../images/shoe1.png";
 import img2 from "../../images/shoe2.png";
 import img3 from "../../images/shoe3.png";
+import { NavLink } from "react-router-dom";
 const Carousel = () => {
   const arr = [
     { image: img1, heading: "Nike Air Max 2020" },
@@ -50,7 +51,9 @@ const Carousel = () => {
                 }
             >
               {index === current && (
-                <img src={arr[current].image} alt={arr[current].heading} />
+               <NavLink to="/product/men/1" exact>
+                 <img src={arr[current].image} alt={arr[current].heading} />
+               </NavLink> 
               )}
             </span>
           );
