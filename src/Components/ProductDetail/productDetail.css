@@ -45,7 +45,11 @@
   justify-content: space-around;
 }
 .middle-content .back {
+  width: 65px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
+  cursor: pointer;
 }
 .imageThumbnail {
   display: flex;
@@ -57,7 +61,6 @@
   display: flex;
   align-items: center;
   color: rgba(254, 77, 1, 255);
-  cursor: pointer;
 }
 .back .fas {
   font-size: 18px;
