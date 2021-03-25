@@ -1,7 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./productDetail.css";
+import {useHistory} from 'react-router-dom';
 const ProductDetail = () => {
+  const history=useHistory();
   const data = [
     {
       _id: 1001,
@@ -78,7 +80,7 @@ const ProductDetail = () => {
         </div>
         <div className="middle-content col-sm-10 offset-sm-1 col-md-4 offset-md-0">
           <div className="back">
-            <span>
+            <span onClick={()=>history.goBack()}>
               <i className="fas fa-long-arrow-alt-left"></i>Back
             </span>
           </div>
