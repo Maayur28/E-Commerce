@@ -1,0 +1,136 @@
+.row {
+  user-select: none;
+}
+.left-content {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: center;
+}
+.left-content h2 {
+  margin-left: 50px;
+  margin-top: 20px;
+  line-height: 1.8;
+}
+.left-content h5 {
+  margin-left: 50px;
+  margin-top: 20px;
+  line-height: 1.8;
+}
+.cartWish {
+  margin-left: 50px;
+  margin-top: 20px;
+  display: flex;
+}
+.addToCart {
+  margin-right: 20px;
+  padding: 15px 30px;
+  background-color: rgba(254, 77, 1, 255);
+  color: white;
+}
+.fa-heart {
+  margin-left: 20px;
+  margin-top: 10px;
+  color: red;
+  font-size: 24px;
+  cursor: pointer;
+}
+.fa-heart:active {
+  transform: scale(1.2);
+}
+.middle-content {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: space-around;
+}
+.middle-content .back {
+  text-align: center;
+}
+.imageThumbnail {
+  display: flex;
+  width: 9vw;
+  margin-left: 20px;
+}
+.imageThumbnail .fas{
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  color: rgba(254, 77, 1, 255);
+  cursor: pointer;
+}
+.back .fas {
+  font-size: 18px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.middle-content .back span {
+  font-size: 16px;
+}
+.right-content {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  justify-content: center;
+}
+.size h5 {
+  margin: 20px 0px;
+  font-weight: bolder;
+}
+.sizeBox {
+  border: 2px solid rgba(254, 77, 1, 255);
+  padding: 10px 10px;
+  border-radius: 50px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.activeSize {
+  border: 2px solid rgba(254, 77, 1, 255);
+  padding: 10px 10px;
+  border-radius: 50px;
+  margin-right: 10px;
+  background-color: rgba(254, 77, 1, 255);
+  color: white;
+}
+.rating {
+  display: flex;
+  justify-content: space-between;
+}
+.price {
+  display: flex;
+  justify-content: space-between;
+}
+.right {
+  margin: 15px 70px;
+}
+.right .text-muted {
+  font-weight: light;
+}
+.color h5 {
+  font-weight: bolder;
+  margin-bottom: 20px;
+}
+.colorBox {
+  position: relative;
+  border: 1px solid #999;
+  border-radius: 50px;
+  padding: 10px 20px;
+  margin-right: 10px;
+}
+.fa-check-circle {
+  position: absolute;
+  font-size: 44px;
+  top: -5%;
+  left: -5%;
+}
+.active {
+  color: #999;
+}
+.passive {
+  color: transparent;
+  cursor: pointer;
+}
+.masking
+{
+  background-color: rgba(0,0,0,0.3);
+}

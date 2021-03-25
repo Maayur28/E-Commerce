@@ -1,13 +1,12 @@
 import React from "react";
 import "./navbar.css";
-import logo from "../../images/logos.png";
 import { NavLink } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="navbar">
       <div className="logoNav">
         <NavLink to="/" exact>
-          <img src={logo} alt="logo" />
+          <img src={"/images/logos.png"} alt="logo" />
         </NavLink>
       </div>
       <ul className="menuBar">
@@ -29,7 +28,17 @@ const Navbar = () => {
       </ul>
       <div className="searchCart">
         <div className="searchBar">
-          <input type="text" className="searchInput" placeholder="Search..." />
+          <input
+            style={{
+              backgroundImage: `url(${process.env.PUBLIC_URL
+                + "/images/magnifier.png"})`,
+              backgroundPosition: "47vw 5px",
+              backgroundRepeat: "no-repeat",
+            }}
+            type="text"
+            className="searchInput"
+            placeholder="Search..."
+          />
         </div>
         <div className="cartDiv">
           <NavLink to="/cart" exact>

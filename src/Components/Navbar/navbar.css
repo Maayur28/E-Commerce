@@ -5,7 +5,7 @@
   align-items: center;
   color: white;
   user-select: none;
-  background-color: rgba(254,77,1,255);
+  background-color: rgba(254, 77, 1, 255);
 }
 .logoNav {
   cursor: pointer;
@@ -17,8 +17,7 @@
   margin-top: 15px;
   margin-left: 100px;
 }
-.menuBar li
-{
+.menuBar li {
   margin-right: 125px;
 }
 .menuBar li a {
@@ -63,9 +62,6 @@ input[type="text"] {
   border-radius: 4px;
   font-size: 16px;
   background-color: white;
-  background-image: url("../../images/magnifier.png");
-  background-position: 47vw 5px;
-  background-repeat: no-repeat;
   padding: 3px 20px 3px 20px;
   transition: width 0.2s ease-in-out;
 }
@@ -92,8 +88,7 @@ input[type="text"]:focus {
 .profile {
   font-size: 24px;
 }
-.dropdown-menu
-{
+.dropdown-menu {
   padding: 10px;
   text-align: center;
 }

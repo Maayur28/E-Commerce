@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import "./carousel.css";
-
-import img1 from "../../images/shoe1.png";
-import img2 from "../../images/shoe2.png";
-import img3 from "../../images/shoe3.png";
 import { NavLink } from "react-router-dom";
 const Carousel = () => {
   const arr = [
-    { image: img1, heading: "Nike Air Max 2020" },
-    { image: img2, heading: "Nike Air Pro 2000" },
-    { image: img3, heading: "Nike Air Pro 2010" },
-    { image: img1, heading: "Nike Air Pro 2015" },
-    { image: img2, heading: "Nike Air Pro 2005" },
-    { image: img3, heading: "Nike Air Pro 2001" },
+    { image: '/images/shoe1.png', heading: "Nike Air Max 2020" },
+    { image: '/images/shoe2.png', heading: "Nike Air Pro 2000" },
+    { image: '/images/shoe3.png', heading: "Nike Air Pro 2010" },
+    { image: '/images/shoe1.png', heading: "Nike Air Pro 2015" },
+    { image: '/images/shoe2.png', heading: "Nike Air Pro 2005" },
+    { image: '/images/shoe3.png', heading: "Nike Air Pro 2001" },
   ];
   const [current, setcurrent] = useState(0);
   const [active, setactive] = useState(1);
@@ -52,7 +48,7 @@ const Carousel = () => {
             >
               {index === current && (
                <NavLink to="/product/men/1" exact>
-                 <img src={arr[current].image} alt={arr[current].heading} />
+                 <img src={ arr[current].image} alt={arr[current].heading} />
                </NavLink> 
               )}
             </span>
