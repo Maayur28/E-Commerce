@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "./carousel.css";
 import { NavLink } from "react-router-dom";
 const Carousel = () => {
   const arr = [
-    { image: '/images/shoe1.png', heading: "Nike Air Max 2020" },
-    { image: '/images/shoe2.png', heading: "Nike Air Pro 2000" },
-    { image: '/images/shoe3.png', heading: "Nike Air Pro 2010" },
-    { image: '/images/shoe1.png', heading: "Nike Air Pro 2015" },
-    { image: '/images/shoe2.png', heading: "Nike Air Pro 2005" },
-    { image: '/images/shoe3.png', heading: "Nike Air Pro 2001" },
+    { image: '/images/men/m1.png', category:"men", id:1001, heading: "Nike Air Max 2020" },
+    { image: '/images/men/m2.png',category:"men",id:1002 ,heading: "Nike Air Pro 2002" },
+    { image: '/images/men/m3.png',category:"men","id":1003 ,heading: "Nike Air Pro 2001" },
   ];
   const [current, setcurrent] = useState(0);
   const [active, setactive] = useState(1);
@@ -47,7 +44,7 @@ const Carousel = () => {
                 }
             >
               {index === current && (
-               <NavLink to="/product/men/1" exact>
+               <NavLink to={`/product/${arr[current].category}/${arr[current].id}`} exact>
                  <img src={ arr[current].image} alt={arr[current].heading} />
                </NavLink> 
               )}

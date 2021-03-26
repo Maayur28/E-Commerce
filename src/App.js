@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Navbar />
-      <div className="content">
+      <div className="contentApp">
         <Switch>
           <Route path="/" exact component={Carousel}></Route>
           <Route
