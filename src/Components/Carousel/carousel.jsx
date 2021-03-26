@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState} from "react";
 import "./carousel.css";
 import { NavLink } from "react-router-dom";
 const Carousel = () => {
