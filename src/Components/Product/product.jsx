@@ -11,6 +11,8 @@ const Product = (props) => {
   const [pricerangeMax, setpricerangeMax] = useState();
   const [pricerangeValue, setpricerangeValue] = useState();
   const [filterSize, setfilterSize] = useState([]);
+  const [filtercolorArray, setfiltercolorArray] = useState([]);
+  const [filtercolorData ,setfiltercolorData]=useState([]);
   const category = props.match.params.category;
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}`)
@@ -44,6 +46,7 @@ const Product = (props) => {
               return prev > curr ? prev : curr;
             })
         );
+      data.map(val=>setfiltercolorArray(prevState=>[...prevState,...val.color]))
       })
       .catch((error) => {
         console.error("Error:", error.message);
@@ -88,7 +91,6 @@ const Product = (props) => {
     } else setcategoryCheck((prevState) => [...prevState, e.target.value]);
   };
   const getSliderValue = (e) => {
-    console.log(e);
     setpricerangeValue(e.target.value);
   };
   const handleFilterSize = (e) => {
@@ -99,8 +101,17 @@ const Product = (props) => {
         })
       );
     } else setfilterSize((prevState) => [...prevState, e.target.value]);
-    console.log(filterSize);
   };
+  const handlefilterColor=(value)=>{
+    if (filtercolorData.includes(value)) {
+      setfiltercolorData(
+        filtercolorData.filter((val) => {
+          return val !==value;
+        })
+      );
+    } else setfiltercolorData((prevState) => [...prevState,value]);
+    console.log(filtercolorData)
+  }
   return (
     <div className="container-fluid">
       <div className="product-row row">
@@ -274,12 +285,13 @@ const Product = (props) => {
             Color<i className="fas fa-plus"></i>
           </button>
           <div className="product-contentBtn" style={{ display: "none" }}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <div className="filtercolorDiv">
+            {data.length > 0 && Array.from(new Set(filtercolorArray)).map((value,index)=>(
+              <div style={{backgroundColor:value}} className="filtercolor" key={index} onClick={()=>handlefilterColor(value)}>
+                {filtercolorData.includes(value)?<i className="filtercolorIcon fas fa-check-square" style={{color:"#999"}}></i>:<i className="filtercolorIcon fas fa-check-square" style={{color:"transparent"}}></i>}
+              </div>
+              ))}
+              </div>
           </div>
         </div>
         <div className="product-listRightTop col-md-8">
@@ -394,7 +406,8 @@ const Product = (props) => {
                 categoryCheck.includes(val.category)) &&
               val.price <= pricerangeValue &&
               (filterSize.length === 0 ||
-                filterSize.every((valu) => val.size.includes(valu))) ? (
+                filterSize.every((valu) => val.size.includes(valu))) &&
+                (filtercolorData.length===0 || filtercolorData.some((valu)=>val.color.includes(valu))) ? (
                 <div className="product-Card" key={val._id || index}>
                   <span className="product-Heart">
                     <i className="far fa-heart" onClick={productWishlist}></i>

@@ -90,6 +90,23 @@
   flex-wrap: wrap;
   font-weight: bold;
 }
+.filtercolorDiv
+{
+  display: flex;
+}
+.filtercolor
+{
+  width: 35px;
+  height: 35px;
+  margin: 10px 15px;
+  cursor: pointer;
+}
+.filtercolorIcon
+{
+  font-size: 42px;
+  margin-top: -4px;
+  margin-left: -1px;
+}
 .product-listRight {
   display: flex;
   flex-wrap: wrap;
