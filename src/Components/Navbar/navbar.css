@@ -7,28 +7,28 @@
   user-select: none;
   background-color: rgba(254, 77, 1, 255);
 }
-.logoNav {
+.navbar-logoNav {
   cursor: pointer;
   margin-left: 50px;
 }
-.menuBar {
+.navbar-menuBar {
   display: flex;
   list-style-type: none;
   margin-top: 15px;
   margin-left: 100px;
 }
-.menuBar li {
+.navbar-menuBar li {
   margin-right: 125px;
 }
-.menuBar li a {
+.navbar-menuBar li a {
   position: relative;
   display: block;
   text-decoration: none;
-  color: #ecf0f1;
+  color:white;
   transition: 0.5s;
   cursor: pointer;
 }
-.menuBar li a::after {
+.navbar-menuBar li a::after {
   position: absolute;
   content: "";
   width: 100%;
@@ -41,18 +41,18 @@
   transform: scaleX(0);
   transform-origin: right;
 }
-.menuBar li a:hover {
+.navbar-menuBar li a:hover {
   color: #95a5a6;
 }
-.menuBar li a:hover::after {
+.navbar-menuBar li a:hover::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-.searchCart {
+.navbar-searchCart {
   display: flex;
 }
-input[type="text"] {
+.navbar-searchInput{
   position: absolute;
   right: 15%;
   width: 100px;
@@ -66,29 +66,34 @@ input[type="text"] {
   transition: width 0.2s ease-in-out;
 }
 
-input[type="text"]:focus {
+.navbar-searchInput:focus {
   width: 50vw;
   outline: none;
   right: 24%;
 }
-
-.cartDiv {
+.navbar-cartIcon {
+  color: white;
+  margin-top: 8px;
+  margin-left: 4px;
+  font-size: 24px;
+}
+.navbar-cartDiv {
   margin: 3px 30px;
   position: relative;
   cursor: pointer;
 }
-.badge {
+.navbar-cartBadge {
   position: absolute;
   left: 25px;
 }
-.profileDiv {
+.navbar-profileDiv {
   margin: 10px 30px;
   cursor: pointer;
 }
-.profile {
+.navbar-profile {
   font-size: 24px;
 }
-.dropdown-menu {
+.navbar-prodfileDropdown{
   padding: 10px;
   text-align: center;
 }

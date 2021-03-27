@@ -1,33 +1,33 @@
 import React from "react";
 import "./navbar.css";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div className="logoNav">
-        <NavLink to="/" exact>
+      <div className="navbar-logoNav">
+        <Link to="/" exact>
           <img src={"/images/logos.png"} alt="logo" />
-        </NavLink>
+        </Link>
       </div>
-      <ul className="menuBar">
+      <ul className="navbar-menuBar">
         <li>
-          <NavLink to="/product/men" exact>
+          <Link to="/product/men" exact>
             Men
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink to="/product/women" exact>
+          <Link to="/product/women" exact>
             Women
-          </NavLink>
+          </Link>
         </li>
         <li>
-          <NavLink to="/product/kids" exact>
+          <Link to="/product/kids" exact>
             Kids
-          </NavLink>
+          </Link>
         </li>
       </ul>
-      <div className="searchCart">
-        <div className="searchBar">
+      <div className="navbar-searchCart">
+        <div className="navbar-searchBar">
           <input
             style={{
               backgroundImage: `url(${process.env.PUBLIC_URL
@@ -36,36 +36,36 @@ const Navbar = () => {
               backgroundRepeat: "no-repeat",
             }}
             type="text"
-            className="searchInput"
+            className="navbar-searchInput"
             placeholder="Search..."
           />
         </div>
-        <div className="cartDiv">
-          <NavLink to="/cart" exact>
-            <i className="cartIcon fas fa-cart-plus"></i>
-          </NavLink>
-          <span className="badge rounded-pill bg-dark">0</span>
+        <div className="navbar-cartDiv">
+          <Link to="/cart" exact>
+            <i className="navbar-cartIcon fas fa-cart-plus"></i>
+          </Link>
+          <span className="navbar-cartBadge badge rounded-pill bg-dark">0</span>
         </div>
-        <div className="profileDiv dropstart">
-          <i className="profile fas fa-user-alt" data-bs-toggle="dropdown"></i>
-          <ul className="dropdown-menu">
+        <div className="navbar-profileDiv dropstart">
+          <i className="navbar-profile fas fa-user-alt" data-bs-toggle="dropdown"></i>
+          <ul className="navbar-prodfileDropdown dropdown-menu">
             <li>
-              <NavLink className="dropdown-item" to="/orders" exact>
+              <Link className="dropdown-item" to="/orders" exact>
                 My Orders
-              </NavLink>
+              </Link>
             </li>
             <li>
-              <NavLink className="dropdown-item" to="/wishlist" exact>
+              <Link className="dropdown-item" to="/wishlist" exact>
                 My Wishlist
-              </NavLink>
+              </Link>
             </li>
             <li>
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <NavLink className="dropdown-item" to="/login" exact>
+              <Link className="dropdown-item" to="/login" exact>
                 Sign In
-              </NavLink>
+              </Link>
             </li>
           </ul>
         </div>

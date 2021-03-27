@@ -7,64 +7,64 @@
   overflow: hidden;
   background-color: rgba(254,77,1,255);
 }
-.navigate {
+.carousel-navigate {
   display: flex;
   color: white;
   margin-top: 100px;
 }
-.arrowleft {
+.carousel-navigateArrowleft {
   font-size: 32px;
   margin-right: 50px;
   margin-top: 10px;
   cursor: pointer;
 }
-.arrowright {
+.carousel-navigateArrowright {
   font-size: 32px;
   margin-left: 50px;
   margin-top: 10px;
   cursor: pointer;
 }
-img {
+.carousel-img {
   object-fit: contain;
   cursor: pointer;
   z-index: 10;
 }
-.activeImg {
+.carousel-activeImg {
   animation-name: act;
   animation-duration: 2s;
   z-index: 2;
 }
-.passiveImg {
+.carousel-passiveImg {
   animation-name: pass;
   animation-duration: 2s;
   z-index: 2;
 }
-.image {
+.carousel-imageDiv {
   display: flex;
   margin-bottom: 150px;
 }
-h3 {
+.carousel-heading {
   font-size: 40px;
   animation-name: text;
   animation-duration: 2s;
   text-align: center;
 }
-.cardPaper {
+.carousel-cardPaper {
   position: absolute;
   width: 45%;
   bottom: 0%;
   margin-bottom: 30px;
 }
-.cardBody {
+.carousel-cardBody {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 }
-.select {
+.carousel-selectDiv {
   position: relative;
   margin-top: 125px;
 }
-select {
+.carousel-select {
   appearance: none;
   font-weight: bold;
   cursor: pointer;
@@ -77,10 +77,10 @@ select {
   border: 2px solid #999;
   border-radius: 50px;
 }
-select:focus {
+.carousel-select:focus {
   outline: none;
 }
-.select-icon {
+.carousel-selectIcon {
   position: absolute;
   top: 7px;
   left: 100px;
@@ -88,7 +88,7 @@ select:focus {
   color: rgba(254, 77, 1, 255);
   cursor: pointer;
 }
-.cart {
+.carousel-cart {
   position: absolute;
   right: -20px;
   bottom: 60px;
@@ -99,10 +99,10 @@ select:focus {
   z-index: 1;
   cursor: pointer;
 }
-.cart:hover {
+.carousel-cart:hover {
   transform: scale(1.05);
 }
-.cartIcon {
+.carousel-cartIcon {
   color: white;
   margin-top: 8px;
   margin-left: 4px;
@@ -133,68 +133,56 @@ select:focus {
   }
 }
 @media screen and (max-width: 680px) {
-  .cardPaper {
+  .carousel-cardPaper {
     width: 90%;
   }
-  img {
+  .carousel-img {
     width: 80%;
     margin: 20px 30px;
   }
-  .arrowleft {
+  .carousel-navigateArrowleft {
     margin-right: 25px;
     margin-left: 10px;
   }
-  .arrowright {
+  .carousel-navigateArrowright {
     margin-left: 25px;
     margin-right: 10px;
   }
 }
 @media screen and (min-width: 680px) and (max-width: 840px) {
-  /* body
-  {
-    background-color: blue;
-  } */
-  .cardPaper {
+  .carousel-cardPaper {
     width: 70%;
   }
-  img {
+  .carousel-img {
     width: 80%;
     margin: 0 50px;
   }
-  .arrowleft {
+  .carousel-navigateArrowleft {
     margin-right: 35px;
   }
-  .arrowright {
+  .carousel-navigateArrowright {
     margin-left: 35px;
   }
 }
 @media screen and (min-width: 840px) and (max-width: 1048px) {
-  /* body
-  {
-    background-color: green;
-  } */
-  .cardPaper {
+  .carousel-cardPaper {
     width: 60%;
   }
-  .arrowleft {
+  .carousel-navigateArrowleft{
     margin-right: 50px;
   }
-  .arrowright {
+  .carousel-navigateArrowright {
     margin-left: 50px;
   }
 }
 @media screen and (min-width: 1048px) and (max-width: 1200px) {
-  /* body
-  {
-    background-color: yellow;
-  } */
-  .cardPaper {
+  .carousel-cardPaper {
     width: 50%;
   }
-  .arrowleft {
+  .carousel-navigateArrowleft {
     margin-right: 50px;
   }
-  .arrowright {
+  .carousel-navigateArrowright {
     margin-left: 50px;
   }
 }

@@ -121,16 +121,18 @@
   padding: 10px 20px;
   margin-right: 10px;
 }
-.fa-check-circle {
+.active {
   position: absolute;
   font-size: 44px;
   top: -5%;
   left: -5%;
-}
-.active {
   color: #999;
 }
 .passive {
+  position: absolute;
+  font-size: 44px;
+  top: -5%;
+  left: -5%;
   color: transparent;
   cursor: pointer;
 }
