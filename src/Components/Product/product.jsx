@@ -12,7 +12,7 @@ const Product = (props) => {
   const [pricerangeValue, setpricerangeValue] = useState();
   const [filterSize, setfilterSize] = useState([]);
   const [filtercolorArray, setfiltercolorArray] = useState([]);
-  const [filtercolorData ,setfiltercolorData]=useState([]);
+  const [filtercolorData, setfiltercolorData] = useState([]);
   const category = props.match.params.category;
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}`)
@@ -46,7 +46,9 @@ const Product = (props) => {
               return prev > curr ? prev : curr;
             })
         );
-      data.map(val=>setfiltercolorArray(prevState=>[...prevState,...val.color]))
+        data.map((val) =>
+          setfiltercolorArray((prevState) => [...prevState, ...val.color])
+        );
       })
       .catch((error) => {
         console.error("Error:", error.message);
@@ -102,16 +104,51 @@ const Product = (props) => {
       );
     } else setfilterSize((prevState) => [...prevState, e.target.value]);
   };
-  const handlefilterColor=(value)=>{
+  const handlefilterColor = (value) => {
     if (filtercolorData.includes(value)) {
       setfiltercolorData(
         filtercolorData.filter((val) => {
-          return val !==value;
+          return val !== value;
         })
       );
-    } else setfiltercolorData((prevState) => [...prevState,value]);
-    console.log(filtercolorData)
-  }
+    } else setfiltercolorData((prevState) => [...prevState, value]);
+    console.log(filtercolorData);
+  };
+  const productSortRight = (e) => {
+    if (e.target.value === "price(ltoh)") {
+      setData(prevState=>[
+        ...prevState.sort((a, b) => {
+          if (a.price > b.price) return 1;
+          if (a.price < b.price) return -1;
+          return 0;
+        })
+      ]);
+    } else if (e.target.value === "price(htol)") {
+      setData(prevState=>[
+        ...prevState.sort((a, b) => {
+          if (a.price > b.price) return -1;
+          if (a.price < b.price) return 1;
+          return 0;
+        })
+      ]);
+    } else if (e.target.value === "rating") {
+      setData(prevState=>[
+        ...prevState.sort((a, b) => {
+          if (a.rating > b.rating) return -1;
+          if (a.rating < b.rating) return 1;
+          return 0;
+        })
+      ]);
+    } else {
+      setData(prevState=>[
+        ...prevState.sort((a, b) => {
+          if (a._id > b._id) return 1;
+          if (a._id < b._id) return -1;
+          return 0;
+        })
+      ]);
+    }
+  };
   return (
     <div className="container-fluid">
       <div className="product-row row">
@@ -286,12 +323,28 @@ const Product = (props) => {
           </button>
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="filtercolorDiv">
-            {data.length > 0 && Array.from(new Set(filtercolorArray)).map((value,index)=>(
-              <div style={{backgroundColor:value}} className="filtercolor" key={index} onClick={()=>handlefilterColor(value)}>
-                {filtercolorData.includes(value)?<i className="filtercolorIcon fas fa-check-square" style={{color:"#999"}}></i>:<i className="filtercolorIcon fas fa-check-square" style={{color:"transparent"}}></i>}
-              </div>
-              ))}
-              </div>
+              {data.length > 0 &&
+                Array.from(new Set(filtercolorArray)).map((value, index) => (
+                  <div
+                    style={{ backgroundColor: value }}
+                    className="filtercolor"
+                    key={index}
+                    onClick={() => handlefilterColor(value)}
+                  >
+                    {filtercolorData.includes(value) ? (
+                      <i
+                        className="filtercolorIcon fas fa-check-square"
+                        style={{ color: "#999" }}
+                      ></i>
+                    ) : (
+                      <i
+                        className="filtercolorIcon fas fa-check-square"
+                        style={{ color: "transparent" }}
+                      ></i>
+                    )}
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
         <div className="product-listRightTop col-md-8">
@@ -307,6 +360,7 @@ const Product = (props) => {
                   className="product-sortSelect font-weight-bold"
                   name="product-select"
                   id="product-select"
+                  onChange={productSortRight}
                 >
                   <option value="popular">Popular</option>
                   <option value="rating">Rating</option>
@@ -407,7 +461,8 @@ const Product = (props) => {
               val.price <= pricerangeValue &&
               (filterSize.length === 0 ||
                 filterSize.every((valu) => val.size.includes(valu))) &&
-                (filtercolorData.length===0 || filtercolorData.some((valu)=>val.color.includes(valu))) ? (
+              (filtercolorData.length === 0 ||
+                filtercolorData.some((valu) => val.color.includes(valu))) ? (
                 <div className="product-Card" key={val._id || index}>
                   <span className="product-Heart">
                     <i className="far fa-heart" onClick={productWishlist}></i>
