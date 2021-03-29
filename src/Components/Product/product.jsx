@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./product.css";
-// import Skeleton from "react-loading-skeleton";
+import CheckboxComp from "./checkbox";
+import Skeleton from "react-loading-skeleton";
 const Product = (props) => {
   const [data, setData] = useState([]);
+  let count = 0;
+  const categoryArray = ["Sports", "Formal", "Casual"];
+  const sizeArray = ["XS", "S", "M", "L", "XL"];
   const [categoryCheck, setcategoryCheck] = useState([]);
   const [modaldata, setModalData] = useState();
   const [modalsize, setmodalSize] = useState();
@@ -13,8 +17,10 @@ const Product = (props) => {
   const [filterSize, setfilterSize] = useState([]);
   const [filtercolorArray, setfiltercolorArray] = useState([]);
   const [filtercolorData, setfiltercolorData] = useState([]);
+  const [productCount, setproductCount] = useState(0);
   const category = props.match.params.category;
   useEffect(() => {
+    setData([])
     fetch(`http://localhost:1111/product/${category}`)
       .then((response) => response.json())
       .then((data) => {
@@ -84,6 +90,8 @@ const Product = (props) => {
     else e.target.nextSibling.className = "fas fa-angle-double-down";
   };
   const handleCategoryCheckBox = (e) => {
+    count = 0;
+    setproductCount(0);
     if (categoryCheck.includes(e.target.value)) {
       setcategoryCheck(
         categoryCheck.filter((val) => {
@@ -93,9 +101,13 @@ const Product = (props) => {
     } else setcategoryCheck((prevState) => [...prevState, e.target.value]);
   };
   const getSliderValue = (e) => {
+    count = 0;
+    setproductCount(0);
     setpricerangeValue(e.target.value);
   };
   const handleFilterSize = (e) => {
+    count = 0;
+    setproductCount(0);
     if (filterSize.includes(e.target.value)) {
       setfilterSize(
         filterSize.filter((val) => {
@@ -105,6 +117,8 @@ const Product = (props) => {
     } else setfilterSize((prevState) => [...prevState, e.target.value]);
   };
   const handlefilterColor = (value) => {
+    count = 0;
+    setproductCount(0);
     if (filtercolorData.includes(value)) {
       setfiltercolorData(
         filtercolorData.filter((val) => {
@@ -116,106 +130,77 @@ const Product = (props) => {
   };
   const productSortRight = (e) => {
     if (e.target.value === "price(ltoh)") {
-      setData(prevState=>[
+      setData((prevState) => [
         ...prevState.sort((a, b) => {
           if (a.price > b.price) return 1;
           if (a.price < b.price) return -1;
           return 0;
-        })
+        }),
       ]);
     } else if (e.target.value === "price(htol)") {
-      setData(prevState=>[
+      setData((prevState) => [
         ...prevState.sort((a, b) => {
           if (a.price > b.price) return -1;
           if (a.price < b.price) return 1;
           return 0;
-        })
+        }),
       ]);
     } else if (e.target.value === "rating") {
-      setData(prevState=>[
+      setData((prevState) => [
         ...prevState.sort((a, b) => {
           if (a.rating > b.rating) return -1;
           if (a.rating < b.rating) return 1;
           return 0;
-        })
+        }),
       ]);
     } else {
-      setData(prevState=>[
+      setData((prevState) => [
         ...prevState.sort((a, b) => {
           if (a._id > b._id) return 1;
           if (a._id < b._id) return -1;
           return 0;
-        })
+        }),
       ]);
     }
   };
+  // const productresetFilter=()=>{
+  //   setcategoryCheck([]);
+  //   setpricerangeValue(pricerangeValue);
+  //   setfilterSize([]);
+  //   setfiltercolorData([]);
+  //   setData(data);
+  // }
   return (
     <div className="container-fluid">
       <div className="product-row row">
         <div className="product-filterLeft col-md-3 offset-md-0">
-          <button
+          {/* {productCount<data.length && <button type="button" className=" btn btn-outline-dark btn-sm mt-1" onClick={productresetFilter}>Reset Filter</button>} */}
+          {data.length>0 ?<button
             type="button"
             className="productfilter-collapsible"
             onClick={collapse}
           >
             Category<i className="fas fa-plus"></i>
-          </button>
+          </button>:<Skeleton width={300} height={20} style={{marginTop:"30px"}}/>}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="product-catgoryForm">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="Sports"
-                  id="sports"
-                  onChange={handleCategoryCheckBox}
+              { categoryArray.map((val, index) => (
+                <CheckboxComp
+                  key={index}
+                  onChangeProps={handleCategoryCheckBox}
+                  value={val}
+                  name="category"
                 />
-                <label
-                  className="form-check-label font-weight-bold"
-                  htmlFor="sports"
-                >
-                  Sports
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="Formal"
-                  id="formal"
-                  onChange={handleCategoryCheckBox}
-                />
-                <label
-                  className="form-check-label font-weight-bold"
-                  htmlFor="formal"
-                >
-                  Formal
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="Casual"
-                  id="casual"
-                  onChange={handleCategoryCheckBox}
-                />
-                <label
-                  className="form-check-label font-weight-bold"
-                  htmlFor="casual"
-                >
-                  Casual
-                </label>
-              </div>
+              ))}
             </div>
           </div>
-          <button
+          {data.length>0?<button
             type="button"
             className="productfilter-collapsible"
             onClick={collapse}
           >
             Price<i className="fas fa-plus"></i>
-          </button>
+          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
           <div className=" product-contentBtn" style={{ display: "none" }}>
             <div className="product-rangeDiv">
               <div className="productPriceSlider">
@@ -243,84 +228,31 @@ const Product = (props) => {
               <span className="productrangevalueShow">{pricerangeValue}</span>
             </div>
           </div>
-          <button
+          {data.length>0?<button
             type="button"
             className="productfilter-collapsible"
             onClick={collapse}
           >
             Size<i className="fas fa-plus"></i>
-          </button>
+          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="product-filterSize">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="XS"
-                  id="XS"
-                  onChange={handleFilterSize}
+              {sizeArray.map((val, index) => (
+                <CheckboxComp
+                  key={index}
+                  onChangeProps={handleFilterSize}
+                  value={val}
                 />
-                <label className="form-check-label" htmlFor="XS">
-                  XS
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="S"
-                  id="S"
-                  onChange={handleFilterSize}
-                />
-                <label className="form-check-label" htmlFor="S">
-                  S
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="M"
-                  id="M"
-                  onChange={handleFilterSize}
-                />
-                <label className="form-check-label" htmlFor="M">
-                  M
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="L"
-                  id="L"
-                  onChange={handleFilterSize}
-                />
-                <label className="form-check-label" htmlFor="L">
-                  L
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value="XL"
-                  id="XL"
-                  onChange={handleFilterSize}
-                />
-                <label className="form-check-label" htmlFor="XL">
-                  XL
-                </label>
-              </div>
+              ))}
             </div>
           </div>
-          <button
+          {data.length>0?<button
             type="button"
             className="productfilter-collapsible"
             onClick={collapse}
           >
             Color<i className="fas fa-plus"></i>
-          </button>
+          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="filtercolorDiv">
               {data.length > 0 &&
@@ -348,16 +280,16 @@ const Product = (props) => {
           </div>
         </div>
         <div className="product-listRightTop col-md-8">
-          <div className="product-sortTop">
+          {data.length>0 ?<div className="product-sortTop">
             <div className="product-itemFound font-weight-bold">
-              {data.length} <span>items found</span>
+              {productCount} <span>items found</span>
             </div>
             <div className="product-itemSort">
               <div className="product-selectDiv">
                 <span className="font-weight-bold">Sort By:</span>
                 <select
                   onClick={changeSelectArrow}
-                  className="product-sortSelect font-weight-bold"
+                  className="product-sortSelect"
                   name="product-select"
                   id="product-select"
                   onChange={productSortRight}
@@ -370,8 +302,8 @@ const Product = (props) => {
                 <i className="fas fa-angle-double-down"></i>
               </div>
             </div>
-          </div>
-          <div className="product-borderTop"></div>
+          </div>:null}
+          {data.length>0 ?<div className="product-borderTop"></div>:null}
           <div className="product-listRight ">
             <div
               className="modal fade"
@@ -455,75 +387,77 @@ const Product = (props) => {
                 )}
               </div>
             </div>
-            {data.map((val, index) =>
-              (categoryCheck.length === 0 ||
-                categoryCheck.includes(val.category)) &&
-              val.price <= pricerangeValue &&
-              (filterSize.length === 0 ||
-                filterSize.every((valu) => val.size.includes(valu))) &&
-              (filtercolorData.length === 0 ||
-                filtercolorData.some((valu) => val.color.includes(valu))) ? (
-                <div className="product-Card" key={val._id || index}>
-                  <span className="product-Heart">
-                    <i className="far fa-heart" onClick={productWishlist}></i>
-                  </span>
-                  <div className="product-flipCard">
-                    <div className="product-flipCardInner">
-                      <div className="product-flipCardFront">
-                        {
-                          <img
-                            src={val.image[0]}
-                            alt="Avatar"
-                            style={{
-                              width: "250px",
-                              height: "200px",
-                              objectFit: "contain",
-                            }}
-                          />
-                        }
-                      </div>
-                      <div className="product-flipCardBack">
-                        <h4>{val.name}</h4>
-                        <p>{val.description}</p>
-                        <div className="product-cardRating">
-                          <h6>Rating-</h6>
-                          <span
-                            className={
-                              val.rating >= 4
-                                ? "badge bg-success"
-                                : "badge bg-warning"
-                            }
-                          >
-                            {val.rating}
-                          </span>
+            {data.length > 0?
+              data.map((val, index) =>
+                (categoryCheck.length === 0 ||
+                  categoryCheck.includes(val.category)) &&
+                val.price <= pricerangeValue &&
+                (filterSize.length === 0 ||
+                  filterSize.some((valu) => val.size.includes(valu))) &&
+                (filtercolorData.length === 0 ||
+                  filtercolorData.some((valu) => val.color.includes(valu))) ? (
+                  <div className="product-Card" key={val._id || index}>
+                    {productCount < count++ ? setproductCount(count) : null}
+                    <span className="product-Heart">
+                      <i className="far fa-heart" onClick={productWishlist}></i>
+                    </span>
+                    <div className="product-flipCard">
+                      <div className="product-flipCardInner">
+                        <div className="product-flipCardFront">
+                          {
+                            <img
+                              src={val.image[0]}
+                              alt="Avatar"
+                              style={{
+                                width: "250px",
+                                height: "200px",
+                                objectFit: "contain",
+                              }}
+                            />
+                          }
                         </div>
-                        <button
-                          type="button"
-                          className="btn btn-dark"
-                          data-toggle="modal"
-                          data-target="#exampleModalCenter"
-                          onClick={() => setModalData(val)}
-                        >
-                          Select Size
-                        </button>
+                        <div className="product-flipCardBack">
+                          <h4>{val.name}</h4>
+                          <p>{val.description}</p>
+                          <div className="product-cardRating">
+                            <h6>Rating-</h6>
+                            <span
+                              className={
+                                val.rating >= 4
+                                  ? "badge bg-success"
+                                  : "badge bg-warning"
+                              }
+                            >
+                              {val.rating}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            className="btn btn-dark"
+                            data-toggle="modal"
+                            data-target="#exampleModalCenter"
+                            onClick={() => setModalData(val)}
+                          >
+                            Select Size
+                          </button>
+                        </div>
                       </div>
                     </div>
+                    <div className="product-cardBottom">
+                      <h4>
+                        <i className="fas fa-rupee-sign"></i>
+                        {val.price}
+                      </h4>
+                      <button
+                        className="product-viewDetails btn"
+                        onClick={() => gotoDetails(val.idealFor, val._id)}
+                      >
+                        View Details
+                      </button>
+                    </div>
                   </div>
-                  <div className="product-cardBottom">
-                    <h4>
-                      <i className="fas fa-rupee-sign"></i>
-                      {val.price}
-                    </h4>
-                    <button
-                      className="product-viewDetails btn"
-                      onClick={() => gotoDetails(val.idealFor, val._id)}
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              ) : null
-            )}
+                ) : null
+              ):<Skeleton width={270} height={250} count={6} style={{marginRight:'20px',marginBottom:'20px'}}/>}
           </div>
         </div>
       </div>

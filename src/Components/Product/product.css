@@ -45,64 +45,52 @@
   padding: 0 18px;
   background: transparent;
 }
-.product-catgoryForm
-{
+.product-catgoryForm {
   display: flex;
 }
-.form-check
-{
+.form-check {
   margin: 10px 15px;
 }
-.product-rangeDiv
-{
+.product-rangeDiv {
   display: flex;
   height: 80px;
-  align-items:center;
+  align-items: center;
   font-weight: bolder;
 }
-.productrangevalueDiv
-{
+.productrangevalueDiv {
   display: flex;
   justify-content: center;
 }
-.productrangevalueShow
-{
+.productrangevalueShow {
   padding: 3px 15px;
   background-color: rgba(254, 77, 1, 255);
   color: white;
   border-radius: 50px;
 }
-.form-range
-{
+.form-range {
   margin: 0 10px;
 }
-.productPriceSymbol
-{
-  margin-top: 5px; 
+.productPriceSymbol {
+  margin-top: 5px;
 }
-.productPriceSlider
-{
+.productPriceSlider {
   display: flex;
 }
-.product-filterSize
-{
+.product-filterSize {
   display: flex;
   flex-wrap: wrap;
   font-weight: bold;
 }
-.filtercolorDiv
-{
+.filtercolorDiv {
   display: flex;
 }
-.filtercolor
-{
+.filtercolor {
   width: 35px;
   height: 35px;
   margin: 10px 15px;
   cursor: pointer;
 }
-.filtercolorIcon
-{
+.filtercolorIcon {
   font-size: 42px;
   margin-top: -4px;
   margin-left: -1px;
@@ -128,6 +116,7 @@
   margin-left: 8px;
   padding-right: 25px;
   color: rgba(254, 77, 1, 255);
+  font-weight: bold;
 }
 .fa-angle-double-down {
   position: absolute;
@@ -147,9 +136,9 @@
   outline: none;
 }
 .product-borderTop {
-  margin-left: 18px;
+  margin-left: 10px;
   margin-bottom: 15px;
-  width: 61vw;
+  width: 62vw;
   height: 1px;
   background-color: #999;
 }
@@ -157,7 +146,7 @@
   width: 270px;
   height: 280px;
   box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2);
-  margin: 15px 19px;
+  margin: 10px 10px;
 }
 .product-Heart {
   margin-left: 220px;
@@ -250,8 +239,7 @@
   height: 20px;
   margin: 15px 0;
 }
-.product-categoryForm
-{
+.product-categoryForm {
   display: flex;
   flex-direction: column;
 }
