@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./product.css";
 import CheckboxComp from "./checkbox";
 import Skeleton from "react-loading-skeleton";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 const Product = (props) => {
   const [data, setData] = useState([]);
   let count = 0;
@@ -18,9 +20,10 @@ const Product = (props) => {
   const [filtercolorArray, setfiltercolorArray] = useState([]);
   const [filtercolorData, setfiltercolorData] = useState([]);
   const [productCount, setproductCount] = useState(0);
+  const [wishlist, setwishlist] = useState([]);
   const category = props.match.params.category;
   useEffect(() => {
-    setData([])
+    setData([]);
     fetch(`http://localhost:1111/product/${category}`)
       .then((response) => response.json())
       .then((data) => {
@@ -59,6 +62,12 @@ const Product = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
+    fetch("http://localhost:2222/wishlist/getproduct")
+      .then((response) => response.json())
+      .then((datawish) => setwishlist(datawish))
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
   }, [category]);
   const collapse = (e) => {
     if (e.target.nextSibling.style.display === "none") {
@@ -69,11 +78,40 @@ const Product = (props) => {
       e.target.children[0].className = "fas fa-plus";
     }
   };
-  const productWishlist = (e) => {
-    if (e.target.className === "far fa-heart")
-      e.target.className = "fas fa-heart";
-    else e.target.className = "far fa-heart";
+  const productWishlist = (e, val) => {
+    fetch("http://localhost:2222/wishlist/toggleproduct", {
+      method: "POST",
+      body: JSON.stringify(val),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((datarec) => {
+        console.log(datarec);
+        datarec
+          ? toast.success("Product added to wishlist", {
+              position: "bottom-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+            })
+          : toast.error("Product removed from the wishlist", {
+              position: "bottom-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+            });
+        if (datarec) e.target.className = "fas fa-heart";
+        else e.target.className = "far fa-heart";
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
   };
+
   const gotoDetails = (category, id) => {
     console.log(category, id);
     props.history.push(`/product/${category}/${id}`);
@@ -163,28 +201,32 @@ const Product = (props) => {
       ]);
     }
   };
-  // const productresetFilter=()=>{
-  //   setcategoryCheck([]);
-  //   setpricerangeValue(pricerangeValue);
-  //   setfilterSize([]);
-  //   setfiltercolorData([]);
-  //   setData(data);
-  // }
+  const checkwishlistpresent=(val)=>{
+    for(let i=0;i<wishlist.length;i++)
+    {
+      if(wishlist[i]._id===val._id)
+      return true;
+    }
+    return false;
+  }
   return (
     <div className="container-fluid">
       <div className="product-row row">
         <div className="product-filterLeft col-md-3 offset-md-0">
-          {/* {productCount<data.length && <button type="button" className=" btn btn-outline-dark btn-sm mt-1" onClick={productresetFilter}>Reset Filter</button>} */}
-          {data.length>0 ?<button
-            type="button"
-            className="productfilter-collapsible"
-            onClick={collapse}
-          >
-            Category<i className="fas fa-plus"></i>
-          </button>:<Skeleton width={300} height={20} style={{marginTop:"30px"}}/>}
+          {data.length > 0 ? (
+            <button
+              type="button"
+              className="productfilter-collapsible"
+              onClick={collapse}
+            >
+              Category<i className="fas fa-plus"></i>
+            </button>
+          ) : (
+            <Skeleton width={300} height={20} style={{ marginTop: "30px" }} />
+          )}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="product-catgoryForm">
-              { categoryArray.map((val, index) => (
+              {categoryArray.map((val, index) => (
                 <CheckboxComp
                   key={index}
                   onChangeProps={handleCategoryCheckBox}
@@ -194,13 +236,17 @@ const Product = (props) => {
               ))}
             </div>
           </div>
-          {data.length>0?<button
-            type="button"
-            className="productfilter-collapsible"
-            onClick={collapse}
-          >
-            Price<i className="fas fa-plus"></i>
-          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
+          {data.length > 0 ? (
+            <button
+              type="button"
+              className="productfilter-collapsible"
+              onClick={collapse}
+            >
+              Price<i className="fas fa-plus"></i>
+            </button>
+          ) : (
+            <Skeleton width={300} height={20} style={{ marginTop: "20px" }} />
+          )}
           <div className=" product-contentBtn" style={{ display: "none" }}>
             <div className="product-rangeDiv">
               <div className="productPriceSlider">
@@ -228,13 +274,17 @@ const Product = (props) => {
               <span className="productrangevalueShow">{pricerangeValue}</span>
             </div>
           </div>
-          {data.length>0?<button
-            type="button"
-            className="productfilter-collapsible"
-            onClick={collapse}
-          >
-            Size<i className="fas fa-plus"></i>
-          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
+          {data.length > 0 ? (
+            <button
+              type="button"
+              className="productfilter-collapsible"
+              onClick={collapse}
+            >
+              Size<i className="fas fa-plus"></i>
+            </button>
+          ) : (
+            <Skeleton width={300} height={20} style={{ marginTop: "20px" }} />
+          )}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="product-filterSize">
               {sizeArray.map((val, index) => (
@@ -246,13 +296,17 @@ const Product = (props) => {
               ))}
             </div>
           </div>
-          {data.length>0?<button
-            type="button"
-            className="productfilter-collapsible"
-            onClick={collapse}
-          >
-            Color<i className="fas fa-plus"></i>
-          </button>:<Skeleton width={300} height={20} style={{marginTop:"20px"}}/>}
+          {data.length > 0 ? (
+            <button
+              type="button"
+              className="productfilter-collapsible"
+              onClick={collapse}
+            >
+              Color<i className="fas fa-plus"></i>
+            </button>
+          ) : (
+            <Skeleton width={300} height={20} style={{ marginTop: "20px" }} />
+          )}
           <div className="product-contentBtn" style={{ display: "none" }}>
             <div className="filtercolorDiv">
               {data.length > 0 &&
@@ -280,30 +334,32 @@ const Product = (props) => {
           </div>
         </div>
         <div className="product-listRightTop col-md-8">
-          {data.length>0 ?<div className="product-sortTop">
-            <div className="product-itemFound font-weight-bold">
-              {productCount} <span>items found</span>
-            </div>
-            <div className="product-itemSort">
-              <div className="product-selectDiv">
-                <span className="font-weight-bold">Sort By:</span>
-                <select
-                  onClick={changeSelectArrow}
-                  className="product-sortSelect"
-                  name="product-select"
-                  id="product-select"
-                  onChange={productSortRight}
-                >
-                  <option value="popular">Popular</option>
-                  <option value="rating">Rating</option>
-                  <option value="price(ltoh)">Price(low to high)</option>
-                  <option value="price(htol)">Price(high to low)</option>
-                </select>
-                <i className="fas fa-angle-double-down"></i>
+          {data.length > 0 ? (
+            <div className="product-sortTop">
+              <div className="product-itemFound font-weight-bold">
+                {productCount} <span>items found</span>
+              </div>
+              <div className="product-itemSort">
+                <div className="product-selectDiv">
+                  <span className="font-weight-bold">Sort By:</span>
+                  <select
+                    onClick={changeSelectArrow}
+                    className="product-sortSelect"
+                    name="product-select"
+                    id="product-select"
+                    onChange={productSortRight}
+                  >
+                    <option value="popular">Popular</option>
+                    <option value="rating">Rating</option>
+                    <option value="price(ltoh)">Price(low to high)</option>
+                    <option value="price(htol)">Price(high to low)</option>
+                  </select>
+                  <i className="fas fa-angle-double-down"></i>
+                </div>
               </div>
             </div>
-          </div>:null}
-          {data.length>0 ?<div className="product-borderTop"></div>:null}
+          ) : null}
+          {data.length > 0 ? <div className="product-borderTop"></div> : null}
           <div className="product-listRight ">
             <div
               className="modal fade"
@@ -387,7 +443,7 @@ const Product = (props) => {
                 )}
               </div>
             </div>
-            {data.length > 0?
+            {data.length > 0 ? (
               data.map((val, index) =>
                 (categoryCheck.length === 0 ||
                   categoryCheck.includes(val.category)) &&
@@ -399,7 +455,10 @@ const Product = (props) => {
                   <div className="product-Card" key={val._id || index}>
                     {productCount < count++ ? setproductCount(count) : null}
                     <span className="product-Heart">
-                      <i className="far fa-heart" onClick={productWishlist}></i>
+                      <i
+                        className={wishlist.length>0 && checkwishlistpresent(val)?"fas fa-heart" :"far fa-heart"}
+                        onClick={(e) => productWishlist(e, val)}
+                      ></i>
                     </span>
                     <div className="product-flipCard">
                       <div className="product-flipCardInner">
@@ -457,8 +516,25 @@ const Product = (props) => {
                     </div>
                   </div>
                 ) : null
-              ):<Skeleton width={270} height={250} count={6} style={{marginRight:'20px',marginBottom:'20px'}}/>}
+              )
+            ) : (
+              <Skeleton
+                width={270}
+                height={250}
+                count={6}
+                style={{ marginRight: "20px", marginBottom: "20px" }}
+              />
+            )}
           </div>
+          <ToastContainer
+            position="bottom-center"
+            autoClose={1999}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+          />
         </div>
       </div>
     </div>
