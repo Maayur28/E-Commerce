@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import Login from '../Login/login';
 const Navbar = () => {
+  const [loginmodal, setloginmodal] = useState(false);
+  const handleLaunch=()=>{
+    setloginmodal(false);
+  }
   return (
     <div className="navbar">
       <div className="navbar-logoNav">
@@ -63,13 +69,14 @@ const Navbar = () => {
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <Link className="dropdown-item" to="/login" exact>
+              <Button className="dropdown-item" type="button" onClick={()=>setloginmodal(true)}>
                 Sign In
-              </Link>
+              </Button>
             </li>
           </ul>
         </div>
       </div>
+      {loginmodal?<Login  handleloginLaunch={handleLaunch}/>:null}
     </div>
   );
 };
