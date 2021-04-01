@@ -1,26 +1,26 @@
 import React, { useState } from "react";
-import "./login.css";
+import "./register.css";
 import { Modal } from "react-bootstrap";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 
-const Login = (props) => {
-  const [passShow, setpassShow] = useState(false);
-  const [show, setShow] = useState(true);
-  const handleClose = () => {
-    setShow(false);
-    props.handleloginLaunch(false);
-  };
-  const launchRegister=()=>{
-    setShow(false);
-    props.handleloginLaunch(true);
-  }
+const Register = (props) => {
+    const [passShow, setpassShow] = useState(false);
+    const [show, setShow] = useState(true);
+    const handleClose = () => {
+      setShow(false);
+      props.handleRegisterLaunch(false);
+    };
+    const handleLoginLaunch = () => {
+      setShow(false);
+      props.handleRegisterLaunch(true);
+    };
   const CustomInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
       <>
-        <div className="login-inputDiv">
-          <input {...field} {...props} className="login-input" />
+        <div className="register-inputDiv">
+          <input {...field} {...props} className="register-input" />
           <i
             className={label === "Username" ? "fas fa-envelope" : "fas fa-lock"}
           ></i>
@@ -28,16 +28,16 @@ const Login = (props) => {
             <i
               className={
                 passShow
-                  ? "login-passwordEye fas fa-eye-slash"
-                  : "login-passwordEye fas fa-eye"
+                  ? "register-passwordEye fas fa-eye-slash"
+                  : "register-passwordEye fas fa-eye"
               }
               onClick={() => setpassShow(!passShow)}
             ></i>
           ) : null}
-          <label className="login-label" htmlFor={props.name}>
+          <label className="register-label" htmlFor={props.name}>
             {label}
           </label>
-          <div className="login-inputfieldError">
+          <div className="register-inputfieldError">
             {meta.touched && meta.error ? meta.error : null}
           </div>
         </div>
@@ -48,9 +48,9 @@ const Login = (props) => {
     <>
       <Modal show={show} onHide={handleClose}>
         <Modal.Body>
-          <div className="login-heading">
-            <img className="login-logo" src="/favicon.ico" alt="logo" />
-            <h2>Welcome Back</h2>
+          <div className="register-heading">
+            <img className="register-logo" src="/favicon.ico" alt="logo" />
+            <h2>Please Register</h2>
           </div>
           <Formik
             initialValues={{ username: "", password: "" }}
@@ -72,7 +72,7 @@ const Login = (props) => {
           >
             {(formprops) => (
               <Form onSubmit={formprops.handleSubmit}>
-                <div className="login-form">
+                <div className="register-form">
                   <CustomInput
                     type="email"
                     name="username"
@@ -89,7 +89,7 @@ const Login = (props) => {
                     label="Password"
                     onChange={formprops.handleChange}
                   />
-                  <button type="submit" className="login-button">
+                  <button type="submit" className="register-button">
                     {formprops.isSubmitting ? (
                       <span
                         style={{ marginRight: "5px" }}
@@ -107,18 +107,12 @@ const Login = (props) => {
                     )}
                     Login
                   </button>
-                  <div className="login-forgetButton">
+                  <div className="register-forgetButton">
                     <button
                       type="button"
-                      className="login-forget login-buttoncommon"
+                      className="register-login"
                     >
-                      Forget Password?
-                    </button>
-                    <button
-                      type="button"
-                      className="login-register login-buttoncommon"
-                    >
-                      New user?<span onClick={launchRegister}> Register</span>
+                      Already Register?<span onClick={handleLoginLaunch}> Login</span>
                     </button>
                   </div>
                 </div>
@@ -131,4 +125,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default Register;

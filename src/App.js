@@ -4,7 +4,7 @@ import Navbar from "./Components/Navbar/navbar";
 import Product from "./Components/Product/product";
 import ProductDetail from "./Components/ProductDetail/productDetail";
 import Login from './Components/Login/login';
-// import Cart from './Components/Cart/cart'
+import Cart from './Components/Cart/cart';
 import 'react-toastify/dist/ReactToastify.css';
 import { Route, Switch } from "react-router-dom";
 function App() {
@@ -28,6 +28,11 @@ function App() {
             path="/login"
             exact
             component={Login}
+          ></Route>
+          <Route
+            path="/cart"
+            exact
+            component={Cart}
           ></Route>
         </Switch>
       </div>

@@ -1,8 +1,8 @@
-.login-form {
+.register-form {
   margin-left: 35px;
   margin-bottom: 20px;
 }
-.login-inputDiv {
+.register-inputDiv {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -20,96 +20,88 @@
   bottom: 53%;
   font-size: 20px;
 }
-.login-label {
+.register-label {
   position: absolute;
   bottom: 48%;
   left: 10%;
   font-size: 18px;
   pointer-events: none;
 }
-.login-input {
+.register-input {
   border: none;
   border-bottom: 2px solid #999;
   padding-top: 20px;
   padding-left: 40px;
 }
-.login-heading {
+.register-heading {
   display: flex;
   flex-direction: column;
   margin-left: 125px;
   margin-bottom: 10px;
 }
-.login-logo {
+.register-logo {
   width: 80px;
   height: 50px;
   margin-left: 60px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.login-passwordEye {
+.register-passwordEye {
   position: absolute;
   right: 0;
   top: 28%;
   cursor: pointer;
 }
-.login-button {
+.register-button {
   border: none;
   background-color: rgba(254, 77, 1, 255);
   color: white;
   padding: 10px 170px 10px 170px;
   margin-top: 5px;
 }
-.login-forgetButton {
+.register-forgetButton {
   display: flex;
   margin-top: 20px;
+  justify-content: flex-end;
 }
-.login-buttoncommon {
-  border: none;
-  background-color: transparent;
-  font-size: 14px;
+.register-login {
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+  margin-right: 30px;
 }
-.login-forget {
-  color: #00acee;
-  margin-right: 150px;
-}
-.login-forget:hover {
-  text-decoration: underline;
-}
-.login-register span {
+.register-login span {
   color: #00acee;
 }
-.login-register:hover span {
+.register-login:hover span {
   text-decoration: underline;
 }
-.login-forget:focus {
+.register-button:focus {
   outline: none;
 }
-.login-button:focus {
-  outline: none;
-}
-.login-input::placeholder {
+.register-input::placeholder {
   color: transparent;
   user-select: none;
 }
 
-.login-input:focus {
+.register-input:focus {
   outline: none;
   border-color: #11998e;
 }
-.login-inputfieldError {
+.register-inputfieldError {
   margin-left: 40px;
   color: rgb(255, 1, 1);
 }
-.login-input:focus::placeholder {
+.register-input:focus::placeholder {
   color: #999;
 }
 
-.login-input:focus ~ label {
+.register-input:focus ~ label {
   top: 0%;
   font-size: 14px;
 }
 
-.login-input:not(:placeholder-shown) ~ label {
+.register-input:not(:placeholder-shown) ~ label {
   top: 0%;
   font-size: 14px;
 }

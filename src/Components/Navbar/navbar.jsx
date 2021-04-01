@@ -3,10 +3,17 @@ import "./navbar.css";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Login from '../Login/login';
+import Register from '../Register/register';
 const Navbar = () => {
   const [loginmodal, setloginmodal] = useState(false);
-  const handleLaunch=()=>{
+  const [registermodal, setregistermodal] = useState(false);
+  const handleLoginLaunch=(val)=>{
     setloginmodal(false);
+    setregistermodal(val);
+  }
+  const handleRegisterLaunch=(val)=>{
+    setregistermodal(false);
+    setloginmodal(val);
   }
   return (
     <div className="navbar">
@@ -76,7 +83,8 @@ const Navbar = () => {
           </ul>
         </div>
       </div>
-      {loginmodal?<Login  handleloginLaunch={handleLaunch}/>:null}
+      {loginmodal?<Login  handleloginLaunch={handleLoginLaunch} />:null}
+      {registermodal?<Register  handleRegisterLaunch={handleRegisterLaunch}/>:null}
     </div>
   );
 };
