@@ -3,6 +3,8 @@ import "./login.css";
 import { Modal } from "react-bootstrap";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const Login = (props) => {
   const [passShow, setpassShow] = useState(false);
@@ -11,10 +13,14 @@ const Login = (props) => {
     setShow(false);
     props.handleloginLaunch(false);
   };
-  const launchRegister=()=>{
+  const launchRegister = () => {
     setShow(false);
     props.handleloginLaunch(true);
-  }
+  };
+  const handleLoginStatus = (val) => {
+    setShow(false);
+    props.handleisLogin(val);
+  };
   const CustomInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
@@ -46,8 +52,14 @@ const Login = (props) => {
   };
   return (
     <>
-      <Modal show={show} onHide={handleClose}>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        // keyboard={false}
+      >
         <Modal.Body>
+          <i className="login-cross fas fa-times" onClick={handleClose}></i>
           <div className="login-heading">
             <img className="login-logo" src="/favicon.ico" alt="logo" />
             <h2>Welcome Back</h2>
@@ -63,11 +75,30 @@ const Login = (props) => {
                 .required("Please enter password"),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
-              console.log(values);
-              setTimeout(() => {
-                resetForm();
-                setSubmitting(false);
-              }, 2000);
+              fetch("http://localhost:3333/login", {
+                method: "POST",
+                body: JSON.stringify(values),
+                headers: {
+                  "Content-type": "application/json; charset=UTF-8",
+                },
+              })
+                .then((response) => response.json())
+                .then((datarec) => {
+                  localStorage.setItem("x-auth-token", datarec.authToken);
+                  datarec && toast.success("Login Successful", {
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    progress: undefined,
+                  })
+                  resetForm();
+                  setSubmitting(false);
+                  handleLoginStatus(true);
+                })
+                .catch((error) => {
+                  console.error("Error:", error.message);
+                });
             }}
           >
             {(formprops) => (
@@ -126,6 +157,15 @@ const Login = (props) => {
             )}
           </Formik>
         </Modal.Body>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1999}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+      />
       </Modal>
     </>
   );

@@ -2,6 +2,13 @@
   margin-left: 35px;
   margin-bottom: 20px;
 }
+.login-cross {
+  position: absolute;
+  right: 5%;
+  font-weight: bolder;
+  font-size: 20px;
+  cursor: pointer;
+}
 .login-inputDiv {
   position: relative;
   display: flex;
