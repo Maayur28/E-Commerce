@@ -1,15 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import Login from "../Login/login";
 import Register from "../Register/register";
+import {StoreContext} from '../../Store/data';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 const Navbar = () => {
+  const [isLogin,setisLogin]=useContext(StoreContext);
   const [loginmodal, setloginmodal] = useState(false);
   const [registermodal, setregistermodal] = useState(false);
-  const [isLogin, setisLogin] = useState(localStorage.length>0?true:false);
   const handleLoginLaunch = (val) => {
     setloginmodal(false);
     setregistermodal(val);

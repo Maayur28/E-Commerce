@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./login.css";
 import { Modal } from "react-bootstrap";
-import { Formik, Form, useField } from "formik";
+import { Formik, useField } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -102,7 +102,7 @@ const Login = (props) => {
             }}
           >
             {(formprops) => (
-              <Form onSubmit={formprops.handleSubmit}>
+              <form onSubmit={formprops.handleSubmit} autocomplete="on">
                 <div className="login-form">
                   <CustomInput
                     type="email"
@@ -111,6 +111,7 @@ const Login = (props) => {
                     placeholder="example@gmail.com"
                     label="Username"
                     onChange={formprops.handleChange}
+                    autocomplete="on"
                   />
                   <CustomInput
                     type={passShow ? "text" : "password"}
@@ -119,6 +120,7 @@ const Login = (props) => {
                     placeholder="a2b2c3d4e5"
                     label="Password"
                     onChange={formprops.handleChange}
+                    autocomplete="on"
                   />
                   <button type="submit" className="login-button">
                     {formprops.isSubmitting ? (
@@ -153,7 +155,7 @@ const Login = (props) => {
                     </button>
                   </div>
                 </div>
-              </Form>
+              </form>
             )}
           </Formik>
         </Modal.Body>
