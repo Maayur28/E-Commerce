@@ -4,7 +4,7 @@
 .left-content {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 88vh;
   justify-content: center;
 }
 .left-content h2 {
@@ -27,6 +27,7 @@
   padding: 15px 30px;
   background-color: rgba(254, 77, 1, 255);
   color: white;
+  border: none;
 }
 .fa-heart {
   margin-left: 20px;
@@ -41,7 +42,7 @@
 .middle-content {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 88vh;
   justify-content: space-around;
 }
 .middle-content .back {
@@ -74,7 +75,7 @@
 .right-content {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 88vh;
   justify-content: center;
 }
 .size h5 {

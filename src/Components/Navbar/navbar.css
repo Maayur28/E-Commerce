@@ -1,30 +1,53 @@
-.navbar {
-  display: flex;
-  height: 70px;
-  justify-content: space-between;
-  align-items: center;
+.navbar-mainDiv {
+  height: 12vh;
   color: white;
   user-select: none;
   background-color: rgba(254, 77, 1, 255);
+  display: flex;
 }
 .navbar-logoNav {
   cursor: pointer;
+  margin-top: 25px;
   margin-left: 50px;
+}
+.navbar-cartDivAlignResponsive
+{
+  display: none;
+  position: absolute;
+  top: 2%;
+  right: 15%;
+}
+.fa-sliders-h {
+  display: none;
+  color: white;
+  position: absolute;
+  right: 4%;
+  top: 4%;
+  font-size: 22px;
+  cursor: pointer;
+}
+.navbar-menuBarResponsive
+{
+  display: none;
+}
+.navbar-content {
+  display: flex;
 }
 .navbar-menuBar {
   display: flex;
   list-style-type: none;
-  margin-top: 15px;
-  margin-left: 100px;
+  position: absolute;
+  left: 24%;
+  top: 4%;
 }
 .navbar-menuBar li {
-  margin-right: 125px;
+  margin-left: 10vw;
 }
-.navbar-menuBar li a {
+.navbar-menuBar li a{
   position: relative;
   display: block;
   text-decoration: none;
-  color:white;
+  color: white;
   transition: 0.5s;
   cursor: pointer;
 }
@@ -48,28 +71,15 @@
   transform: scaleX(1);
   transform-origin: left;
 }
-
-.navbar-searchCart {
-  display: flex;
-}
-.navbar-searchInput{
+.navbar-cartDivAlign {
   position: absolute;
+  top: 2%;
   right: 15%;
-  width: 100px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  margin-top: 8px;
-  border-radius: 4px;
-  font-size: 16px;
-  background-color: white;
-  padding: 3px 20px 3px 20px;
-  transition: width 0.2s ease-in-out;
 }
-
-.navbar-searchInput:focus {
-  width: 50vw;
-  outline: none;
-  right: 24%;
+.navbar-cartDiv {
+  margin-top: 4px;
+  position: relative;
+  cursor: pointer;
 }
 .navbar-cartIcon {
   color: white;
@@ -77,45 +87,67 @@
   margin-left: 4px;
   font-size: 24px;
 }
-.navbar-cartDiv {
-  margin: 3px 30px;
-  position: relative;
-  cursor: pointer;
-}
 .navbar-cartBadge {
   position: absolute;
   left: 25px;
 }
 .navbar-profileDiv {
-  margin: 10px 30px;
+  margin-top: 22px;
+  position: absolute;
+  right: 3%;
   cursor: pointer;
+  z-index: 100;
 }
 .navbar-profile {
   font-size: 24px;
 }
-.navbar-prodfileDropdown{
+.navbar-prodfileDropdown {
   padding: 10px;
   text-align: center;
 }
-@media screen and (max-width: 680px) {
-  .logoNav {
-    margin-left: -10px;
+@media screen and (min-width: 1080px) and (max-width: 1200px) {
+}
+@media screen and (max-width: 1080px) {
+  .navbar-cartDivAlignResponsive
+  {
+    display: block;
   }
-  .logoNav img {
-    width: 50%;
-  }
-  .menuBar li {
-    margin-right: 12px;
-  }
-  .menuBar {
+  .navbar-menuBarResponsive {
     display: flex;
-    margin-top: 10px;
-    margin-left: -100px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    position: absolute;
+    z-index: 100;
+    right: -10%;
+    background-color: #111;
+    overflow-x: hidden;
+    list-style-type: none;
+    text-align: start;
   }
-}
-@media screen and (min-width: 680px) and (max-width: 840px) {
-}
-@media screen and (min-width: 840px) and (max-width: 1048px) {
-}
-@media screen and (min-width: 1048px) and (max-width: 1200px) {
+  .navbar-responsiveCross
+  {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    font-size: 30px;
+    cursor: pointer;
+  }
+  .navbar-menuBarResponsive li
+  {
+    padding: 20px 0px;
+  }
+  .navbar-menuBarResponsive li a
+  {
+    color: white;
+    text-decoration: none;
+    font-size: 30px;
+  }
+  .fa-sliders-h {
+    display: block;
+  }
+  .navbar-content {
+    display: none;
+  }
 }

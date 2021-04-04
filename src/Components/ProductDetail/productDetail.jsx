@@ -1,7 +1,10 @@
-import React from "react";
+import React,{useContext} from "react";
 import "./productDetail.css";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { StoreContext } from "../../Store/data";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 const ProductDetail = (props) => {
   const history = useHistory();
   const category = props.match.params.category;
@@ -12,6 +15,9 @@ const ProductDetail = (props) => {
   const [star, setStar] = useState([]);
   const [icon, setIcon] = useState(false);
   const [currentThumbnail, setcurrentThumbnail] = useState(0);
+  const{value,value1}=useContext(StoreContext)
+  const [isLogin]=value;
+  const [cartCount,setcartCount]=value1;
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}/${id}`)
       .then((response) => response.json())
@@ -19,6 +25,7 @@ const ProductDetail = (props) => {
         setData(data);
         setSize(data.size[0]);
         setColor(data.color[0]);
+        setStar([]);
         for (let i = 1; i <= 5; i++) {
           if (Math.round(data.rating) >= i)
             setStar((prevState) => [...prevState, "fas fa-star"]);
@@ -51,6 +58,49 @@ const ProductDetail = (props) => {
   const settheColor = (val) => {
     setColor(val);
   };
+  const addprducttoCart=()=>{
+    if(isLogin)
+    {
+      const userData={...data};
+      userData.size=size;
+      userData.color=color;
+      delete userData.quantity;
+      fetch(`http://localhost:4444/cart`,{
+      method:"POST",
+      body:JSON.stringify(userData),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+        "x-auth-token":localStorage.getItem('x-auth-token')
+      }
+    })
+      .then((response) => response.json())
+      .then((datarec) => {
+        console.log(datarec.count)
+        setcartCount(datarec.count);
+        localStorage.setItem('count',datarec.count);
+        toast.success("Added to cart successfully", {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        })
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+    }
+    else
+    {
+      toast.error("Please login to continue", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      })
+    }
+  }
   return (
     <div className="container-fluid">
       {data?<div className="row">
@@ -58,7 +108,7 @@ const ProductDetail = (props) => {
           <h2>{data.name}</h2>
           <h5 className="text-muted">{data.description}</h5>
           <div className="cartWish">
-            <button className="addToCart btn">ADD TO CART</button>
+            <button className="addToCart " onClick={addprducttoCart}>ADD TO CART</button>
             <i
               className={icon ? "fas fa-heart" : "far fa-heart"}
               onClick={toggleIcon}

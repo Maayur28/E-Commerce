@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import "./login.css";
 import { Modal } from "react-bootstrap";
 import { Formik, useField } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { StoreContext } from "../../Store/data";
 
 const Login = (props) => {
   const [passShow, setpassShow] = useState(false);
   const [show, setShow] = useState(true);
+  const { value1 } = useContext(StoreContext);
+  const [cartCount, setcartCount] = value1;
   const handleClose = () => {
     setShow(false);
     props.handleloginLaunch(false);
@@ -61,7 +64,7 @@ const Login = (props) => {
         <Modal.Body>
           <i className="login-cross fas fa-times" onClick={handleClose}></i>
           <div className="login-heading">
-            <img className="login-logo" src="/favicon.ico" alt="logo" />
+            <img className="login-logo" src="/favilogo.png" alt="logo" />
             <h2>Welcome Back</h2>
           </div>
           <Formik
@@ -85,13 +88,22 @@ const Login = (props) => {
                 .then((response) => response.json())
                 .then((datarec) => {
                   localStorage.setItem("x-auth-token", datarec.authToken);
-                  datarec && toast.success("Login Successful", {
-                    position: "bottom-center",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    progress: undefined,
+                  fetch("http://localhost:4444/cartCount",{
+                    headers:{
+                      "x-auth-token":localStorage.getItem('x-auth-token')
+                    }
                   })
+                    .then((response) => response.json())
+                    .then((datacount) => {setcartCount(datacount.count);localStorage.setItem('count',datacount.count)})
+                    .catch((err) => console.error(err));
+                  datarec &&
+                    toast.success("Login Successful", {
+                      position: "bottom-center",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      progress: undefined,
+                    });
                   resetForm();
                   setSubmitting(false);
                   handleLoginStatus(true);
@@ -159,15 +171,15 @@ const Login = (props) => {
             )}
           </Formik>
         </Modal.Body>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={1999}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-      />
+        <ToastContainer
+          position="bottom-center"
+          autoClose={1999}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+        />
       </Modal>
     </>
   );

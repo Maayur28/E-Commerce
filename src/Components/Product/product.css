@@ -163,11 +163,9 @@
   transition: transform 0.5s;
   transform-style: preserve-3d;
 }
-
 .product-flipCard:hover .product-flipCardInner {
   transform: rotateY(180deg);
 }
-
 .product-flipCardFront,
 .product-flipCardBack {
   position: absolute;
@@ -188,6 +186,11 @@
   height: 40px;
   width: 130px;
   color: white;
+}
+.product-modalheader
+{
+  display: flex;
+  align-items: center;
 }
 .product-modalBody {
   display: flex;
@@ -242,4 +245,9 @@
 .product-categoryForm {
   display: flex;
   flex-direction: column;
+}
+.product-price
+{
+  margin-left: 10px;
+  font-weight: bolder;
 }

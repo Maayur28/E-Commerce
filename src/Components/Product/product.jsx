@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./product.css";
 import CheckboxComp from "./checkbox";
 import Skeleton from "react-loading-skeleton";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { StoreContext } from "../../Store/data";
+import { Modal } from "react-bootstrap";
 const Product = (props) => {
   const [data, setData] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
   let count = 0;
   const categoryArray = ["Sports", "Formal", "Casual"];
   const sizeArray = ["XS", "S", "M", "L", "XL"];
@@ -22,6 +25,9 @@ const Product = (props) => {
   const [productCount, setproductCount] = useState(0);
   const [wishlist, setwishlist] = useState([]);
   const category = props.match.params.category;
+  const { value, value1 } = useContext(StoreContext);
+  const [isLogin] = value;
+  const [cartCount, setcartCount] = value1;
   useEffect(() => {
     setData([]);
     fetch(`http://localhost:1111/product/${category}`)
@@ -201,13 +207,91 @@ const Product = (props) => {
       ]);
     }
   };
-  const checkwishlistpresent=(val)=>{
-    for(let i=0;i<wishlist.length;i++)
-    {
-      if(wishlist[i]._id===val._id)
-      return true;
+  const checkwishlistpresent = (val) => {
+    for (let i = 0; i < wishlist.length; i++) {
+      if (wishlist[i]._id === val._id) return true;
     }
     return false;
+  };
+  const settingmodalDataShow = (val) => {
+    setModalData(val);
+    setModalShow(true);
+  };
+  const addprducttoCart = (data) => {
+    if (!modalsize && !modalcolor) {
+      toast.error("Please select Size and Color", {
+        position: "bottom-center",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+    } 
+    else if (!modalsize) {
+      toast.error("Please select Size", {
+        position: "bottom-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+    } 
+    else if (!modalcolor) {
+      toast.error("Please Select Color", {
+        position: "bottom-center",
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      });
+    } else {
+      if(isLogin)
+      {
+        const userData={...data};
+        userData.size=modalsize;
+        userData.color=modalcolor;
+        delete userData.quantity;
+        fetch(`http://localhost:4444/cart`,{
+        method:"POST",
+        body:JSON.stringify(userData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          "x-auth-token":localStorage.getItem('x-auth-token')
+        }
+      })
+        .then((response) => response.json())
+        .then((datarec) => {
+          setcartCount(datarec.count);
+          localStorage.setItem('count',datarec.count);
+          toast.success("Added to cart successfully", {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          })
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+        });
+      }
+      else
+      {
+        toast.error("Please login to continue", {
+          position: "bottom-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        })
+      }
+    }
+  };
+  const setModalHideShow=()=>
+  {
+    setModalShow(false);
+    setmodalSize();
+    setmodalColor();
   }
   return (
     <div className="container-fluid">
@@ -361,88 +445,74 @@ const Product = (props) => {
           ) : null}
           {data.length > 0 ? <div className="product-borderTop"></div> : null}
           <div className="product-listRight ">
-            <div
-              className="modal fade"
-              id="exampleModalCenter"
-              tabIndex="-1"
-              role="dialog"
-              aria-labelledby="exampleModalCenterTitle"
-              aria-hidden="true"
-            >
-              <div
-                className="modal-dialog modal-sm modal-dialog-centered"
-                role="document"
+            {modaldata && (
+              <Modal
+                show={modalShow}
+                onHide={setModalHideShow}
+                size="sm"
+                backdrop="static"
+                centered
+                style={{userSelect:'none'}}
               >
-                {modaldata && (
-                  <div className="modal-content">
-                    <div className="modal-header">
-                      <img
-                        style={{
-                          width: "50px",
-                          height: "50px",
-                          objectFit: "contain",
-                        }}
-                        src={modaldata.image[0]}
-                        alt={modaldata.name}
-                        className="img-thumbnail"
-                      />
-                      <h5 className="modal-title" id="exampleModalLongTitle">
-                        {modaldata.name}
-                      </h5>
-                      <button
-                        type="button"
-                        className="close"
-                        data-dismiss="modal"
-                        aria-label="Close"
+                <Modal.Header closeButton>
+                  <Modal.Title className="product-modalheader">
+                    <img
+                      style={{
+                        width: "50px",
+                        height: "50px",
+                        objectFit: "contain",
+                      }}
+                      src={modaldata.image[0]}
+                      alt={modaldata.name}
+                      className="img-thumbnail"
+                    />
+                    <h5 className="modal-title">{modaldata.name}</h5>
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body className="product-modalBody">
+                  <div className="product-modalDiv">
+                    <h6 className="font-weight-bold">Size</h6>
+                    {modaldata.size.map((val, index) => (
+                      <span
+                        className={
+                          val === modalsize
+                            ? "product-modalSizeActive"
+                            : "product-modalSize"
+                        }
+                        key={index}
+                        onClick={() => productmodalSize(val)}
                       >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div className="product-modalBody modal-body">
-                      <div className="product-modalDiv">
-                        <h6 className="font-weight-bold">Size</h6>
-                        {modaldata.size.map((val, index) => (
-                          <span
-                            className={
-                              val === modalsize
-                                ? "product-modalSizeActive"
-                                : "product-modalSize"
-                            }
-                            key={index}
-                            onClick={() => productmodalSize(val)}
-                          >
-                            {val}
-                          </span>
-                        ))}
-                      </div>
-                      <div className="product-modalDiv">
-                        <h6 className="font-weight-bold">Color</h6>
-                        {modaldata.color.map((val, index) => (
-                          <span
-                            className="product-modalColor"
-                            key={index}
-                            style={{ backgroundColor: val }}
-                            onClick={() => productmodalColor(val)}
-                          >
-                            {val === modalcolor ? (
-                              <i className="product-modalColorcheck fas fa-check-circle"></i>
-                            ) : (
-                              <i className="product-modalColornotCheck fas fa-check-circle"></i>
-                            )}
-                          </span>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        className="btn product-modalAddtoCart"
-                      >
-                        ADD TO CART
-                      </button>
-                    </div>
+                        {val}
+                      </span>
+                    ))}
                   </div>
-                )}
-              </div>
-            </div>
+                  <div className="product-modalDiv">
+                    <h6 className="font-weight-bold">Color</h6>
+                    {modaldata.color.map((val, index) => (
+                      <span
+                        className="product-modalColor"
+                        key={index}
+                        style={{ backgroundColor: val }}
+                        onClick={() => productmodalColor(val)}
+                      >
+                        {val === modalcolor ? (
+                          <i className="product-modalColorcheck fas fa-check-circle"></i>
+                        ) : (
+                          <i className="product-modalColornotCheck fas fa-check-circle"></i>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                  <button
+                    type="button"
+                    className="btn product-modalAddtoCart"
+                    onClick={()=>addprducttoCart(modaldata)}
+                  >
+                    ADD TO CART
+                  </button>
+                </Modal.Body>
+              </Modal>
+            )}
             {data.length > 0 ? (
               data.map((val, index) =>
                 (categoryCheck.length === 0 ||
@@ -456,7 +526,11 @@ const Product = (props) => {
                     {productCount < count++ ? setproductCount(count) : null}
                     <span className="product-Heart">
                       <i
-                        className={wishlist.length>0 && checkwishlistpresent(val)?"fas fa-heart" :"far fa-heart"}
+                        className={
+                          wishlist.length > 0 && checkwishlistpresent(val)
+                            ? "fas fa-heart"
+                            : "far fa-heart"
+                        }
                         onClick={(e) => productWishlist(e, val)}
                       ></i>
                     </span>
@@ -493,9 +567,7 @@ const Product = (props) => {
                           <button
                             type="button"
                             className="btn btn-dark"
-                            data-toggle="modal"
-                            data-target="#exampleModalCenter"
-                            onClick={() => setModalData(val)}
+                            onClick={() => settingmodalDataShow(val)}
                           >
                             Select Size
                           </button>
@@ -503,9 +575,11 @@ const Product = (props) => {
                       </div>
                     </div>
                     <div className="product-cardBottom">
-                      <h4>
+                      <h4 className="product-price">
                         <i className="fas fa-rupee-sign"></i>
-                        {val.price}
+                        {Math.floor(
+                          val.price - (val.price * val.discount) / 100
+                        )}
                       </h4>
                       <button
                         className="product-viewDetails btn"

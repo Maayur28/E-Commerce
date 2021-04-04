@@ -1,10 +1,9 @@
 .carousel {
   display: flex;
   flex-direction: column;
-  height: 90vh;
+  height: 88vh;
   justify-content: space-between;
   align-items: center;
-  overflow: hidden;
   background-color: rgba(254,77,1,255);
 }
 .carousel-navigate {
@@ -185,4 +184,5 @@
   .carousel-navigateArrowright {
     margin-left: 50px;
   }
+  
 }
