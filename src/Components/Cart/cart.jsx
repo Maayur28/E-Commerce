@@ -71,7 +71,7 @@ const Cart = () => {
         <div className="row">
           {isLogin ? (
             <>
-              <div className="cart-productSummary col-md-8">
+              <div className="cart-productSummary col-lg-8">
                 {cartItem.length>0 && <h5 style={{ marginLeft: "20px", marginTop: "10px" }}>
                  MY CART({cartItem.length})
                 </h5>}
@@ -112,8 +112,8 @@ const Cart = () => {
                         <div className="cart-detail">
                           <h5 className="card-title">{val.name}</h5>
                           <h6>{val.description}</h6>
-                          <div className="cart-quantityAlign">
                             <p className="text-muted">Size: {val.size}</p>
+                          <div className="cart-quantityAlign">
                             <div className="cart-priceShipping">
                               <div className="cart-selectDiv">
                                 <span className="select-quantity">Qty: </span>
@@ -173,7 +173,7 @@ const Cart = () => {
               </div>
               {
                 cartItem.length>0?
-              <div className="cart-priceSummary col-md-3">
+              <div className="cart-priceSummary col-lg-3">
                 <div className="card cart-summarySticky">
                   <div className="card-body">
                     <h6 className="cart-priceSummaryHead text-muted">

@@ -104,7 +104,7 @@ const ProductDetail = (props) => {
   return (
     <div className="container-fluid">
       {data?<div className="row">
-        <div className="left-content col-sm-10 offset-sm-1 col-md-4 offset-md-0">
+        <div className="left-content col-10 offset-1 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-0">
           <h2>{data.name}</h2>
           <h5 className="text-muted">{data.description}</h5>
           <div className="cartWish">
@@ -115,7 +115,7 @@ const ProductDetail = (props) => {
             ></i>
           </div>
         </div>
-        <div className="middle-content col-sm-10 offset-sm-1 col-md-4 offset-md-0">
+        <div className="middle-content col-10 offset-1 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-0">
           <div className="back">
             <span onClick={() => history.goBack()}>
               <i className="fas fa-long-arrow-alt-left"></i>Back
@@ -144,7 +144,7 @@ const ProductDetail = (props) => {
             <i className="fas fa-caret-square-right" onClick={rightIcon}></i>
           </div>
         </div>
-        <div className="right-content col-sm-10 offset-sm-1 col-md-4 offset-md-0">
+        <div className="right-content col-10 offset-1  col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-0">
           <div className="right size">
             <h5>Size</h5>
             {data.size.map((val, index) => (

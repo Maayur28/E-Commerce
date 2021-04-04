@@ -79,22 +79,22 @@ const Navbar = () => {
               <i className="fas fa-male"></i> Men
             </Link>
           </li>
-          <li onClick={() => navigateComp("men")}>
+          <li onClick={() => navigateComp("women")}>
             <Link>
               <i className="fas fa-female"></i> Women
             </Link>
           </li>
-          <li onClick={() => navigateComp("men")}>
+          <li onClick={() => navigateComp("kids")}>
             <Link>
               <i className="fas fa-child"></i> Kids
             </Link>
           </li>
-          <li onClick={() => navigateComp("men")}>
+          <li onClick={() => navigateComp("orders")}>
             <Link>
               <i className="fas fa-store"></i> My Orders
             </Link>
           </li>
-          <li onClick={() => navigateComp("men")}>
+          <li onClick={() => navigateComp("wishlist")}>
             <Link>
               <i className="fas fa-clipboard-list"></i> My Wishlist
             </Link>

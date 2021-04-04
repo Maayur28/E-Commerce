@@ -4,6 +4,7 @@
   user-select: none;
   background-color: rgba(254, 77, 1, 255);
   display: flex;
+  overflow: hidden;
 }
 .navbar-logoNav {
   cursor: pointer;
@@ -118,7 +119,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     z-index: 100;
     right: -10%;
     background-color: #111;

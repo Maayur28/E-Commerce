@@ -296,7 +296,7 @@ const Product = (props) => {
   return (
     <div className="container-fluid">
       <div className="product-row row">
-        <div className="product-filterLeft col-md-3 offset-md-0">
+        <div className="product-filterLeft col-lg-3">
           {data.length > 0 ? (
             <button
               type="button"
@@ -417,7 +417,7 @@ const Product = (props) => {
             </div>
           </div>
         </div>
-        <div className="product-listRightTop col-md-8">
+        <div className="product-listRightTop col-lg-9">
           {data.length > 0 ? (
             <div className="product-sortTop">
               <div className="product-itemFound font-weight-bold">
@@ -539,18 +539,14 @@ const Product = (props) => {
                         <div className="product-flipCardFront">
                           {
                             <img
+                            className="product-imageDesc"
                               src={val.image[0]}
                               alt="Avatar"
-                              style={{
-                                width: "250px",
-                                height: "200px",
-                                objectFit: "contain",
-                              }}
                             />
                           }
                         </div>
                         <div className="product-flipCardBack">
-                          <h4>{val.name}</h4>
+                          <h5>{val.name}</h5>
                           <p>{val.description}</p>
                           <div className="product-cardRating">
                             <h6>Rating-</h6>
@@ -582,7 +578,7 @@ const Product = (props) => {
                         )}
                       </h4>
                       <button
-                        className="product-viewDetails btn"
+                        className="product-viewDetails"
                         onClick={() => gotoDetails(val.idealFor, val._id)}
                       >
                         View Details

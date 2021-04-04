@@ -55,7 +55,6 @@
 .imageThumbnail {
   display: flex;
   width: 9vw;
-  margin-left: 20px;
 }
 .imageThumbnail .fas{
   font-size: 26px;
@@ -140,4 +139,23 @@
 .masking
 {
   background-color: rgba(0,0,0,0.3);
+}
+@media screen and (max-width: 991px) {
+  .left-content
+  {
+    order: 3;
+    height: 50vh;
+  }
+  .middle-content
+  {
+    order: 1;
+  }
+  .imageThumbnail {
+    width: 20vw;
+  }
+  .right-content
+  {
+    order: 2;
+    height: 50vh;
+  }
 }
