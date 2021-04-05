@@ -15,9 +15,11 @@ const ProductDetail = (props) => {
   const [star, setStar] = useState([]);
   const [icon, setIcon] = useState(false);
   const [currentThumbnail, setcurrentThumbnail] = useState(0);
-  const{value,value1}=useContext(StoreContext)
+  const{value,value1,value2}=useContext(StoreContext)
   const [isLogin]=value;
+  // eslint-disable-next-line
   const [cartCount,setcartCount]=value1;
+  const[cartitemsTotal,setcartitemsTotal]=value2;
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}/${id}`)
       .then((response) => response.json())
@@ -61,23 +63,30 @@ const ProductDetail = (props) => {
   const addprducttoCart=()=>{
     if(isLogin)
     {
-      const userData={...data};
-      userData.size=size;
+      if(cartitemsTotal.find(val=>val._id===data._id))
+      {
+        history.push('/cart');
+      }
+      else
+      {
+
+        const userData={...data};
+        userData.size=size;
       userData.color=color;
       delete userData.quantity;
       fetch(`http://localhost:4444/cart`,{
-      method:"POST",
-      body:JSON.stringify(userData),
+        method:"POST",
+        body:JSON.stringify(userData),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
         "x-auth-token":localStorage.getItem('x-auth-token')
       }
-    })
+      })
       .then((response) => response.json())
       .then((datarec) => {
-        console.log(datarec.count)
-        setcartCount(datarec.count);
-        localStorage.setItem('count',datarec.count);
+        localStorage.setItem('count',datarec.cartItems.length);
+        setcartCount(datarec.cartItems.length);
+        setcartitemsTotal([...datarec.cartItems]);
         toast.success("Added to cart successfully", {
           position: "bottom-center",
           autoClose: 2000,
@@ -89,6 +98,7 @@ const ProductDetail = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
+    }
     }
     else
     {
@@ -108,7 +118,7 @@ const ProductDetail = (props) => {
           <h2>{data.name}</h2>
           <h5 className="text-muted">{data.description}</h5>
           <div className="cartWish">
-            <button className="addToCart " onClick={addprducttoCart}>ADD TO CART</button>
+            <button className="addToCart " onClick={addprducttoCart}>{cartitemsTotal.find(val=>val._id===data._id)?'GO TO CART':'ADD TO CART'}</button>
             <i
               className={icon ? "fas fa-heart" : "far fa-heart"}
               onClick={toggleIcon}

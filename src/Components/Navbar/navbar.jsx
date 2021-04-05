@@ -51,13 +51,13 @@ const Navbar = () => {
     <>
       <div className="navbar-mainDiv">
         <div className="navbar-logoNav">
-          <Link to="/">
+          <Link to="/" exact="true">
             <img src={"/images/logos.png"} alt="logo" />
           </Link>
         </div>
         <div className="navbar-cartDivAlignResponsive">
           <div className="navbar-cartDiv">
-            <Link to="/cart" exact>
+            <Link to="/cart" exact="true">
               <i className="navbar-cartIcon fas fa-cart-plus"></i>
             </Link>
             <span className="navbar-cartBadge badge rounded-pill bg-dark">
@@ -75,46 +75,46 @@ const Navbar = () => {
             onClick={() => settogglewidth(0)}
           ></i>
           <li onClick={() => navigateComp("men")}>
-            <Link>
+            <a href="true" style={{cursor:"pointer"}}>
               <i className="fas fa-male"></i> Men
-            </Link>
+            </a>
           </li>
           <li onClick={() => navigateComp("women")}>
-            <Link>
+          <a href="true" style={{cursor:"pointer"}}>
               <i className="fas fa-female"></i> Women
-            </Link>
+            </a>
           </li>
           <li onClick={() => navigateComp("kids")}>
-            <Link>
+          <a href="true" style={{cursor:"pointer"}}>
               <i className="fas fa-child"></i> Kids
-            </Link>
+            </a>
           </li>
           <li onClick={() => navigateComp("orders")}>
-            <Link>
+          <a href="true" style={{cursor:"pointer"}}>
               <i className="fas fa-store"></i> My Orders
-            </Link>
+            </a>
           </li>
           <li onClick={() => navigateComp("wishlist")}>
-            <Link>
+          <a href="true" style={{cursor:"pointer"}}>
               <i className="fas fa-clipboard-list"></i> My Wishlist
-            </Link>
+            </a>
           </li>
         </ul>
         <div className="navbar-content">
           <ul className="navbar-menuBar">
             <li>
-              <Link to="/product/men">Men</Link>
+              <Link to="/product/men" exact="true">Men</Link>
             </li>
             <li>
-              <Link to="/product/women">Women</Link>
+              <Link to="/product/women" exact="true">Women</Link>
             </li>
             <li>
-              <Link to="product/kids">Kids</Link>
+              <Link to="/product/kids" exact="true">Kids</Link>
             </li>
           </ul>
           <div className="navbar-cartDivAlign">
             <div className="navbar-cartDiv">
-              <Link to="/cart" exact>
+              <Link to="/cart" exact="true">
                 <i className="navbar-cartIcon fas fa-cart-plus"></i>
               </Link>
               <span className="navbar-cartBadge badge rounded-pill bg-dark">
@@ -129,12 +129,12 @@ const Navbar = () => {
             ></i>
             <ul className="navbar-prodfileDropdown dropdown-menu">
               <li>
-                <Link className="dropdown-item" to="/orders" exact>
+                <Link className="dropdown-item" to="/orders" exact="true">
                   My Orders
                 </Link>
               </li>
               <li>
-                <Link className="dropdown-item" to="/wishlist" exact>
+                <Link className="dropdown-item" to="/wishlist" exact="true">
                   My Wishlist
                 </Link>
               </li>

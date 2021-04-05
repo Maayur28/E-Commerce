@@ -27,6 +27,7 @@ const Product = (props) => {
   const category = props.match.params.category;
   const { value, value1 } = useContext(StoreContext);
   const [isLogin] = value;
+  // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   useEffect(() => {
     setData([]);

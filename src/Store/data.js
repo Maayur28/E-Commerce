@@ -5,8 +5,9 @@ export const StoreProvider = (props) => {
     localStorage.length > 0 ? true : false
   );
   const [cartCount, setcartCount] = useState(localStorage.count?localStorage.count:0);
+  const [cartitemsTotal,setcartitemsTotal]=useState([]);
   return (
-    <StoreContext.Provider value={{value:[isLogin, setisLogin], value1:[cartCount,setcartCount]}}>
+    <StoreContext.Provider value={{value:[isLogin, setisLogin], value1:[cartCount,setcartCount],value2:[cartitemsTotal,setcartitemsTotal]}}>
       {props.children}
     </StoreContext.Provider>
   );

@@ -58,8 +58,8 @@ const Carousel = () => {
                   key={index}
                   className={
                     active === 1
-                      ? index === current && "carousel-activeImg"
-                      : index === current && "carousel-passiveImg"
+                      ? index === current ? "carousel-activeImg":undefined
+                      : index === current ? "carousel-passiveImg":undefined
                   }
                 >
                   {index === current && (

@@ -8,8 +8,11 @@ import Skeleton from "react-loading-skeleton";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 const Cart = () => {
-  const { value } = useContext(StoreContext);
+  const { value,value1,value2 } = useContext(StoreContext);
   const [isLogin, setisLogin] = value;
+  const [cartCount, setcartCount] = value1;
+  // eslint-disable-next-line
+  const [cartitemsTotal, setcartitemsTotal] = value2;
   const [loginmodal, setloginmodal] = useState(false);
   const [registermodal, setregistermodal] = useState(false);
   const [cartItem, setcartItem] = useState([]);
@@ -37,7 +40,20 @@ const Cart = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        setcartItem(data.cartDetail);
+        if(data.cartDetail.length>0)
+        {
+          setcartItem(data.cartDetail);
+          setcartCount(data.cartDetail.length);
+          localStorage.setItem('count',data.cartDetail.length);
+          setcartitemsTotal(data.cartDetail);
+        }
+        else
+        {
+          setcartCount(0);
+          setcartItem([]);
+          localStorage.setItem('count',0);
+          setcartitemsTotal([]);
+        }
       })
       .catch((err) => console.error(err));
   },[]);
@@ -56,6 +72,42 @@ const Cart = () => {
       .then((data) => {
         setcartItem(data.cartDetail);
         toast.success("Quantity has been updated successfully", {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        });
+      })
+      .catch((err) => console.error(err))
+    }
+    const cartRemove=(val)=>{
+      fetch("http://localhost:4444/cartdelete", {
+        method:'DELETE',
+      body:JSON.stringify(val),
+      headers: {
+        "Content-Type":'application/json',
+        "x-auth-token": localStorage.getItem("x-auth-token"),
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.cartDetail)
+        if(data.cartDetail.length===0)
+        {
+          setcartItem([]);
+          setcartCount(0);
+          localStorage.setItem('count',0);
+          setcartitemsTotal([]);
+        }
+        else
+        {
+          setcartItem(data.cartDetail);
+          setcartCount(data.cartDetail.length);
+          localStorage.setItem('count',data.cartDetail.length);
+          setcartitemsTotal(data.cartDetail);
+        }
+        toast.success("Item has been removed successfully", {
           position: "bottom-center",
           autoClose: 1000,
           hideProgressBar: false,
@@ -156,13 +208,13 @@ const Cart = () => {
                           </p>
                           <p className="cart-removeDiv">
                             <i className="cart-removeIcon fas fa-trash-alt"></i>
-                            <span className="cart-remove"> Remove</span>
+                            <span className="cart-remove" onClick={()=>cartRemove(val)}> Remove</span>
                           </p>
                         </div>
                       </div>
                     </div>
                   )))
-                ) : (
+                ) : cartCount===0?<div className="cart-empty"><img style={{width:'100vw',height:'70vh',objectFit:'contain'}} src="/emptyCart.gif" alt="emptyCart" className="img-fluid"/><h4 className="text-muted">Seems like you have no product in cart</h4></div>: (
                   <Skeleton
                     width={800}
                     height={250}
@@ -205,7 +257,7 @@ const Cart = () => {
                     </div>
                     <div>
                       <p className="cart-Saving">
-                        Your Total Saving on this order{" "}
+                        Your Total Saving on this order
                         <i className="fas fa-rupee-sign"></i>
                         {totalPrice - totalDiscountedPrice - totalShippingPrice}
                       </p>
@@ -215,7 +267,7 @@ const Cart = () => {
                     <button className="cart-placeOrder">Place Order</button>
                   </div>
                 </div>
-              </div>:<Skeleton style={{position:'absolute',right:'5%',top:'18%'}} width={400} height={300}/>
+              </div>:cartCount!==0 && <Skeleton style={{position:'absolute',right:'5%',top:'18%'}} width={400} height={300}/>
             }
             </>
           ) : (

@@ -4,6 +4,7 @@ import Navbar from "./Components/Navbar/navbar";
 import Product from "./Components/Product/product";
 import ProductDetail from "./Components/ProductDetail/productDetail";
 import Cart from "./Components/Cart/cart";
+import my404 from './Components/My404/notfound';
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch } from "react-router-dom";
 import {StoreProvider} from "./Store/data";
@@ -14,14 +15,15 @@ function App() {
         <Navbar />
         <div className="contentApp">
           <Switch>
-            <Route path="/" exact component={Carousel}></Route>
-            <Route path="/product/:category" exact component={Product}></Route>
+            <Route path="/" exact={true} component={Carousel}></Route>
+            <Route path="/product/:category" exact={true} component={Product}></Route>
             <Route
               path="/product/:category/:id"
-              exact
+              exact={true}
               component={ProductDetail}
             ></Route>
-            <Route path="/cart" exact component={Cart}></Route>
+            <Route path="/cart" exact={true} component={Cart}></Route>
+            <Route path="*" exact={true} component={my404}></Route>
           </Switch>
         </div>
       </div>

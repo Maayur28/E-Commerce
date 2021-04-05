@@ -141,7 +141,14 @@
   position: sticky;
   top: 3%;
 }
-
+.cart-empty
+{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
 @media screen and (max-width: 991px) {
   .cart-priceSummary {
     margin-top: 33px;

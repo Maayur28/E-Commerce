@@ -11,6 +11,7 @@ const Login = (props) => {
   const [passShow, setpassShow] = useState(false);
   const [show, setShow] = useState(true);
   const { value1 } = useContext(StoreContext);
+  // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   const handleClose = () => {
     setShow(false);
@@ -88,7 +89,7 @@ const Login = (props) => {
                 .then((response) => response.json())
                 .then((datarec) => {
                   localStorage.setItem("x-auth-token", datarec.authToken);
-                  fetch("http://localhost:4444/cartCount",{
+                  fetch("http://localhost:4444/cartcount",{
                     headers:{
                       "x-auth-token":localStorage.getItem('x-auth-token')
                     }
