@@ -237,6 +237,7 @@
   color: white;
   margin-left: auto;
   margin-right: auto;
+  border: none;
 }
 .product-cardRating {
   display: flex;
@@ -281,6 +282,7 @@
 @media screen and (max-width:991px){
   .product-row {
     margin-top: 25px;
+    margin-left: 10px;
   }
   .product-imageDesc
   {

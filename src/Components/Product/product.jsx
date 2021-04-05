@@ -251,6 +251,7 @@ const Product = (props) => {
         userData.size=modalsize;
         userData.color=modalcolor;
         delete userData.quantity;
+        setModalShow(false);
         fetch(`http://localhost:4444/cart`,{
         method:"POST",
         body:JSON.stringify(userData),
@@ -505,7 +506,7 @@ const Product = (props) => {
                   </div>
                   <button
                     type="button"
-                    className="btn product-modalAddtoCart"
+                    className="product-modalAddtoCart"
                     onClick={()=>addprducttoCart(modaldata)}
                   >
                     ADD TO CART
