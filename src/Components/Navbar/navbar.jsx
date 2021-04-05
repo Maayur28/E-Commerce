@@ -47,6 +47,10 @@ const Navbar = () => {
     settogglewidth(0);
     history.push(`/product/${val}`);
   };
+  const navigateAcc = (val) => {
+    settogglewidth(0);
+    history.push(`/${val}`);
+  };
   return (
     <>
       <div className="navbar-mainDiv">
@@ -75,29 +79,29 @@ const Navbar = () => {
             onClick={() => settogglewidth(0)}
           ></i>
           <li onClick={() => navigateComp("men")}>
-            <a href="true" style={{cursor:"pointer"}}>
+            <span style={{cursor:"pointer"}}>
               <i className="fas fa-male"></i> Men
-            </a>
+            </span>
           </li>
           <li onClick={() => navigateComp("women")}>
-          <a href="true" style={{cursor:"pointer"}}>
+          <span style={{cursor:"pointer"}}>
               <i className="fas fa-female"></i> Women
-            </a>
+            </span>
           </li>
           <li onClick={() => navigateComp("kids")}>
-          <a href="true" style={{cursor:"pointer"}}>
+          <span style={{cursor:"pointer"}}>
               <i className="fas fa-child"></i> Kids
-            </a>
+            </span>
           </li>
-          <li onClick={() => navigateComp("orders")}>
-          <a href="true" style={{cursor:"pointer"}}>
+          <li onClick={() => navigateAcc("orders")}>
+          <span style={{cursor:"pointer"}}>
               <i className="fas fa-store"></i> My Orders
-            </a>
+            </span>
           </li>
-          <li onClick={() => navigateComp("wishlist")}>
-          <a href="true" style={{cursor:"pointer"}}>
+          <li onClick={() => navigateAcc("wishlist")}>
+          <span style={{cursor:"pointer"}}>
               <i className="fas fa-clipboard-list"></i> My Wishlist
-            </a>
+            </span>
           </li>
         </ul>
         <div className="navbar-content">

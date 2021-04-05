@@ -8,14 +8,14 @@
 }
 .navbar-logoNav {
   cursor: pointer;
-  margin-top: 25px;
-  margin-left: 50px;
+  margin-top: 20px;
+  margin-left: 40px;
 }
 .navbar-cartDivAlignResponsive
 {
   display: none;
   position: absolute;
-  top: 2%;
+  top: 1%;
   right: 15%;
 }
 .fa-sliders-h {
@@ -39,7 +39,7 @@
   list-style-type: none;
   position: absolute;
   left: 24%;
-  top: 4%;
+  top: 3.5%;
 }
 .navbar-menuBar li {
   margin-left: 10vw;
@@ -74,7 +74,7 @@
 }
 .navbar-cartDivAlign {
   position: absolute;
-  top: 2%;
+  top: 1.5%;
   right: 15%;
 }
 .navbar-cartDiv {
@@ -93,7 +93,7 @@
   left: 25px;
 }
 .navbar-profileDiv {
-  margin-top: 22px;
+  margin-top: 20px;
   position: absolute;
   right: 3%;
   cursor: pointer;
@@ -139,7 +139,7 @@
   {
     padding: 20px 0px;
   }
-  .navbar-menuBarResponsive li a
+  .navbar-menuBarResponsive li span
   {
     color: white;
     text-decoration: none;

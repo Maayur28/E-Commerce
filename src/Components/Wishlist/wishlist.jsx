@@ -15,7 +15,7 @@ const Wishlist = () => {
       },
     })
       .then((response) => response.json())
-      .then((datawish) =>{setcheck(true);setwish(datawish.wish)})
+      .then((datawish) =>{setcheck(true); if(datawish.wish.length>0){setwish(datawish.wish)} else{ setwish([])}})
       .catch((error) => {
         console.error("Error:", error.message);
       });
@@ -43,9 +43,6 @@ const Wishlist = () => {
       })
       .catch((err) => console.error(err));
   };
-  const wishmovetocart=(val)=>{
-
-  }
   return (
     <div className="container-fluid">
       <div className="row">
@@ -63,8 +60,8 @@ const Wishlist = () => {
                   <th>Product</th>
                   <th>Product name</th>
                   <th>Rating</th>
-                  <th>Unit Price(when added)</th>
                   <th>Unit Price(now)</th>
+                  <th>Unit Price(when added)</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -72,6 +69,7 @@ const Wishlist = () => {
                 {wish.map((val, index) => (
                   <tr key={index}>
                     <td className="wishlist-product">
+                      <Link to={`/product/${val.idealFor}/${val._id}`} exact={true}>
                       <img
                         style={{
                           width: "10vw",
@@ -81,7 +79,8 @@ const Wishlist = () => {
                         src={val.image}
                         alt={val.name}
                         className="img-fluid "
-                      />
+                        />
+                        </Link>
                     </td>
                     <td>
                       <span className="">{val.name}</span>
@@ -89,8 +88,8 @@ const Wishlist = () => {
                     <td>
                       <span class="badge bg-success">{val.rating}</span>
                     </td>
-                    <td style={{ fontWeight: "bolder" }}>{val.price}</td>
-                    <td style={{ fontWeight: "bolder" }}>{val.price}</td>
+                    <td style={{ fontWeight: "bolder" }}>{Math.floor(val.price -val.price*val.discount/100)}</td>
+                    <td >{val.price}</td>
                     <td>
                       <OverlayTrigger
                         placement="top"
@@ -99,15 +98,6 @@ const Wishlist = () => {
                         <i
                           className="wishlist-remove fas fa-times"
                           onClick={() => wishRemove(val)}
-                        ></i>
-                      </OverlayTrigger>
-                      <OverlayTrigger
-                        placement="top"
-                        overlay={<Tooltip>Move to cart</Tooltip>}
-                      >
-                        <i
-                          className="wishlist-cart fas fa-cart-plus"
-                          onClick={() => wishmovetocart(val)}
                         ></i>
                       </OverlayTrigger>
                     </td>

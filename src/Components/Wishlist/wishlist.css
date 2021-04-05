@@ -22,18 +22,3 @@
     color: red;
     cursor: pointer;
 }
-/* .wishlist-remove:hover
-{
-    transform: scale(1.1);
-} */
-.wishlist-cart
-{
-    font-size: 20px;
-    margin-left: 10px;
-    color: forestgreen;
-    cursor: pointer;
-}
-.wishlist-cart:hover
-{
-    transform: scale(1.1);
-}
