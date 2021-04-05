@@ -4,6 +4,7 @@ import Navbar from "./Components/Navbar/navbar";
 import Product from "./Components/Product/product";
 import ProductDetail from "./Components/ProductDetail/productDetail";
 import Cart from "./Components/Cart/cart";
+import Wishlist from "./Components/Wishlist/wishlist";
 import my404 from './Components/My404/notfound';
 import "react-toastify/dist/ReactToastify.css";
 import { Route, Switch } from "react-router-dom";
@@ -23,6 +24,7 @@ function App() {
               component={ProductDetail}
             ></Route>
             <Route path="/cart" exact={true} component={Cart}></Route>
+            <Route path="/wishlist" exact={true} component={Wishlist}></Route>
             <Route path="*" exact={true} component={my404}></Route>
           </Switch>
         </div>

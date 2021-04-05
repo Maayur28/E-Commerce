@@ -1,0 +1,39 @@
+.wishlist-table
+{
+    display: flex;
+    height: 88vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.iwishlist
+{
+    font-size: 60px;
+    margin: 15px 0;
+}
+.wishlist-tab
+{
+    margin-top: 10px;
+}
+.wishlist-remove
+{
+    font-size: 20px;
+    margin-right: 10px;
+    color: red;
+    cursor: pointer;
+}
+/* .wishlist-remove:hover
+{
+    transform: scale(1.1);
+} */
+.wishlist-cart
+{
+    font-size: 20px;
+    margin-left: 10px;
+    color: forestgreen;
+    cursor: pointer;
+}
+.wishlist-cart:hover
+{
+    transform: scale(1.1);
+}

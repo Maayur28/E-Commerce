@@ -69,9 +69,13 @@ const Product = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
-    fetch("http://localhost:2222/wishlist/getproduct")
+    fetch("http://localhost:2222/getwishlist",{
+      headers: {
+        "x-auth-token": localStorage.getItem("x-auth-token"),
+      },
+    })
       .then((response) => response.json())
-      .then((datawish) => setwishlist(datawish))
+      .then((datawish) => setwishlist(datawish.wish))
       .catch((error) => {
         console.error("Error:", error.message);
       });
@@ -86,32 +90,18 @@ const Product = (props) => {
     }
   };
   const productWishlist = (e, val) => {
-    fetch("http://localhost:2222/wishlist/toggleproduct", {
+    fetch("http://localhost:2222/togglewishlist", {
       method: "POST",
       body: JSON.stringify(val),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "x-auth-token": localStorage.getItem("x-auth-token"),
       },
     })
       .then((response) => response.json())
       .then((datarec) => {
-        console.log(datarec);
-        datarec
-          ? toast.success("Product added to wishlist", {
-              position: "bottom-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-            })
-          : toast.error("Product removed from the wishlist", {
-              position: "bottom-center",
-              autoClose: 2000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-            });
-        if (datarec) e.target.className = "fas fa-heart";
+        console.log(datarec.toggle);
+        if (datarec.toggle) e.target.className = "fas fa-heart";
         else e.target.className = "far fa-heart";
       })
       .catch((error) => {
@@ -209,6 +199,7 @@ const Product = (props) => {
     }
   };
   const checkwishlistpresent = (val) => {
+    if(wishlist.length>0)
     for (let i = 0; i < wishlist.length; i++) {
       if (wishlist[i]._id === val._id) return true;
     }

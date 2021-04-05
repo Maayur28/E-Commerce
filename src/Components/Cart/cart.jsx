@@ -107,7 +107,7 @@ const Cart = () => {
           localStorage.setItem('count',data.cartDetail.length);
           setcartitemsTotal(data.cartDetail);
         }
-        toast.success("Item has been removed successfully", {
+        toast.error("Item has been removed successfully", {
           position: "bottom-center",
           autoClose: 1000,
           hideProgressBar: false,
@@ -214,7 +214,7 @@ const Cart = () => {
                       </div>
                     </div>
                   )))
-                ) : cartCount===0?<div className="cart-empty"><img style={{width:'100vw',height:'70vh',objectFit:'contain'}} src="/emptyCart.gif" alt="emptyCart" className="img-fluid"/><h4 className="text-muted">Seems like you have no product in cart</h4></div>: (
+                ) : cartCount===0?<div className="cart-empty"><img style={{width:'100vw',height:'80vh',objectFit:'contain'}} src="/emptyCart.gif" alt="emptyCart" className="img-fluid"/><h4 className="text-muted">Seems like you have no product in cart</h4></div>: (
                   <Skeleton
                     width={800}
                     height={250}
