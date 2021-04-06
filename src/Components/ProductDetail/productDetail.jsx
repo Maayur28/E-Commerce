@@ -22,9 +22,10 @@ const ProductDetail = (props) => {
   const [cartitemsTotal, setcartitemsTotal] = value2;
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
+    .then((response) => response.json())
+    .then((data) => {
+      setData(data);
+      document.title=data.name;
         setSize(data.size[0]);
         setColor(data.color[0]);
         setStar([]);

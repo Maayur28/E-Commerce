@@ -9,6 +9,7 @@ import Login from "../Login/login";
 import Register from "../Register/register";
 import "react-toastify/dist/ReactToastify.min.css";
 const Wishlist = () => {
+  document.title="Wishlist";
   const [wish, setwish] = useState([]);
   const [check,setcheck]=useState(false);
   const { value} = useContext(StoreContext);

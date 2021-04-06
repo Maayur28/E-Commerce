@@ -31,6 +31,7 @@ const Product = (props) => {
   const [cartCount, setcartCount] = value1;
   useEffect(() => {
     setData([]);
+    document.title=category.toUpperCase();
     fetch(`http://localhost:1111/product/${category}`)
       .then((response) => response.json())
       .then((data) => {

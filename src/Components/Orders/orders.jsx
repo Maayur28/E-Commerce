@@ -8,6 +8,7 @@ import Login from "../Login/login";
 import Register from "../Register/register";
 
 const Orders = () => {
+  document.title="Orders";
   const [order, setOrder] = useState([]);
   const [check, setcheck] = useState(false);
   const { value } = useContext(StoreContext);

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import {useHistory} from 'react-router-dom';
 const Cart = () => {
+  document.title="Cart";
   const history=useHistory();
   const { value, value1, value2 } = useContext(StoreContext);
   const [isLogin, setisLogin] = value;
@@ -36,14 +37,17 @@ const Cart = () => {
     setisLogin(val);
   };
   useEffect(() => {
-    fetch("http://localhost:4444/cart", {
-      headers: {
-        "x-auth-token": localStorage.getItem("x-auth-token"),
+    if(isLogin)
+    {
+
+      fetch("http://localhost:4444/cart", {
+        headers: {
+          "x-auth-token": localStorage.getItem("x-auth-token"),
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.cartDetail.length > 0) {
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.cartDetail.length > 0) {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
           localStorage.setItem("count", data.cartDetail.length);
@@ -56,7 +60,8 @@ const Cart = () => {
         }
       })
       .catch((err) => console.error(err));
-  }, []);
+    }
+  }, [isLogin]);
   const updatedQuan = (e, val) => {
     let resdata = { ...val };
     resdata.quantity = e.target.value;

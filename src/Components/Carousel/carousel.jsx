@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./carousel.css";
 import { NavLink } from "react-router-dom";
 const Carousel = () => {
+  document.title="Shoes App";
   const arr = [
     {
       image: "/images/men/m1.png",
