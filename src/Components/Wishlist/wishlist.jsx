@@ -1,25 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import {Link} from 'react-router-dom';
 import { Table, OverlayTrigger, Tooltip } from "react-bootstrap";
 import "./wishlist.css";
 import Skeleton from "react-loading-skeleton";
 import {  toast } from "react-toastify";
+import { StoreContext } from "../../Store/data";
+import Login from "../Login/login";
+import Register from "../Register/register";
 import "react-toastify/dist/ReactToastify.min.css";
 const Wishlist = () => {
   const [wish, setwish] = useState([]);
   const [check,setcheck]=useState(false);
+  const { value} = useContext(StoreContext);
+  const [isLogin,setisLogin] = value;
+  const [loginmodal, setloginmodal] = useState(false);
+  const [registermodal, setregistermodal] = useState(false);
   useEffect(() => {
-    fetch("http://localhost:2222/getwishlist", {
-      headers: {
-        "x-auth-token": localStorage.getItem("x-auth-token"),
-      },
-    })
+    if(isLogin)
+    {
+      fetch("http://localhost:2222/getwishlist", {
+        headers: {
+          "x-auth-token": localStorage.getItem("x-auth-token"),
+        },
+      })
       .then((response) => response.json())
       .then((datawish) =>{setcheck(true); if(datawish.wish.length>0){setwish(datawish.wish)} else{ setwish([])}})
       .catch((error) => {
         console.error("Error:", error.message);
       });
-  }, []);
+    }
+  }, [isLogin]);
+  const handleLoginLaunch = (val) => {
+    setloginmodal(false);
+    setregistermodal(val);
+  };
+  const handleRegisterLaunch = (val) => {
+    setregistermodal(false);
+    setloginmodal(val);
+  };
+  const handleisLogin = (val) => {
+    setregistermodal(false);
+    setloginmodal(false);
+    setisLogin(val);
+  };
   const wishRemove = (val) => {
     fetch("http://localhost:2222/removewishlist", {
       method: "DELETE",
@@ -44,6 +67,8 @@ const Wishlist = () => {
       .catch((err) => console.error(err));
   };
   return (
+    <>
+    {isLogin?
     <div className="container-fluid">
       <div className="row">
         <div className="wishlist-table">
@@ -122,6 +147,25 @@ const Wishlist = () => {
         </div>
       </div>
     </div>
+    :(<div className="col-md-6 offset-md-3 cart-Login">
+    <h3>
+      Please <span onClick={() => setloginmodal(true)}>Login</span> to
+      view wishlist
+    </h3>
+  </div>)}
+    {loginmodal ? (
+      <Login
+        handleloginLaunch={handleLoginLaunch}
+        handleisLogin={handleisLogin}
+      />
+    ) : null}
+    {registermodal ? (
+      <Register
+        handleRegisterLaunch={handleRegisterLaunch}
+        handleisLogin={handleisLogin}
+      />
+    ) : null}
+    </>
   );
 };
 

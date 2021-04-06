@@ -26,7 +26,7 @@ const Product = (props) => {
   const [wishlist, setwishlist] = useState([]);
   const category = props.match.params.category;
   const { value, value1 } = useContext(StoreContext);
-  const [isLogin] = value;
+  const [isLogin] = value; 
   // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   useEffect(() => {
@@ -82,7 +82,7 @@ const Product = (props) => {
         console.error("Error:", error.message);
       });
     }
-  }, [category]);
+  }, [category,isLogin]);
   const collapse = (e) => {
     if (e.target.nextSibling.style.display === "none") {
       e.target.children[0].className = "fas fa-minus";
