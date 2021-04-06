@@ -1,0 +1,29 @@
+.order-table
+{
+    display: flex;
+    height: 88vh;
+    width: 100vw;
+    flex-direction: column;
+}
+.order-heading
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.iOrder
+{
+    font-size: 60px;
+    margin: 15px 0;
+}
+.order-tab
+{
+    margin-top: 10px;
+}
+.order-remove
+{
+    font-size: 20px;
+    margin-right: 10px;
+    color: red;
+    cursor: pointer;
+}

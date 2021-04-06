@@ -5,10 +5,12 @@ import { StoreContext } from "../../Store/data";
 import Login from "../Login/login";
 import Register from "../Register/register";
 import Skeleton from "react-loading-skeleton";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import {useHistory} from 'react-router-dom';
 const Cart = () => {
-  const { value,value1,value2 } = useContext(StoreContext);
+  const history=useHistory();
+  const { value, value1, value2 } = useContext(StoreContext);
   const [isLogin, setisLogin] = value;
   const [cartCount, setcartCount] = value1;
   // eslint-disable-next-line
@@ -16,6 +18,7 @@ const Cart = () => {
   const [loginmodal, setloginmodal] = useState(false);
   const [registermodal, setregistermodal] = useState(false);
   const [cartItem, setcartItem] = useState([]);
+  const [outofstock, setoutofstock] = useState([]);
   let totalPrice = 0;
   let totalDiscountedPrice = 0;
   let totalShippingPrice = 0;
@@ -40,33 +43,30 @@ const Cart = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if(data.cartDetail.length>0)
-        {
+        if (data.cartDetail.length > 0) {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
-          localStorage.setItem('count',data.cartDetail.length);
+          localStorage.setItem("count", data.cartDetail.length);
           setcartitemsTotal(data.cartDetail);
-        }
-        else
-        {
+        } else {
           setcartCount(0);
           setcartItem([]);
-          localStorage.setItem('count',0);
+          localStorage.setItem("count", 0);
           setcartitemsTotal([]);
         }
       })
       .catch((err) => console.error(err));
-  },[]);
-  const updatedQuan=(e,val)=>{
-    let resdata={...val};
-    resdata.quantity=e.target.value;
-      fetch("http://localhost:4444/cartquantity", {
-        method:'PUT',
-      body:JSON.stringify(resdata),
+  }, []);
+  const updatedQuan = (e, val) => {
+    let resdata = { ...val };
+    resdata.quantity = e.target.value;
+    fetch("http://localhost:4444/cartquantity", {
+      method: "PUT",
+      body: JSON.stringify(resdata),
       headers: {
-        "Content-Type":'application/json',
+        "Content-Type": "application/json",
         "x-auth-token": localStorage.getItem("x-auth-token"),
-      }
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -79,32 +79,29 @@ const Cart = () => {
           progress: undefined,
         });
       })
-      .catch((err) => console.error(err))
-    }
-    const cartRemove=(val)=>{
-      fetch("http://localhost:4444/cartdelete", {
-        method:'DELETE',
-      body:JSON.stringify(val),
+      .catch((err) => console.error(err));
+  };
+  const cartRemove = (val) => {
+    fetch("http://localhost:4444/cartdelete", {
+      method: "DELETE",
+      body: JSON.stringify(val),
       headers: {
-        "Content-Type":'application/json',
+        "Content-Type": "application/json",
         "x-auth-token": localStorage.getItem("x-auth-token"),
-      }
+      },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.cartDetail)
-        if(data.cartDetail.length===0)
-        {
+        console.log(data.cartDetail);
+        if (data.cartDetail.length === 0) {
           setcartItem([]);
           setcartCount(0);
-          localStorage.setItem('count',0);
+          localStorage.setItem("count", 0);
           setcartitemsTotal([]);
-        }
-        else
-        {
+        } else {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
-          localStorage.setItem('count',data.cartDetail.length);
+          localStorage.setItem("count", data.cartDetail.length);
           setcartitemsTotal(data.cartDetail);
         }
         toast.error("Item has been removed successfully", {
@@ -115,8 +112,82 @@ const Cart = () => {
           progress: undefined,
         });
       })
-      .catch((err) => console.error(err))
-    }
+      .catch((err) => console.error(err));
+  };
+  const cartplaceOrder = () => {
+    fetch("http://localhost:1111/getprod", {
+      method: "PUT",
+      body: JSON.stringify(cartItem),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.prod.length === 0) {
+          setoutofstock([]);
+          fetch("http://localhost:4444/cartempty", {
+            method: "DELETE",
+            headers: {
+              "x-auth-token": localStorage.getItem("x-auth-token"),
+            },
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log(data.cart);
+              fetch("http://localhost:5555/order", {
+                method: "POST",
+                body: JSON.stringify(data.cart),
+                headers: {
+                  "Content-Type": "application/json",
+                  "x-auth-token": localStorage.getItem("x-auth-token"),
+                },
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  if (data.order) {
+                    toast.success("Order has been placed successfully", {
+                      position: "bottom-center",
+                      autoClose: 2000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      progress: undefined,
+                    });
+                    history.replace('/order');
+                  } else {
+                    toast.error(
+                      "Sorry! Error occured while placing the order",
+                      {
+                        position: "bottom-center",
+                        autoClose: 2500,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        progress: undefined,
+                      }
+                    );
+                  }
+                  setcartItem([]);
+                  setcartCount(0);
+                  localStorage.setItem("count", 0);
+                  setcartitemsTotal([]);
+                })
+                .catch((err) => console.error(err));
+            })
+            .catch((err) => console.error(err));
+        } else setoutofstock(data.prod);
+      })
+      .catch((err) => console.error(err));
+  };
+  if (outofstock.length > 0) {
+    toast.error("Sorry! Some items went out of stock", {
+      position: "bottom-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      progress: undefined,
+    });
+  }
+
   return (
     <>
       <div className="container-fluid">
@@ -124,9 +195,11 @@ const Cart = () => {
           {isLogin ? (
             <>
               <div className="cart-productSummary col-lg-8">
-                {cartItem.length>0 && <h5 style={{ marginLeft: "20px", marginTop: "10px" }}>
-                 MY CART({cartItem.length})
-                </h5>}
+                {cartItem.length > 0 && (
+                  <h5 style={{ marginLeft: "20px", marginTop: "10px" }}>
+                    MY CART({cartItem.length})
+                  </h5>
+                )}
                 {cartItem.length > 0 ? (
                   (cartItem.forEach(
                     (val) => (
@@ -141,7 +214,13 @@ const Cart = () => {
                   ),
                   cartItem.map((val, index) => (
                     <div className="card" key={index}>
-                      <div className="cart-body card-body">
+                      <div
+                        className={
+                          outofstock.find((value) => value === val._id)
+                            ? "cart-bodyoutofStock card-body"
+                            : "cart-body card-body"
+                        }
+                      >
                         <div
                           className="cart-image"
                           style={{
@@ -164,7 +243,8 @@ const Cart = () => {
                         <div className="cart-detail">
                           <h5 className="card-title">{val.name}</h5>
                           <h6>{val.description}</h6>
-                            <p className="text-muted">Size: {val.size}</p>
+                          <p>Size: {val.size}</p>
+                          <p>Color: {val.color}</p>
                           <div className="cart-quantityAlign">
                             <div className="cart-priceShipping">
                               <div className="cart-selectDiv">
@@ -173,7 +253,7 @@ const Cart = () => {
                                   className="cart-select"
                                   name="quantity"
                                   id="quantity"
-                                  onChange={(e)=>updatedQuan(e,val)}
+                                  onChange={(e) => updatedQuan(e, val)}
                                   value={val.quantity}
                                 >
                                   <option value="1">1</option>
@@ -208,67 +288,107 @@ const Cart = () => {
                           </p>
                           <p className="cart-removeDiv">
                             <i className="cart-removeIcon fas fa-trash-alt"></i>
-                            <span className="cart-remove" onClick={()=>cartRemove(val)}> Remove</span>
+                            <span
+                              className="cart-remove"
+                              onClick={() => cartRemove(val)}
+                            >
+                              {" "}
+                              Remove
+                            </span>
                           </p>
                         </div>
                       </div>
                     </div>
                   )))
-                ) : cartCount===0?<div className="cart-empty"><img style={{width:'100vw',height:'80vh',objectFit:'contain'}} src="/emptyCart.gif" alt="emptyCart" className="img-fluid"/><h4 className="text-muted">Seems like you have no product in cart</h4></div>: (
+                ) : cartCount === 0 ? (
+                  <div className="cart-empty">
+                    <img
+                      style={{
+                        width: "100vw",
+                        height: "80vh",
+                        objectFit: "contain",
+                      }}
+                      src="/emptyCart.gif"
+                      alt="emptyCart"
+                      className="img-fluid"
+                    />
+                    <h4 className="text-muted">
+                      Seems like you have no product in cart
+                    </h4>
+                  </div>
+                ) : (
                   <Skeleton
                     width={800}
                     height={250}
                     count={3}
-                    style={{marginTop:"45px", marginLeft: "20px", marginBottom: "20px" }}
+                    style={{
+                      marginTop: "45px",
+                      marginLeft: "20px",
+                      marginBottom: "20px",
+                    }}
                   />
                 )}
               </div>
-              {
-                cartItem.length>0?
-              <div className="cart-priceSummary col-lg-3">
-                <div className="card cart-summarySticky">
-                  <div className="card-body">
-                    <h6 className="cart-priceSummaryHead text-muted">
-                      PRICE DETAILS
-                    </h6>
-                    <div className="cart-priceSummaryPrice">
-                      <h6>Price</h6>
-                      <span>
-                        <i className="fas fa-rupee-sign"></i>
-                        {cartItem.length > 0 ? totalDiscountedPrice : null}
-                      </span>
-                    </div>
-                    <div className="cart-priceSummaryShipping">
-                      <h6>Shipping Charges</h6>
-                      <span>
-                        <i className="fas fa-rupee-sign"></i>
-                        {cartItem.length > 0 ? totalShippingPrice : null}
-                      </span>
-                    </div>
+              {cartItem.length > 0 ? (
+                <div className="cart-priceSummary col-lg-3">
+                  <div className="card cart-summarySticky">
+                    <div className="card-body">
+                      <h6 className="cart-priceSummaryHead text-muted">
+                        PRICE DETAILS
+                      </h6>
+                      <div className="cart-priceSummaryPrice">
+                        <h6>Price</h6>
+                        <span>
+                          <i className="fas fa-rupee-sign"></i>
+                          {cartItem.length > 0 ? totalDiscountedPrice : null}
+                        </span>
+                      </div>
+                      <div className="cart-priceSummaryShipping">
+                        <h6>Shipping Charges</h6>
+                        <span>
+                          <i className="fas fa-rupee-sign"></i>
+                          {cartItem.length > 0 ? totalShippingPrice : null}
+                        </span>
+                      </div>
 
-                    <div className="cart-priceSummaryTotal">
-                      <h6 className="cart-totalAmount">Total Amount</h6>
-                      <span>
-                        <i className="fas fa-rupee-sign"></i>
-                        {cartItem.length > 0
-                          ? totalShippingPrice + totalDiscountedPrice
-                          : null}
-                      </span>
+                      <div className="cart-priceSummaryTotal">
+                        <h6 className="cart-totalAmount">Total Amount</h6>
+                        <span>
+                          <i className="fas fa-rupee-sign"></i>
+                          {cartItem.length > 0
+                            ? totalShippingPrice + totalDiscountedPrice
+                            : null}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="cart-Saving">
+                          Your Total Saving on this order
+                          <i className="fas fa-rupee-sign"></i>
+                          {totalPrice -
+                            totalDiscountedPrice -
+                            totalShippingPrice}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="cart-Saving">
-                        Your Total Saving on this order
-                        <i className="fas fa-rupee-sign"></i>
-                        {totalPrice - totalDiscountedPrice - totalShippingPrice}
-                      </p>
+                    <div className="card-footer">
+                      <button
+                        className="cart-placeOrder"
+                        onClick={cartplaceOrder}
+                      >
+                        Place Order
+                      </button>
                     </div>
-                  </div>
-                  <div className="card-footer">
-                    <button className="cart-placeOrder">Place Order</button>
                   </div>
                 </div>
-              </div>:cartCount!==0 && <Skeleton style={{position:'absolute',right:'5%',top:'18%'}} width={400} height={300}/>
-            }
+              ) : (
+                cartCount !== 0 && (
+                  <Skeleton
+                    style={{ position: "absolute", right: "5%", top: "18%" }}
+                    width={400}
+                    height={300}
+                  />
+                )
+              )}
             </>
           ) : (
             <div className="col-md-6 offset-md-3 cart-Login">

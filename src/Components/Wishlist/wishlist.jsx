@@ -112,7 +112,7 @@ const Wishlist = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                marginTop: "10px",
+                marginTop: "50px",
               }}
               width={600}
               height={50}
