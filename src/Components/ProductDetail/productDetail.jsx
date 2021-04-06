@@ -127,7 +127,7 @@ const ProductDetail = (props) => {
             setcartitemsTotal([...datarec.cartItems]);
             toast.success("Added to cart successfully", {
               position: "bottom-center",
-              autoClose: 2000,
+              autoClose: 1000,
               hideProgressBar: false,
               closeOnClick: true,
               progress: undefined,

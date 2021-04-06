@@ -55,6 +55,7 @@
 .imageThumbnail {
   display: flex;
   width: 9vw;
+  margin-left: 50px;
 }
 .imageThumbnail .fas{
   font-size: 26px;
