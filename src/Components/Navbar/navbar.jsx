@@ -93,7 +93,7 @@ const Navbar = () => {
               <i className="fas fa-child"></i> Kids
             </span>
           </li>
-          <li onClick={() => navigateAcc("orders")}>
+          <li onClick={() => navigateAcc("order")}>
           <span style={{cursor:"pointer"}}>
               <i className="fas fa-store"></i> My Orders
             </span>
@@ -133,7 +133,7 @@ const Navbar = () => {
             ></i>
             <ul className="navbar-prodfileDropdown dropdown-menu">
               <li>
-                <Link className="dropdown-item" to="/orders" exact="true">
+                <Link className="dropdown-item" to="/order" exact="true">
                   My Orders
                 </Link>
               </li>
