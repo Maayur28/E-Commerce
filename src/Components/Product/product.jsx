@@ -69,16 +69,19 @@ const Product = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
-    fetch("http://localhost:2222/getwishlist",{
-      headers: {
-        "x-auth-token": localStorage.getItem("x-auth-token"),
-      },
-    })
-      .then((response) => response.json())
+      if(isLogin)
+      {
+        fetch("http://localhost:2222/getwishlist",{
+          headers: {
+            "x-auth-token": localStorage.getItem("x-auth-token"),
+          },
+        })
+        .then((response) => response.json())
       .then((datawish) => setwishlist(datawish.wish))
       .catch((error) => {
         console.error("Error:", error.message);
       });
+    }
   }, [category]);
   const collapse = (e) => {
     if (e.target.nextSibling.style.display === "none") {
@@ -90,16 +93,19 @@ const Product = (props) => {
     }
   };
   const productWishlist = (e, val) => {
-    fetch("http://localhost:2222/togglewishlist", {
-      method: "POST",
-      body: JSON.stringify(val),
-      headers: {
+    if(isLogin)
+    {
+
+      fetch("http://localhost:2222/togglewishlist", {
+        method: "POST",
+        body: JSON.stringify(val),
+        headers: {
         "Content-type": "application/json; charset=UTF-8",
         "x-auth-token": localStorage.getItem("x-auth-token"),
       },
     })
-      .then((response) => response.json())
-      .then((datarec) => {
+    .then((response) => response.json())
+    .then((datarec) => {
         console.log(datarec.toggle);
         if (datarec.toggle) e.target.className = "fas fa-heart";
         else e.target.className = "far fa-heart";
@@ -107,10 +113,20 @@ const Product = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
+    }
+    else
+    {
+      toast.error("Please login to continue", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
+      })
+    }
   };
 
   const gotoDetails = (category, id) => {
-    console.log(category, id);
     props.history.push(`/product/${category}/${id}`);
   };
   const productmodalColor = (val) => {

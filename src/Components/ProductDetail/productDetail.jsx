@@ -37,42 +37,52 @@ const ProductDetail = (props) => {
       .catch((error) => {
         console.error("Error:", error.message);
       });
-    }, [category, id]);
-    useEffect(() => {
+  }, [category, id]);
+  useEffect(() => {
+    if (isLogin) {
       fetch("http://localhost:2222/getwishlist", {
         headers: {
-        "x-auth-token": localStorage.getItem("x-auth-token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((datawish) => {
-        console.log(datawish.wish,data)
-        if(datawish.wish.find(val=>val._id===data._id))
-        setIcon(true);
-        else
-        setIcon(false);
+          "x-auth-token": localStorage.getItem("x-auth-token"),
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error.message);
-      });
-    }, [data]);
+        .then((response) => response.json())
+        .then((datawish) => {
+          console.log(datawish.wish, data);
+          if (datawish.wish.find((val) => val._id === data._id)) setIcon(true);
+          else setIcon(false);
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+        });
+    }
+  }, [isLogin,data]);
   const toggleIcon = (val) => {
-    fetch("http://localhost:2222/togglewishlist", {
-      method: "POST",
-      body: JSON.stringify(val),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-        "x-auth-token": localStorage.getItem("x-auth-token"),
-      },
-    })
-      .then((response) => response.json())
-      .then((datarec) => {
-        if (datarec.toggle) setIcon(true);
-        else setIcon(false);
+    if (isLogin) {
+      fetch("http://localhost:2222/togglewishlist", {
+        method: "POST",
+        body: JSON.stringify(val),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          "x-auth-token": localStorage.getItem("x-auth-token"),
+        },
       })
-      .catch((error) => {
-        console.error("Error:", error.message);
+        .then((response) => response.json())
+        .then((datarec) => {
+          if (datarec.toggle) setIcon(true);
+          else setIcon(false);
+        })
+        .catch((error) => {
+          console.error("Error:", error.message);
+        });
+    } else {
+      toast.error("Please login to continue", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        progress: undefined,
       });
+    }
   };
   const thumbImg = (val) => {
     setcurrentThumbnail(data.image.indexOf(val));
