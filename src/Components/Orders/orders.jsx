@@ -24,7 +24,10 @@ const Orders = () => {
         .then((response) => response.json())
         .then((data) => {
           setcheck(true);
+          if(data.orderDetail.length>0)
           setOrder(data.orderDetail);
+          else
+          setOrder([]);
         })
         .catch((err) => console.error(err));
     }
@@ -119,15 +122,21 @@ const Orders = () => {
                 </>
               ) : check ? (
                 <Link to="/" exact={true}>
-                  <img
-                    src="/wishlistEmpty.webp"
-                    alt="wishlistempty"
-                    style={{
-                      width: "100vw",
-                      height: "88vh",
-                      objectFit: "contain",
-                    }}
-                  />
+                 <div className="order-empty">
+                    <img
+                      style={{
+                        width: "100vw",
+                        height: "70vh",
+                        objectFit: "contain",
+                      }}
+                      src="/noOrderFound.jpg"
+                      alt="noOrderFound"
+                      className="img-fluid"
+                    />
+                    <h4 className="text-muted">
+                      Seems like you have no ordered anything yet
+                    </h4>
+                  </div>
                 </Link>
               ) : (
                 <Skeleton

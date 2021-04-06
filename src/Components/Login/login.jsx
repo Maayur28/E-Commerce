@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./login.css";
 import { Modal } from "react-bootstrap";
 import { Formik, useField } from "formik";
@@ -13,6 +13,7 @@ const Login = (props) => {
   const { value1 } = useContext(StoreContext);
   // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
+  const [errorOccur, seterrorOccur] = useState();
   const handleClose = () => {
     setShow(false);
     props.handleloginLaunch(false);
@@ -79,6 +80,7 @@ const Login = (props) => {
                 .required("Please enter password"),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
+              seterrorOccur();
               fetch("http://localhost:3333/login", {
                 method: "POST",
                 body: JSON.stringify(values),
@@ -86,7 +88,15 @@ const Login = (props) => {
                   "Content-type": "application/json; charset=UTF-8",
                 },
               })
-                .then((response) => response.json())
+                .then((response) => {
+                  if (response.status >= 200 && response.status <= 299) {
+                    return response.json();
+                  } else {
+                    return response.text().then((text) => {
+                      throw new Error(text);
+                    });
+                  }
+                })
                 .then((datarec) => {
                   localStorage.setItem("x-auth-token", datarec.authToken);
                   fetch("http://localhost:4444/cartcount",{
@@ -109,13 +119,14 @@ const Login = (props) => {
                   setSubmitting(false);
                   handleLoginStatus(true);
                 })
-                .catch((error) => {
-                  console.error("Error:", error.message);
+                .catch((err) => {
+                  setSubmitting(false);
+                  seterrorOccur(err.message);
                 });
             }}
           >
             {(formprops) => (
-              <form onSubmit={formprops.handleSubmit} autocomplete="on">
+              <form onSubmit={formprops.handleSubmit} autoComplete="on">
                 <div className="login-form">
                   <CustomInput
                     type="email"
@@ -124,7 +135,7 @@ const Login = (props) => {
                     placeholder="example@gmail.com"
                     label="Username"
                     onChange={formprops.handleChange}
-                    autocomplete="on"
+                    autoComplete="on"
                   />
                   <CustomInput
                     type={passShow ? "text" : "password"}
@@ -133,7 +144,7 @@ const Login = (props) => {
                     placeholder="a2b2c3d4e5"
                     label="Password"
                     onChange={formprops.handleChange}
-                    autocomplete="on"
+                    autoComplete="on"
                   />
                   <button type="submit" className="login-button">
                     {formprops.isSubmitting ? (
@@ -153,6 +164,11 @@ const Login = (props) => {
                     )}
                     Login
                   </button>
+                  {errorOccur ? (
+                    <div style={{width:'92%',marginTop:'10px',textAlign:'center' }} className="alert alert-danger" role="alert">
+                      {errorOccur}
+                    </div>
+                  ) : null}
                   <div className="login-forgetButton">
                     <button
                       type="button"

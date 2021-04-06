@@ -33,7 +33,7 @@ const Navbar = () => {
     else {
       localStorage.clear();
       setisLogin(false);
-      setcartCount(0);
+      setcartCount();
       toast.error("Logout Successful", {
         position: "bottom-center",
         autoClose: 1000,

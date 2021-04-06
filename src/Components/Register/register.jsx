@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./register.css";
 import { Modal } from "react-bootstrap";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import { StoreContext } from "../../Store/data";
 
 const Register = (props) => {
   const [passShow, setpassShow] = useState(false);
   const [confpassShow, setconfpassShow] = useState(false);
   const [show, setShow] = useState(true);
+  const { value1 } = useContext(StoreContext);
+  // eslint-disable-next-line
+  const [cartCount, setcartCount] = value1;
+  const [errorOccur, seterrorOccur] = useState();
   const handleClose = () => {
     setShow(false);
     props.handleRegisterLaunch(false);
@@ -18,10 +23,10 @@ const Register = (props) => {
     setShow(false);
     props.handleRegisterLaunch(true);
   };
-  const handleLoginStatus=(val)=>{
+  const handleLoginStatus = (val) => {
     setShow(false);
     props.handleisLogin(val);
-  }
+  };
   const CustomName = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
@@ -125,6 +130,7 @@ const Register = (props) => {
                 .required("Please enter confirm password"),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
+              seterrorOccur();
               fetch("http://localhost:3333/register", {
                 method: "POST",
                 body: JSON.stringify(values),
@@ -132,24 +138,45 @@ const Register = (props) => {
                   "Content-type": "application/json; charset=UTF-8",
                 },
               })
-                .then((response) => response.json())
-                .then((datarec) => {
-                  localStorage.setItem('x-auth-token',datarec.authToken)
-                  datarec && toast.success("Registered Successfully", {
-                    position: "bottom-center",
-                    autoClose: 1000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    progress: undefined,
-                  })
-                  handleLoginStatus(true);
-                      })
-                .catch((error) => {
-                  console.error("Error:", error.message);
+                .then((response) => {
+                  if (response.status >= 200 && response.status <= 299) {
+                    return response.json();
+                  } else {
+                    return response.text().then((text) => {
+                      throw new Error(text);
+                    });
+                  }
                 })
-                resetForm();
-                setSubmitting(false);
-                handleClose();
+                .then((datarec) => {
+                  localStorage.setItem("x-auth-token", datarec.authToken);
+                  fetch("http://localhost:4444/cartcount", {
+                    headers: {
+                      "x-auth-token": localStorage.getItem("x-auth-token"),
+                    },
+                  })
+                    .then((response) => response.json())
+                    .then((datacount) => {
+                      setcartCount(datacount.count);
+                      localStorage.setItem("count", datacount.count);
+                    })
+                    .catch((err) => console.error(err));
+                  datarec &&
+                    toast.success("Registered Successfully", {
+                      position: "bottom-center",
+                      autoClose: 1000,
+                      hideProgressBar: false,
+                      closeOnClick: true,
+                      progress: undefined,
+                    });
+                  resetForm();
+                  setSubmitting(false);
+                  handleLoginStatus(true);
+                  handleClose();
+                })
+                .catch((err) => {
+                  setSubmitting(false);
+                  seterrorOccur(err.message);
+                });
             }}
           >
             {(formprops) => (
@@ -210,6 +237,19 @@ const Register = (props) => {
                     )}
                     Register
                   </button>
+                  {errorOccur ? (
+                    <div
+                      style={{
+                        width: "92%",
+                        marginTop: "10px",
+                        textAlign: "center",
+                      }}
+                      className="alert alert-danger"
+                      role="alert"
+                    >
+                      {errorOccur}
+                    </div>
+                  ) : null}
                   <div className="register-forgetButton">
                     <button type="button" className="register-login">
                       Already Register?
@@ -222,14 +262,14 @@ const Register = (props) => {
           </Formik>
         </Modal.Body>
         <ToastContainer
-        position="bottom-center"
-        autoClose={1999}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-      />
+          position="bottom-center"
+          autoClose={1999}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+        />
       </Modal>
     </>
   );

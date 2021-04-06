@@ -292,7 +292,6 @@ const Cart = () => {
                               className="cart-remove"
                               onClick={() => cartRemove(val)}
                             >
-                              {" "}
                               Remove
                             </span>
                           </p>
