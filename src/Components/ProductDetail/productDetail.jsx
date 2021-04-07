@@ -37,7 +37,6 @@ const ProductDetail = (props) => {
       })
       .then((data) => {
         setData(data);
-        setcheck(true);
         document.title = data.name;
         setSize(data.size[0]);
         setColor(data.color[0]);
@@ -59,6 +58,10 @@ const ProductDetail = (props) => {
         setcheck(true);
       });
   }, [category, id]);
+  useEffect(() => {
+    if(data)
+     setcheck(true);
+   }, [data]);
   useEffect(() => {
     if (isLogin) {
       fetch("http://localhost:2222/getwishlist", {

@@ -107,12 +107,16 @@ const Product = (props) => {
             });
           }
         })
-        .then((datawish) => {setwishlist(datawish.wish);setcheck(true)})
+        .then((datawish) => {setwishlist(datawish.wish)})
         .catch((err) => {
-          setcheck(true);
+          console.log(err.message);
         });
     }
   }, [category, isLogin]);
+  useEffect(() => {
+   if(data.length>0)
+    setcheck(true);
+  }, [data]);
   const collapse = (e) => {
     if (e.target.nextSibling.style.display === "none") {
       e.target.children[0].className = "fas fa-minus";

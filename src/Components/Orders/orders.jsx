@@ -63,8 +63,10 @@ const Orders = () => {
     return `${hr} hours ago`;
     else if(mn>0)
     return `${mn} minutes ago`;
+    else if(sc>0)
+    return `${sc} seconds ago`;
     else
-    return `${sc} seconds ago`; 
+    return "just now" 
   };
   return (
     <>
