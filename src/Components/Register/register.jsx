@@ -157,7 +157,6 @@ const Register = (props) => {
                     .then((response) => response.json())
                     .then((datacount) => {
                       setcartCount(datacount.count);
-                      localStorage.setItem("count", datacount.count);
                     })
                     .catch((err) => console.error(err));
                   datarec &&

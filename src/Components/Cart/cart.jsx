@@ -51,12 +51,10 @@ const Cart = () => {
       if (data.cartDetail.length > 0) {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
-          localStorage.setItem("count", data.cartDetail.length);
           setcartitemsTotal(data.cartDetail);
         } else {
           setcartCount(0);
           setcartItem([]);
-          localStorage.setItem("count", 0);
           setcartitemsTotal([]);
         }
       })
@@ -102,12 +100,10 @@ const Cart = () => {
         if (data.cartDetail.length === 0) {
           setcartItem([]);
           setcartCount(0);
-          localStorage.setItem("count", 0);
           setcartitemsTotal([]);
         } else {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
-          localStorage.setItem("count", data.cartDetail.length);
           setcartitemsTotal(data.cartDetail);
         }
         toast.error("Item has been removed successfully", {
@@ -176,7 +172,6 @@ const Cart = () => {
                   }
                   setcartItem([]);
                   setcartCount(0);
-                  localStorage.setItem("count", 0);
                   setcartitemsTotal([]);
                 })
                 .catch((err) => console.error(err));

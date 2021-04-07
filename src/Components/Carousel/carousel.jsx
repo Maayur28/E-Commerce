@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./carousel.css";
-import { NavLink,useHistory } from "react-router-dom";
+import { NavLink} from "react-router-dom";
 import { StoreContext } from "../../Store/data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 const Carousel = () => {
   document.title = "Shoes App";
-  const history=useHistory();
   const [arr, setarr] = useState([]);
   const [current, setcurrent] = useState(0);
   const [active, setactive] = useState(1);
@@ -14,6 +13,7 @@ const Carousel = () => {
   const [color, setcolor] = useState();
   const { value, value1, value2 } = useContext(StoreContext);
   const [isLogin] = value;
+  // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   const [cartitemsTotal, setcartitemsTotal] = value2;
   useEffect(() => {
@@ -34,15 +34,14 @@ const Carousel = () => {
       return prevState === arr.length - 1 ? 0 : prevState + 1;
     });
   };
-  const selectsize=(e)=>{
+  const selectsize = (e) => {
     setsize(e.target.value);
-  }
-  const selectcolor=(e)=>{
+  };
+  const selectcolor = (e) => {
     setcolor(e.target.value);
-  }
+  };
   const addtoCart = () => {
     if (isLogin) {
-      console.log(cartitemsTotal)
       if (cartitemsTotal.find((val) => val._id === arr[current]._id)) {
         toast.info("Already present in cart", {
           position: "bottom-center",
@@ -51,10 +50,8 @@ const Carousel = () => {
           closeOnClick: true,
           progress: undefined,
         });
-        history.push("/cart");
       } else {
-        if(!size && !color)
-        {
+        if (!size && !color) {
           toast.error("Please select size & color", {
             position: "bottom-center",
             autoClose: 1500,
@@ -62,9 +59,7 @@ const Carousel = () => {
             closeOnClick: true,
             progress: undefined,
           });
-        }
-        else if(!size)
-        {
+        } else if (!size) {
           toast.error("Please select size", {
             position: "bottom-center",
             autoClose: 1500,
@@ -72,9 +67,7 @@ const Carousel = () => {
             closeOnClick: true,
             progress: undefined,
           });
-        }
-        else if(!color)
-        {
+        } else if (!color) {
           toast.error("Please select color", {
             position: "bottom-center",
             autoClose: 1500,
@@ -82,41 +75,38 @@ const Carousel = () => {
             closeOnClick: true,
             progress: undefined,
           });
-        }
-        else
-        {
+        } else {
           const userData = { ...arr[current] };
           userData.size = size;
           userData.color = color;
           delete userData.quantity;
-        fetch(`http://localhost:4444/cart`, {
-          method: "POST",
-          body: JSON.stringify(userData),
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            "x-auth-token": localStorage.getItem("x-auth-token"),
-          },
-        })
-          .then((response) => response.json())
-          .then((datarec) => {
-            localStorage.setItem("count", datarec.cartItems.length);
-            setcartCount(datarec.cartItems.length);
-            setcartitemsTotal([...datarec.cartItems]);
-            setsize();
-            setcolor();
-            toast.success("Added to cart", {
-              position: "bottom-center",
-              autoClose: 1000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              progress: undefined,
-            });
+          fetch(`http://localhost:4444/cart`, {
+            method: "POST",
+            body: JSON.stringify(userData),
+            headers: {
+              "Content-type": "application/json; charset=UTF-8",
+              "x-auth-token": localStorage.getItem("x-auth-token"),
+            },
           })
-          .catch((error) => {
-            console.error("Error:", error.message);
-            setsize();
-            setcolor();
-          });
+            .then((response) => response.json())
+            .then((datarec) => {
+              setcartCount(datarec.cartItems.length);
+              setcartitemsTotal([...datarec.cartItems]);
+              setsize();
+              setcolor();
+              toast.success("Added to cart", {
+                position: "bottom-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                progress: undefined,
+              });
+            })
+            .catch((error) => {
+              console.error("Error:", error.message);
+              setsize();
+              setcolor();
+            });
         }
       }
     } else {
@@ -181,7 +171,12 @@ const Carousel = () => {
                 <div className="carousel-cardBody">
                   <div className="carousel-selectDiv">
                     <span className="carousel-def">Size: </span>
-                    <select className="carousel-select" name="size" id="size" onChange={selectsize}>
+                    <select
+                      className="carousel-select"
+                      name="size"
+                      id="size"
+                      onChange={selectsize}
+                    >
                       <option value="">--select--</option>
                       {arr[current].size.map((val, index) => (
                         <option key={index} value={val}>
@@ -193,8 +188,13 @@ const Carousel = () => {
                   </div>
                   <div className="carousel-selectDiv">
                     <span className="carousel-def">Color: </span>
-                    <select className="carousel-select" name="color" id="color" onChange={selectcolor}>
-                    <option value="">--select--</option>
+                    <select
+                      className="carousel-select"
+                      name="color"
+                      id="color"
+                      onChange={selectcolor}
+                    >
+                      <option value="">--select--</option>
                       {arr[current].color.map((val, index) => (
                         <option key={index} value={val}>
                           {val}

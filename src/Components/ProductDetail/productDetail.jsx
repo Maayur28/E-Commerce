@@ -49,7 +49,6 @@ const ProductDetail = (props) => {
       })
         .then((response) => response.json())
         .then((datawish) => {
-          console.log(datawish.wish, data);
           if (datawish.wish.find((val) => val._id === data._id)) setIcon(true);
           else setIcon(false);
         })
@@ -125,7 +124,6 @@ const ProductDetail = (props) => {
         })
           .then((response) => response.json())
           .then((datarec) => {
-            localStorage.setItem("count", datarec.cartItems.length);
             setcartCount(datarec.cartItems.length);
             setcartitemsTotal([...datarec.cartItems]);
             setiswait(false);

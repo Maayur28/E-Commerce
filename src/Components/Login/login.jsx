@@ -105,7 +105,7 @@ const Login = (props) => {
                     }
                   })
                     .then((response) => response.json())
-                    .then((datacount) => {setcartCount(datacount.count);localStorage.setItem('count',datacount.count)})
+                    .then((datacount) => {setcartCount(datacount.count);})
                     .catch((err) => console.error(err));
                   datarec &&
                     toast.success("Login Successful", {

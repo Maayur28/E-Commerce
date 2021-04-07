@@ -25,13 +25,16 @@ const Product = (props) => {
   const [productCount, setproductCount] = useState(0);
   const [wishlist, setwishlist] = useState([]);
   const category = props.match.params.category;
-  const { value, value1 } = useContext(StoreContext);
-  const [isLogin] = value; 
-  // eslint-disable-next-line
+  const { value, value1, value2 } = useContext(StoreContext);
+  const [isLogin] = value;
+   // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
+  const [cartitemsTotal, setcartitemsTotal] = value2;
+  // eslint-disable-next-line
   useEffect(() => {
     setData([]);
     document.title=category.toUpperCase();
+    setproductCount(0);
     fetch(`http://localhost:1111/product/${category}`)
       .then((response) => response.json())
       .then((data) => {
@@ -256,10 +259,22 @@ const Product = (props) => {
     } else {
       if(isLogin)
       {
-        const userData={...data};
-        userData.size=modalsize;
-        userData.color=modalcolor;
-        delete userData.quantity;
+        if (cartitemsTotal.find((val) => val._id === data._id)) {
+          toast.info("Already present in cart", {
+            position: "bottom-center",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          });
+          setModalHideShow();
+        }
+        else
+        {
+          const userData={...data};
+          userData.size=modalsize;
+          userData.color=modalcolor;
+          delete userData.quantity;
         setModalShow(false);
         fetch(`http://localhost:4444/cart`,{
         method:"POST",
@@ -271,8 +286,8 @@ const Product = (props) => {
       })
         .then((response) => response.json())
         .then((datarec) => {
-          setcartCount(datarec.count);
-          localStorage.setItem('count',datarec.count);
+          setcartitemsTotal([...datarec.cartItems]);
+          setcartCount(datarec.cartItems.length);
           toast.success("Added to cart successfully", {
             position: "bottom-center",
             autoClose: 2000,
@@ -284,6 +299,7 @@ const Product = (props) => {
         .catch((error) => {
           console.error("Error:", error.message);
         });
+      }
       }
       else
       {
@@ -533,7 +549,7 @@ const Product = (props) => {
                 (filtercolorData.length === 0 ||
                   filtercolorData.some((valu) => val.color.includes(valu))) ? (
                   <div className="product-Card" key={val._id || index}>
-                    {productCount < count++ ? setproductCount(count) : null}
+                    {productCount < ++count ? setproductCount(count) : null}
                     <span className="product-Heart">
                       <i
                         className={
