@@ -14,13 +14,13 @@
 .carousel-navigateArrowleft {
   font-size: 32px;
   margin-right: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   cursor: pointer;
 }
 .carousel-navigateArrowright {
   font-size: 32px;
   margin-left: 50px;
-  margin-top: 10px;
+  margin-top: 5px;
   cursor: pointer;
 }
 .carousel-img {
@@ -43,7 +43,7 @@
   margin-bottom: 150px;
 }
 .carousel-heading {
-  font-size: 40px;
+  font-size: 2.2rem;
   animation-name: text;
   animation-duration: 2s;
   text-align: center;
@@ -100,7 +100,7 @@
 }
 .carousel-price h3
 {
-  font-size: 28px;
+  font-size: 1.7rem;
 }
 .carousel-priceicon
 {
@@ -150,6 +150,34 @@
   }
   to {
     opacity: 1;
+  }
+}
+@media screen and (max-width: 450px) {
+  .carousel-cardBody {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 24vh;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .carousel-selectDiv {
+    position: relative;
+    margin-top: 5px;
+  }
+  .carousel-priceicon
+  {
+    margin-top: 21px;
+    font-size: 1.3rem;
+  }
+  .carousel-price h3
+  {
+    margin-top: 18px;
+    font-size: 1.4rem;
+  }
+  .carousel-select
+  {
+    padding-top: 8px;
+    padding-bottom: 8px;
   }
 }
 @media screen and (max-width: 680px) {

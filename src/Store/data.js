@@ -15,8 +15,17 @@ export const StoreProvider = (props) => {
       })
         .then((response) => response.json())
         .then((datarec) => {
-          setcartCount(datarec.cartDetail.length);
-          setcartitemsTotal([...datarec.cartDetail]);
+          if(datarec.cartDetail.length>0)
+          {
+
+            setcartCount(datarec.cartDetail.length);
+            setcartitemsTotal([...datarec.cartDetail]);
+          }
+          else
+          {
+            setcartCount(0);
+            setcartitemsTotal([]);
+          }
         })
         .catch((error) => {
           console.error("Error:", error.message);

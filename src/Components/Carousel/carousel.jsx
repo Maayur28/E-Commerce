@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import "./carousel.css";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { StoreContext } from "../../Store/data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -11,6 +11,7 @@ const Carousel = () => {
   const [active, setactive] = useState(1);
   const [size, setsize] = useState();
   const [color, setcolor] = useState();
+  const [check, setcheck] = useState(false);
   const { value, value1, value2 } = useContext(StoreContext);
   const [isLogin] = value;
   // eslint-disable-next-line
@@ -18,9 +19,29 @@ const Carousel = () => {
   const [cartitemsTotal, setcartitemsTotal] = value2;
   useEffect(() => {
     fetch("http://localhost:1111/product")
-      .then((response) => response.json())
-      .then((val) => setarr(val.prod))
-      .catch((err) => console.error(err));
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299) {
+          return response.json();
+        } else {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        }
+      })
+      .then((val) => {
+        setcheck(true);
+        setarr(val.prod);
+      })
+      .catch((err) => {
+        toast.error(err.message, {
+          position: "bottom-center",
+          autoClose: 3500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        });
+        setcheck(true);
+      });
   }, []);
   const prev = () => {
     setactive(0);
@@ -88,7 +109,15 @@ const Carousel = () => {
               "x-auth-token": localStorage.getItem("x-auth-token"),
             },
           })
-            .then((response) => response.json())
+            .then((response) => {
+              if (response.status >= 200 && response.status <= 299) {
+                return response.json();
+              } else {
+                return response.text().then((text) => {
+                  throw new Error(text);
+                });
+              }
+            })
             .then((datarec) => {
               setcartCount(datarec.cartItems.length);
               setcartitemsTotal([...datarec.cartItems]);
@@ -102,8 +131,14 @@ const Carousel = () => {
                 progress: undefined,
               });
             })
-            .catch((error) => {
-              console.error("Error:", error.message);
+            .catch((err) => {
+                toast.error(err.message, {
+                position: "bottom-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                progress: undefined,
+              });
               setsize();
               setcolor();
             });
@@ -176,6 +211,7 @@ const Carousel = () => {
                       name="size"
                       id="size"
                       onChange={selectsize}
+                      value={size}
                     >
                       <option value="">--select--</option>
                       {arr[current].size.map((val, index) => (
@@ -193,6 +229,7 @@ const Carousel = () => {
                       name="color"
                       id="color"
                       onChange={selectcolor}
+                      value={color}
                     >
                       <option value="">--select--</option>
                       {arr[current].color.map((val, index) => (
@@ -219,6 +256,12 @@ const Carousel = () => {
               </div>
             </div>
           </div>
+        ) : check ? (
+          <img
+            src="/500Error.gif"
+            alt="500 Error"
+            style={{ width: "100vw", height: "88vh", objectFit: "contain" }}
+          />
         ) : null}
       </div>
     </div>
