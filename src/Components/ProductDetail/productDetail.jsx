@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import "./productDetail.css";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Skeleton from "react-loading-skeleton";
 import { StoreContext } from "../../Store/data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -14,6 +15,7 @@ const ProductDetail = (props) => {
   const [color, setColor] = useState();
   const [star, setStar] = useState([]);
   const [icon, setIcon] = useState(false);
+  const [check, setcheck] = useState(false);
   const [currentThumbnail, setcurrentThumbnail] = useState(0);
   const { value, value1, value2 } = useContext(StoreContext);
   const [isLogin] = value;
@@ -22,10 +24,20 @@ const ProductDetail = (props) => {
   const [cartitemsTotal, setcartitemsTotal] = value2;
   const [iswait, setiswait] = useState(false);
   useEffect(() => {
+    setcheck(false);
     fetch(`http://localhost:1111/product/${category}/${id}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status >= 200 && response.status <= 299) {
+          return response.json();
+        } else {
+          return response.text().then((text) => {
+            throw new Error(text);
+          });
+        }
+      })
       .then((data) => {
         setData(data);
+        setcheck(true);
         document.title = data.name;
         setSize(data.size[0]);
         setColor(data.color[0]);
@@ -36,8 +48,15 @@ const ProductDetail = (props) => {
           else setStar((prevState) => [...prevState, "far fa-star"]);
         }
       })
-      .catch((error) => {
-        console.error("Error:", error.message);
+      .catch((err) => {
+        toast.error(err.message, {
+          position: "bottom-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          progress: undefined,
+        });
+        setcheck(true);
       });
   }, [category, id]);
   useEffect(() => {
@@ -47,7 +66,15 @@ const ProductDetail = (props) => {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status >= 200 && response.status <= 299) {
+            return response.json();
+          } else {
+            return response.text().then((text) => {
+              throw new Error(text);
+            });
+          }
+        })
         .then((datawish) => {
           if (datawish.wish.find((val) => val._id === data._id)) setIcon(true);
           else setIcon(false);
@@ -67,13 +94,27 @@ const ProductDetail = (props) => {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status >= 200 && response.status <= 299) {
+            return response.json();
+          } else {
+            return response.text().then((text) => {
+              throw new Error(text);
+            });
+          }
+        })
         .then((datarec) => {
           if (datarec.toggle) setIcon(true);
           else setIcon(false);
         })
-        .catch((error) => {
-          console.error("Error:", error.message);
+        .catch((err) => {
+          toast.error(err.message, {
+            position: "bottom-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          });
         });
     } else {
       toast.error("Please login to continue", {
@@ -122,12 +163,20 @@ const ProductDetail = (props) => {
             "x-auth-token": localStorage.getItem("x-auth-token"),
           },
         })
-          .then((response) => response.json())
+          .then((response) => {
+            if (response.status >= 200 && response.status <= 299) {
+              return response.json();
+            } else {
+              return response.text().then((text) => {
+                throw new Error(text);
+              });
+            }
+          })
           .then((datarec) => {
             setcartCount(datarec.cartItems.length);
             setcartitemsTotal([...datarec.cartItems]);
             setiswait(false);
-            toast.success("Added to cart successfully", {
+            toast.success("Added to cart", {
               position: "bottom-center",
               autoClose: 1000,
               hideProgressBar: false,
@@ -135,9 +184,15 @@ const ProductDetail = (props) => {
               progress: undefined,
             });
           })
-          .catch((error) => {
+          .catch((err) => {
             setiswait(false);
-            console.error("Error:", error.message);
+            toast.error(err.message, {
+              position: "bottom-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              progress: undefined,
+            });
           });
       }
     } else {
@@ -255,7 +310,26 @@ const ProductDetail = (props) => {
             </div>
           </div>
         </div>
-      ) : null}
+      ) : !check ? (
+        <div style={{ marginLeft: "50px" }}>
+          <Skeleton
+            width={"25vw"}
+            height={"60vh"}
+            count={3}
+            style={{
+              marginRight: "40px",
+              marginLeft: "40px",
+              marginTop: "100px",
+            }}
+          />
+        </div>
+      ) : (
+        <img
+          src="/500Error.gif"
+          alt="500 Error"
+          style={{ width: "100vw", height: "80vh", objectFit: "contain" }}
+        />
+      )}
     </div>
   );
 };
