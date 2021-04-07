@@ -17,7 +17,6 @@ export const StoreProvider = (props) => {
         .then((datarec) => {
           if(datarec.cartDetail.length>0)
           {
-
             setcartCount(datarec.cartDetail.length);
             setcartitemsTotal([...datarec.cartDetail]);
           }

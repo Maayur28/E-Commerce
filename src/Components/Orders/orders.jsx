@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { Table } from "react-bootstrap";
 import Skeleton from "react-loading-skeleton";
@@ -6,9 +6,11 @@ import "./orders.css";
 import { StoreContext } from "../../Store/data";
 import Login from "../Login/login";
 import Register from "../Register/register";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
 
 const Orders = () => {
-  document.title="Orders";
+  document.title = "Orders";
   const [order, setOrder] = useState([]);
   const [check, setcheck] = useState(false);
   const { value } = useContext(StoreContext);
@@ -22,15 +24,30 @@ const Orders = () => {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.status >= 200 && response.status <= 299) {
+            return response.json();
+          } else {
+            return response.text().then((text) => {
+              throw new Error(text);
+            });
+          }
+        })
         .then((data) => {
           setcheck(true);
-          if(data.orderDetail.length>0)
-          setOrder(data.orderDetail);
-          else
-          setOrder([]);
+          if (data.orderDetail.length > 0) setOrder(data.orderDetail);
+          else setOrder([]);
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+          toast.error(err.message, {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          });
+          setcheck(true);
+        });
     }
   }, [isLogin]);
   const handleLoginLaunch = (val) => {
@@ -47,26 +64,19 @@ const Orders = () => {
     setisLogin(val);
   };
   const getDate = (time) => {
-    const yr=new Date().getFullYear()-new Date(time).getFullYear()
-    const mon=new Date().getMonth()-new Date(time).getMonth();
-    const dy=new Date().getDate()-new Date(time).getDate();
-    const hr=new Date().getHours()-new Date(time).getHours();
-    const mn=new Date().getMinutes()-new Date(time).getMinutes();
-    const sc=new Date().getSeconds()-new Date(time).getSeconds();
-    if(yr>0)
-    return `${yr} years ago`;
-    else if(mon>0)
-    return `${mon+1} months ago`;
-    else if(dy>0)
-    return `${dy} days ago`;
-    else if( hr>0 && hr<24)
-    return `${hr} hours ago`;
-    else if(mn>0)
-    return `${mn} minutes ago`;
-    else if(sc>0)
-    return `${sc} seconds ago`;
-    else
-    return "just now" 
+    const yr = new Date().getFullYear() - new Date(time).getFullYear();
+    const mon = new Date().getMonth() - new Date(time).getMonth();
+    const dy = new Date().getDate() - new Date(time).getDate();
+    const hr = new Date().getHours() - new Date(time).getHours();
+    const mn = new Date().getMinutes() - new Date(time).getMinutes();
+    const sc = new Date().getSeconds() - new Date(time).getSeconds();
+    if (yr > 0) return `${yr} years ago`;
+    else if (mon > 0) return `${mon + 1} months ago`;
+    else if (dy > 0) return `${dy} days ago`;
+    else if (hr > 0 && hr < 24) return `${hr} hours ago`;
+    else if (mn > 0) return `${mn} minutes ago`;
+    else if (sc > 0) return `${sc} seconds ago`;
+    else return "just now";
   };
   return (
     <>
@@ -144,7 +154,7 @@ const Orders = () => {
                 </>
               ) : check ? (
                 <Link to="/" exact={true}>
-                 <div className="order-empty">
+                  <div className="order-empty">
                     <img
                       style={{
                         width: "100vw",
