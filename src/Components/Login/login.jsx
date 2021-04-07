@@ -154,18 +154,11 @@ const Login = (props) => {
                         role="status"
                         aria-hidden="true"
                       ></span>
-                    ) : (
-                      <span
-                        style={{ marginRight: "5px", color: "transparent" }}
-                        className="spinner-grow spinner-grow-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                    )}
+                    ) : null}
                     Login
                   </button>
                   {errorOccur ? (
-                    <div style={{width:'92%',marginTop:'10px',textAlign:'center' }} className="alert alert-danger" role="alert">
+                    <div style={{width:'88%',marginTop:'10px',marginLeft:'10px',textAlign:'center' }} className="alert alert-danger" role="alert">
                       {errorOccur}
                     </div>
                   ) : null}

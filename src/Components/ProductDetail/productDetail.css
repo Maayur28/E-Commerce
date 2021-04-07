@@ -105,6 +105,25 @@
   display: flex;
   justify-content: space-between;
 }
+.pd-price {
+  margin-left: 40px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.pd-discountedPrice {
+  font-weight: bolder;
+  font-size: 20px;
+  margin-right: 5px;
+}
+.pd-originalPrice {
+  font-size: 16px;
+  margin-top: 1px;
+  margin-right: 5px;
+}
+.pd-discount {
+  font-weight: bolder;
+  color: forestgreen;
+}
 .right {
   margin: 15px 70px;
 }

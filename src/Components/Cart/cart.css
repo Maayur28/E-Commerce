@@ -131,10 +131,15 @@
   font-weight: bolder;
   color: rgba(1, 133, 1, 0.774);
 }
+.card-footer
+{
+  display: flex;
+  justify-content: center;
+}
 .cart-placeOrder {
   border: none;
   background-color: rgba(254, 77, 1, 255);
-  padding: 10px 9.3vw;
+  padding: 10px 7.3vw;
   color: white;
   font-weight: bolder;
 }

@@ -20,12 +20,13 @@ const ProductDetail = (props) => {
   // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   const [cartitemsTotal, setcartitemsTotal] = value2;
+  const [iswait, setiswait] = useState(false);
   useEffect(() => {
     fetch(`http://localhost:1111/product/${category}/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      setData(data);
-      document.title=data.name;
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        document.title = data.name;
         setSize(data.size[0]);
         setColor(data.color[0]);
         setStar([]);
@@ -56,7 +57,7 @@ const ProductDetail = (props) => {
           console.error("Error:", error.message);
         });
     }
-  }, [isLogin,data]);
+  }, [isLogin, data]);
   const toggleIcon = (val) => {
     if (isLogin) {
       fetch("http://localhost:2222/togglewishlist", {
@@ -113,6 +114,7 @@ const ProductDetail = (props) => {
         userData.size = size;
         userData.color = color;
         delete userData.quantity;
+        setiswait(true);
         fetch(`http://localhost:4444/cart`, {
           method: "POST",
           body: JSON.stringify(userData),
@@ -126,6 +128,7 @@ const ProductDetail = (props) => {
             localStorage.setItem("count", datarec.cartItems.length);
             setcartCount(datarec.cartItems.length);
             setcartitemsTotal([...datarec.cartItems]);
+            setiswait(false);
             toast.success("Added to cart successfully", {
               position: "bottom-center",
               autoClose: 1000,
@@ -135,6 +138,7 @@ const ProductDetail = (props) => {
             });
           })
           .catch((error) => {
+            setiswait(false);
             console.error("Error:", error.message);
           });
       }
@@ -157,6 +161,12 @@ const ProductDetail = (props) => {
             <h5 className="text-muted">{data.description}</h5>
             <div className="cartWish">
               <button className="addToCart " onClick={addprducttoCart}>
+                {iswait ? (
+                  <span
+                    className="spinner-grow spinner-grow-sm"
+                    style={{ marginRight: "5px" }}
+                  ></span>
+                ) : null}
                 {cartitemsTotal.find((val) => val._id === data._id)
                   ? "GO TO CART"
                   : "ADD TO CART"}
@@ -219,7 +229,14 @@ const ProductDetail = (props) => {
             </div>
             <div className="right price">
               <h5 className="text-muted">Price</h5>
-              <span> $750</span>
+              <div className="pd-price">
+                <h6 className="pd-discountedPrice">
+                  <i className="fas fa-rupee-sign"></i>
+                  {Math.floor(data.price - (data.price * data.discount) / 100)}
+                </h6>
+                <del className="pd-originalPrice">{data.price}</del>
+                <p className="pd-discount">{data.discount}% Off</p>
+              </div>
             </div>
             <div className="right color">
               <h5>Color</h5>

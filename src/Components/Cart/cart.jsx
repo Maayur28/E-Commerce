@@ -20,6 +20,7 @@ const Cart = () => {
   const [registermodal, setregistermodal] = useState(false);
   const [cartItem, setcartItem] = useState([]);
   const [outofstock, setoutofstock] = useState([]);
+  const[iswait,setiswait]=useState(false);
   let totalPrice = 0;
   let totalDiscountedPrice = 0;
   let totalShippingPrice = 0;
@@ -120,6 +121,7 @@ const Cart = () => {
       .catch((err) => console.error(err));
   };
   const cartplaceOrder = () => {
+    setiswait(true);
     fetch("http://localhost:1111/getprod", {
       method: "PUT",
       body: JSON.stringify(cartItem),
@@ -139,7 +141,6 @@ const Cart = () => {
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log(data.cart);
               fetch("http://localhost:5555/order", {
                 method: "POST",
                 body: JSON.stringify(data.cart),
@@ -151,6 +152,7 @@ const Cart = () => {
                 .then((response) => response.json())
                 .then((data) => {
                   if (data.order) {
+                    setiswait(false);
                     toast.success("Order has been placed successfully", {
                       position: "bottom-center",
                       autoClose: 2000,
@@ -160,6 +162,7 @@ const Cart = () => {
                     });
                     history.replace('/order');
                   } else {
+                    setiswait(false);
                     toast.error(
                       "Sorry! Error occured while placing the order",
                       {
@@ -179,11 +182,12 @@ const Cart = () => {
                 .catch((err) => console.error(err));
             })
             .catch((err) => console.error(err));
-        } else setoutofstock(data.prod);
+        } else {setoutofstock(data.prod);setiswait(false)};
       })
       .catch((err) => console.error(err));
   };
   if (outofstock.length > 0) {
+    setiswait(false);
     toast.error("Sorry! Some items went out of stock", {
       position: "bottom-center",
       autoClose: 2500,
@@ -379,6 +383,7 @@ const Cart = () => {
                         className="cart-placeOrder"
                         onClick={cartplaceOrder}
                       >
+                       {iswait?<span className="spinner-grow spinner-grow-sm" style={{ marginRight: "5px"}}></span>:null}
                         Place Order
                       </button>
                     </div>

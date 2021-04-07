@@ -65,6 +65,7 @@
   color: white;
   padding: 10px 170px 10px 170px;
   margin-top: 5px;
+  margin-left: 10px;
 }
 .login-forgetButton {
   display: flex;

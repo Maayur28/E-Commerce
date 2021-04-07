@@ -47,9 +47,24 @@ const Orders = () => {
     setisLogin(val);
   };
   const getDate = (time) => {
-    return `${new Date(time).getDate()}/${
-      new Date(time).getMonth() + 1
-    }/${new Date(time).getFullYear()}`;
+    const yr=new Date().getFullYear()-new Date(time).getFullYear()
+    const mon=new Date().getMonth()-new Date(time).getMonth();
+    const dy=new Date().getDate()-new Date(time).getDate();
+    const hr=new Date().getHours()-new Date(time).getHours();
+    const mn=new Date().getMinutes()-new Date(time).getMinutes();
+    const sc=new Date().getSeconds()-new Date(time).getSeconds();
+    if(yr>0)
+    return `${yr} years ago`;
+    else if(mon>0)
+    return `${mon+1} months ago`;
+    else if(dy>0)
+    return `${dy} days ago`;
+    else if( hr>0 && hr<24)
+    return `${hr} hours ago`;
+    else if(mn>0)
+    return `${mn} minutes ago`;
+    else
+    return `${sc} seconds ago`; 
   };
   return (
     <>
@@ -71,10 +86,12 @@ const Orders = () => {
                       <tr>
                         <th>Product</th>
                         <th>Product name</th>
+                        <th>Size</th>
+                        <th>Color</th>
                         <th>Unit Price</th>
                         <th>Quantity</th>
                         <th>Total Price</th>
-                        <th>Date</th>
+                        <th>Ordered</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -102,6 +119,8 @@ const Orders = () => {
                               {val.name}
                             </span>
                           </td>
+                          <td>{val.size}</td>
+                          <td>{val.color}</td>
                           <td>
                             {Math.floor(
                               val.price - (val.price * val.discount) / 100
