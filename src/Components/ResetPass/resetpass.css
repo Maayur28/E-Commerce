@@ -1,0 +1,60 @@
+
+.reset-modalDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5vh;
+}
+.reset-icon {
+  font-size: 24px;
+  bottom: 10%;
+}
+.reset-inputDiv {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 50px;
+  width: 300px;
+  margin-top: 10px;
+}
+.reset-input {
+  border: none;
+  border-bottom: 2px solid #999;
+  padding-top: 20px;
+  padding-left: 45px;
+}
+.reset-button {
+  border: none;
+  background-color: rgba(254, 77, 1, 255);
+  color: white;
+  padding: 10px 50px 10px 50px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.reset-label {
+  position: absolute;
+  bottom: 5%;
+  left: 15%;
+  font-size: 18px;
+  pointer-events: none;
+}
+.reset-input::placeholder {
+  color: transparent;
+  user-select: none;
+}
+
+.reset-input:focus {
+  outline: none;
+  border-color: #11998e;
+}
+.reset-input:focus::placeholder {
+  color: #999;
+}
+.reset-input:focus ~ label {
+  top: 0%;
+  font-size: 14px;
+}
+.reset-input:not(:placeholder-shown) ~ label {
+  top: 0%;
+  font-size: 14px;
+}

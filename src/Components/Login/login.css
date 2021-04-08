@@ -95,6 +95,10 @@
 .login-button:focus {
   outline: none;
 }
+.login-inputfieldError {
+  margin-left: 40px;
+  color: rgb(255, 1, 1);
+}
 .login-input::placeholder {
   color: transparent;
   user-select: none;
@@ -103,10 +107,6 @@
 .login-input:focus {
   outline: none;
   border-color: #11998e;
-}
-.login-inputfieldError {
-  margin-left: 40px;
-  color: rgb(255, 1, 1);
 }
 .login-input:focus::placeholder {
   color: #999;

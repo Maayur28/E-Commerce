@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import { StoreContext } from "../../Store/data";
-
+import ForgetPass from '../ForgetPassword/forgetpass';
 const Login = (props) => {
   const [passShow, setpassShow] = useState(false);
   const [show, setShow] = useState(true);
@@ -14,6 +14,7 @@ const Login = (props) => {
   // eslint-disable-next-line
   const [cartCount, setcartCount] = value1;
   const [errorOccur, seterrorOccur] = useState();
+  const [forget,setforget]=useState(false);
   const handleClose = () => {
     setShow(false);
     props.handleloginLaunch(false);
@@ -26,6 +27,10 @@ const Login = (props) => {
     setShow(false);
     props.handleisLogin(val);
   };
+  const launchforgetPass=()=>{
+    setShow(false);
+    setforget(true);
+  }
   const CustomInput = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
@@ -166,6 +171,7 @@ const Login = (props) => {
                     <button
                       type="button"
                       className="login-forget login-buttoncommon"
+                      onClick={launchforgetPass}
                     >
                       Forget Password?
                     </button>
@@ -191,6 +197,9 @@ const Login = (props) => {
           pauseOnFocusLoss
         />
       </Modal>
+      {forget ? (
+          <ForgetPass handleForgetlaunch={handleClose}/>
+        ) : null}
     </>
   );
 };
