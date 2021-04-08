@@ -171,16 +171,18 @@ const Orders = () => {
                   </div>
                 </Link>
               ) : (
+                <div style={{display:'flex',justifyContent:'center',marginTop:'20px'}}>
                 <Skeleton
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    marginTop: "50px",
+                    marginTop: "30px",
                   }}
                   width={600}
                   height={50}
                   count={7}
                 />
+                </div>
               )}
             </div>
           </div>
