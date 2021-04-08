@@ -29,6 +29,7 @@ const Navbar = () => {
     setisLogin(val);
   };
   const handleloginLogout = () => {
+    settogglewidth(0);
     if (!isLogin) setloginmodal(true);
     else {
       localStorage.clear();
@@ -101,6 +102,11 @@ const Navbar = () => {
           <li onClick={() => navigateAcc("wishlist")}>
           <span style={{cursor:"pointer"}}>
               <i className="fas fa-clipboard-list"></i> My Wishlist
+            </span>
+          </li>
+          <li onClick={handleloginLogout}>
+          <span style={{cursor:"pointer"}}>
+          <i className="fas fa-sign-in-alt"></i> {isLogin ? "LOGOUT" : "LOGIN"}
             </span>
           </li>
         </ul>
