@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { StoreContext } from "../../Store/data";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
+import Skeleton from "react-loading-skeleton";
 const Carousel = () => {
   document.title = "Shoes App";
   const [arr, setarr] = useState([]);
@@ -262,7 +263,7 @@ const Carousel = () => {
             alt="500 Error"
             style={{ width: "100vw", height: "88vh", objectFit: "contain" }}
           />
-        ) : null}
+        ) :<div style={{display:'flex',flexDirection:'column',alignItems:'center', justifyContent:'center',height:'88vh'}}><Skeleton width={400} height={50} style={{marginBottom:'20px'}}/><div style={{display:'flex',flexDirection:'column'}}><Skeleton width={600} height={150} style={{marginBottom:'20px'}}/><Skeleton width={600} height={150}/></div></div>}
       </div>
     </div>
   );
