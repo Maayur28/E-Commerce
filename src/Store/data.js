@@ -8,7 +8,7 @@ export const StoreProvider = (props) => {
   );
   useEffect(() => {
     if (isLogin) {
-      fetch(`http://localhost:4444/cart`, {
+      fetch(`https://mayur28cart.herokuapp.com/cart`, {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
