@@ -18,7 +18,7 @@ const Carousel = () => {
   const [cartCount, setcartCount] = value1;
   const [cartitemsTotal, setcartitemsTotal] = value2;
   useEffect(() => {
-    fetch("http://localhost:1111/product")
+    fetch("https://mayur28product.herokuapp.com/product")
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
           return response.json();
@@ -101,7 +101,7 @@ const Carousel = () => {
           userData.size = size;
           userData.color = color;
           delete userData.quantity;
-          fetch(`http://localhost:4444/cart`, {
+          fetch(`https://mayur28cart.herokuapp.com/cart`, {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {

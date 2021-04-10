@@ -203,7 +203,7 @@ const Cart = () => {
               }
             })
             .then((data) => {
-              fetch("http://localhost:5555/order", {
+              fetch("https://mayur28order.herokuapp.com/order", {
                 method: "POST",
                 body: JSON.stringify(data.cart),
                 headers: {

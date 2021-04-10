@@ -21,7 +21,7 @@ const ForgetPass = (props) => {
   };
   useEffect(() => {
     setcheck(false);
-    fetch("http://localhost:3333/verifytoken", {
+    fetch("https://mayur28user.herokuapp.com/verifytoken", {
       method: "POST",
       body: JSON.stringify({ token: token }),
       headers: {
@@ -54,7 +54,7 @@ const ForgetPass = (props) => {
       obj.userid = userid;
       obj.password = password;
       setcheck(false);
-      fetch("http://localhost:3333/setresetpass", {
+      fetch("https://mayur28user.herokuapp.com/setresetpass", {
         method: "POST",
         body: JSON.stringify(obj),
         headers: {

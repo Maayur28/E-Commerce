@@ -25,7 +25,7 @@ const ProductDetail = (props) => {
   const [iswait, setiswait] = useState(false);
   useEffect(() => {
     setcheck(false);
-    fetch(`http://localhost:1111/product/${category}/${id}`)
+    fetch(`https://mayur28product.herokuapp.com/product/${category}/${id}`)
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
           return response.json();
@@ -158,7 +158,7 @@ const ProductDetail = (props) => {
         userData.color = color;
         delete userData.quantity;
         setiswait(true);
-        fetch(`http://localhost:4444/cart`, {
+        fetch(`https://mayur28cart.herokuapp.com/cart`, {
           method: "POST",
           body: JSON.stringify(userData),
           headers: {

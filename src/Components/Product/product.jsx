@@ -310,7 +310,7 @@ const Product = (props) => {
           userData.color = modalcolor;
           delete userData.quantity;
           setModalShow(false);
-          fetch(`http://localhost:4444/cart`, {
+          fetch(`https://mayur28cart.herokuapp.com/cart`, {
             method: "POST",
             body: JSON.stringify(userData),
             headers: {

@@ -19,7 +19,7 @@ const Orders = () => {
   const [registermodal, setregistermodal] = useState(false);
   useEffect(() => {
     if (isLogin) {
-      fetch("http://localhost:5555/order", {
+      fetch("https://mayur28order.herokuapp.com/order", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },

@@ -86,7 +86,7 @@ const Login = (props) => {
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               seterrorOccur();
-              fetch("http://localhost:3333/login", {
+              fetch("https://mayur28user.herokuapp.com/login", {
                 method: "POST",
                 body: JSON.stringify(values),
                 headers: {
@@ -104,7 +104,7 @@ const Login = (props) => {
                 })
                 .then((datarec) => {
                   localStorage.setItem("x-auth-token", datarec.authToken);
-                  fetch("http://localhost:4444/cartcount",{
+                  fetch("https://mayur28cart.herokuapp.com/cartcount",{
                     headers:{
                       "x-auth-token":localStorage.getItem('x-auth-token')
                     }
