@@ -41,7 +41,7 @@ const Cart = () => {
   useEffect(() => {
     if (isLogin) {
       setcheck(false);
-      fetch("http://localhost:4444/cart", {
+      fetch("https://mayur28cart.herokuapp.com/cart", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
