@@ -648,13 +648,9 @@ const Product = (props) => {
             </div>
           </>
         ) : !check ? (
-          <div style={{marginLeft:'50px'}}>
-          <Skeleton
-            width={270}
-            height={250}
-            count={12}
-            style={{ marginRight: "30px", marginBottom: "20px" }}
-          />
+          <div style={{marginLeft:'50px',display:'flex'}}>
+            <Skeleton width={300} height={30} count={6} style={{display:'flex',flexDirection:'column',marginBottom:'10px'}}/>
+          <Skeleton width={270} height={250} count={12} style={{ marginLeft: "30px", marginBottom: "20px" }}/>
           </div>
         ) : (
           <img

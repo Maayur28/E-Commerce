@@ -64,6 +64,7 @@ const Cart = () => {
             setcartItem([]);
             setcartCount(0);
             setcartitemsTotal([]);
+            setcheck(true);
           }
         })
         .catch((err) => {
@@ -74,6 +75,7 @@ const Cart = () => {
             closeOnClick: true,
             progress: undefined,
           });
+          setcheck(true);
         });
     }
   }, [isLogin]);
@@ -140,6 +142,7 @@ const Cart = () => {
           setcartItem([]);
           setcartCount(0);
           setcartitemsTotal([]);
+          setcheck(true);
         } else {
           setcartItem(data.cartDetail);
           setcartCount(data.cartDetail.length);
@@ -159,7 +162,9 @@ const Cart = () => {
         hideProgressBar: false,
         closeOnClick: true,
         progress: undefined,
-      }));
+      })
+      );
+      setcheck(true);
   };
   const cartplaceOrder = () => {
     setiswait(true);
