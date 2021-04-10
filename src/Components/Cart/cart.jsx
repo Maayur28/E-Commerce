@@ -74,7 +74,6 @@ const Cart = () => {
             closeOnClick: true,
             progress: undefined,
           });
-          setcheck(true);
         });
     }
   }, [isLogin]);
@@ -291,6 +290,7 @@ const Cart = () => {
     });
   }
 useEffect(() => {
+  if(cartItem.length>0)
   setcheck(true);
 }, [cartItem])
   return (
