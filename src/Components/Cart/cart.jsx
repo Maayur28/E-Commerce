@@ -82,7 +82,7 @@ const Cart = () => {
   const updatedQuan = (e, val) => {
     let resdata = { ...val };
     resdata.quantity = e.target.value;
-    fetch("http://localhost:4444/cartquantity", {
+    fetch("https://mayur28cart.herokuapp.com/cartquantity", {
       method: "PUT",
       body: JSON.stringify(resdata),
       headers: {
@@ -119,7 +119,7 @@ const Cart = () => {
     });
   };
   const cartRemove = (val) => {
-    fetch("http://localhost:4444/cartdelete", {
+    fetch("https://mayur28cart.herokuapp.com/cartdelete", {
       method: "DELETE",
       body: JSON.stringify(val),
       headers: {
@@ -168,7 +168,7 @@ const Cart = () => {
   };
   const cartplaceOrder = () => {
     setiswait(true);
-    fetch("http://localhost:1111/getprod", {
+    fetch("https://mayur28product.herokuapp.com/getprod", {
       method: "PUT",
       body: JSON.stringify(cartItem),
       headers: {
@@ -187,7 +187,7 @@ const Cart = () => {
       .then((data) => {
         if (data.prod.length === 0) {
           setoutofstock([]);
-          fetch("http://localhost:4444/cartempty", {
+          fetch("https://mayur28cart.herokuapp.com/cartempty", {
             method: "DELETE",
             headers: {
               "x-auth-token": localStorage.getItem("x-auth-token"),
