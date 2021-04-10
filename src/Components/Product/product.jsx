@@ -37,7 +37,7 @@ const Product = (props) => {
     document.title = category.toUpperCase();
     setproductCount(0);
     setcheck(false);
-    fetch(`http://localhost:1111/product/${category}`)
+    fetch(`https://mayur28product.herokuapp.com/product/${category}`)
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
           return response.json();
