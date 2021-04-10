@@ -93,7 +93,7 @@ const Product = (props) => {
       });
     if (isLogin) {
       setcheck(false);
-      fetch("http://localhost:2222/getwishlist", {
+      fetch("https://mayur28wishlist.herokuapp.com/getwishlist", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
@@ -128,7 +128,7 @@ const Product = (props) => {
   };
   const productWishlist = (e, val) => {
     if (isLogin) {
-      fetch("http://localhost:2222/togglewishlist", {
+      fetch("https://mayur28wishlist.herokuapp.com/togglewishlist", {
         method: "POST",
         body: JSON.stringify(val),
         headers: {

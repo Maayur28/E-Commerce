@@ -18,7 +18,7 @@ const Wishlist = () => {
   const [registermodal, setregistermodal] = useState(false);
   useEffect(() => {
     if (isLogin) {
-      fetch("http://localhost:2222/getwishlist", {
+      fetch("https://mayur28wishlist.herokuapp.com/getwishlist", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
@@ -66,7 +66,7 @@ const Wishlist = () => {
     setisLogin(val);
   };
   const wishRemove = (val) => {
-    fetch("http://localhost:2222/removewishlist", {
+    fetch("https://mayur28wishlist.herokuapp.com/removewishlist", {
       method: "DELETE",
       body: JSON.stringify(val),
       headers: {
