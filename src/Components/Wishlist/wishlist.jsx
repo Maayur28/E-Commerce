@@ -19,6 +19,7 @@ const Wishlist = () => {
   useEffect(() => {
     if (isLogin) {
       fetch("https://mayur28wishlist.herokuapp.com/getwishlist", {
+      // fetch("http://localhost:2222/getwishlist", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
@@ -67,6 +68,7 @@ const Wishlist = () => {
   };
   const wishRemove = (val) => {
     fetch("https://mayur28wishlist.herokuapp.com/removewishlist", {
+    // fetch("http://localhost:2222/removewishlist", {
       method: "DELETE",
       body: JSON.stringify(val),
       headers: {
@@ -118,7 +120,7 @@ const Wishlist = () => {
                           <td className="wishlist-product">
                             <Link
                               to={`/product/${val.idealFor}/${val._id}`}
-                              exact={true}
+                              exact="true"
                             >
                               <img
                                 style={{
@@ -136,7 +138,7 @@ const Wishlist = () => {
                             <span className="">{val.name}</span>
                           </td>
                           <td>
-                            <span class="badge bg-success">{val.rating}</span>
+                            <span className="badge bg-success">{val.rating}</span>
                           </td>
                           <td style={{ fontWeight: "bolder" }}>
                             {Math.floor(
@@ -161,7 +163,7 @@ const Wishlist = () => {
                   </Table>
                 </>
               ) : check ? (
-                <Link to="/" exact={true}>
+                <Link to="/" exact="true">
                   <img
                     src="/wishlistEmpty.webp"
                     alt="wishlistempty"

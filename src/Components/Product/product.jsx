@@ -38,6 +38,7 @@ const Product = (props) => {
     setproductCount(0);
     setcheck(false);
     fetch(`https://mayur28product.herokuapp.com/product/${category}`)
+    // fetch(`http://localhost:1111/product/${category}`)
       .then((response) => {
         if (response.status >= 200 && response.status <= 299) {
           return response.json();
@@ -94,6 +95,7 @@ const Product = (props) => {
     if (isLogin) {
       setcheck(false);
       fetch("https://mayur28wishlist.herokuapp.com/getwishlist", {
+      // fetch("http://localhost:2222/getwishlist", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
@@ -129,6 +131,7 @@ const Product = (props) => {
   const productWishlist = (e, val) => {
     if (isLogin) {
       fetch("https://mayur28wishlist.herokuapp.com/togglewishlist", {
+      // fetch("http://localhost:2222/togglewishlist",{
         method: "POST",
         body: JSON.stringify(val),
         headers: {

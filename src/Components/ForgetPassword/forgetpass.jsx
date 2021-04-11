@@ -30,6 +30,7 @@ const ForgetPass = (props) => {
       setcheck(false);
       setiswait(true);
       fetch("https://mayur28user.herokuapp.com/forgetpassword", {
+      // fetch("http://localhost:3333/forgetpassword", {
         method: "POST",
         body: JSON.stringify({ email: mail }),
         headers: {

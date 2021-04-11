@@ -42,6 +42,7 @@ const Cart = () => {
     if (isLogin) {
       setcheck(false);
       fetch("https://mayur28cart.herokuapp.com/cart", {
+      // fetch("http://localhost:4444/cart", {
         headers: {
           "x-auth-token": localStorage.getItem("x-auth-token"),
         },
@@ -83,6 +84,7 @@ const Cart = () => {
     let resdata = { ...val };
     resdata.quantity = e.target.value;
     fetch("https://mayur28cart.herokuapp.com/cartquantity", {
+    // fetch("http://localhost:4444/cartquantity", {
       method: "PUT",
       body: JSON.stringify(resdata),
       headers: {
@@ -120,6 +122,7 @@ const Cart = () => {
   };
   const cartRemove = (val) => {
     fetch("https://mayur28cart.herokuapp.com/cartdelete", {
+    // fetch("http://localhost:4444/cartdelete", {
       method: "DELETE",
       body: JSON.stringify(val),
       headers: {
@@ -168,7 +171,9 @@ const Cart = () => {
   };
   const cartplaceOrder = () => {
     setiswait(true);
+    setoutofstock([]);
     fetch("https://mayur28product.herokuapp.com/getprod", {
+    // fetch("http://localhost:1111/getprod", {
       method: "PUT",
       body: JSON.stringify(cartItem),
       headers: {
@@ -186,8 +191,8 @@ const Cart = () => {
       })
       .then((data) => {
         if (data.prod.length === 0) {
-          setoutofstock([]);
           fetch("https://mayur28cart.herokuapp.com/cartempty", {
+          // fetch("http://localhost:4444/cartempty", {
             method: "DELETE",
             headers: {
               "x-auth-token": localStorage.getItem("x-auth-token"),
@@ -204,6 +209,7 @@ const Cart = () => {
             })
             .then((data) => {
               fetch("https://mayur28order.herokuapp.com/order", {
+              //  fetch("http://localhost:5555/order", {
                 method: "POST",
                 body: JSON.stringify(data.cart),
                 headers: {
@@ -270,6 +276,13 @@ const Cart = () => {
           );setiswait(false)});
         } else {
           setoutofstock(data.prod);
+          toast.error("Sorry! Some items went out of stock", {
+            position: "bottom-center",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            progress: undefined,
+          })
           setiswait(false);
         }
       })
@@ -284,16 +297,6 @@ const Cart = () => {
       }
     );setiswait(false)});
   };
-  if (outofstock.length > 0) {
-    setiswait(false);
-    toast.error("Sorry! Some items went out of stock", {
-      position: "bottom-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      progress: undefined,
-    });
-  }
 useEffect(() => {
   if(cartItem.length>0)
   setcheck(true);
@@ -311,7 +314,7 @@ useEffect(() => {
                       MY CART({cartItem.length})
                     </h5>
                     {
-                      (cartItem.forEach(
+                      cartItem.forEach(
                         (val) => (
                           // eslint-disable-next-line
                           (totalShippingPrice += val.shippingCharges),
@@ -326,11 +329,11 @@ useEffect(() => {
                         <div className="card" key={index}>
                           <div
                             className={
-                              outofstock.find((value) => value === val._id)
-                                ? "cart-bodyoutofStock card-body"
-                                : "cart-body card-body"
+                              outofstock.includes(val._id)
+                              ? "cart-bodyoutofStock card-body"
+                              : "cart-body card-body"
                             }
-                          >
+                            >
                             <div
                               className="cart-image"
                               style={{
@@ -359,7 +362,7 @@ useEffect(() => {
                                 <div className="cart-priceShipping">
                                   <div className="cart-selectDiv">
                                     <span className="select-quantity">
-                                      Qty:{" "}
+                                      Qty:
                                     </span>
                                     <select
                                       className="cart-select"
@@ -412,7 +415,7 @@ useEffect(() => {
                             </div>
                           </div>
                         </div>
-                      )))
+                      ))
                     }
                   </div>
                   {
