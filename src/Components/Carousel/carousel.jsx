@@ -188,7 +188,7 @@ const Carousel = () => {
                   >
                     {index === current && (
                       <NavLink
-                        to={`/product/${arr[current].category}/${arr[current].id}`}
+                        to={`/product/${arr[current].idealFor}/${arr[current]._id}`}
                         exact
                       >
                         <img
@@ -262,6 +262,7 @@ const Carousel = () => {
             src="/500Error.gif"
             alt="500 Error"
             style={{ width: "100vw", height: "88vh", objectFit: "contain" }}
+            loading="lazy"
           />
         ) :<div style={{display:'flex',flexDirection:'column',alignItems:'center', justifyContent:'center',height:'88vh'}}><Skeleton width={400} height={50} style={{marginBottom:'20px'}}/><div style={{display:'flex',flexDirection:'column'}}><Skeleton width={600} height={150} style={{marginBottom:'20px'}}/><Skeleton width={600} height={150}/></div></div>}
       </div>

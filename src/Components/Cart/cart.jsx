@@ -324,6 +324,7 @@ useEffect(() => {
                             ) * val.quantity),
                           (totalPrice += val.price * val.quantity)
                         )
+                        // eslint-disable-next-line
                       ),
                       cartItem.map((val, index) => (
                         <div className="card" key={index}>

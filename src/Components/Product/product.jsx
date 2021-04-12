@@ -660,6 +660,7 @@ const Product = (props) => {
             src="/500Error.gif"
             alt="500 Error"
             style={{ width: "100vw", height: "75vh", objectFit: "contain" }}
+            loading="lazy"
           />
         )}
       </div>
